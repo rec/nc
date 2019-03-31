@@ -83,7 +83,8 @@ if sversion < SETUPTOOLS_VERSION:
 setuptools.setup(
     name=NAME,
     version=VERSION,
-    description='control all the things',
+    description='Named colors in Python',
+    long_description=open('README.rst').read(),
     author='Tom Ritchford',
     author_email='tom@swirly.com',
     url=URL,
@@ -94,6 +95,5 @@ setuptools.setup(
     tests_require=TESTS_REQUIRE,
     install_requires=INSTALL_REQUIRES,
     cmdclass=CMDCLASS,
-    keywords=['projects', 'objects', 'timedata'],
     include_package_data=True,
 )
