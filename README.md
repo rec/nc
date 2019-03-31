@@ -1,2 +1,0 @@
-# nc
-named colors
