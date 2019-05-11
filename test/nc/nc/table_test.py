@@ -23,7 +23,8 @@ class TableTest(unittest.TestCase):
             'Yellow-green (Color Wheel)',
             'Yellow-green (Crayola)',
             'Zaffre',
-            'Zomp']
+            'Zomp',
+        ]
 
         self.assertEqual(actual, expected)
 

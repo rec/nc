@@ -14,6 +14,7 @@ class RunTests(TestCommand):
     def run_tests(self):
         # Import here, because outside the eggs aren't loaded.
         import pytest
+
         errno = pytest.main(self.test_args)
         if errno:
             raise SystemExit(errno)
@@ -22,6 +23,7 @@ class RunTests(TestCommand):
 class RunCoverage(RunTests):
     def run_tests(self):
         import coverage
+
         cov = coverage.Coverage(config_file=True)
 
         cov.start()
@@ -32,8 +34,10 @@ class RunCoverage(RunTests):
         coverage = cov.html_report(directory='htmlcov')
         fail_under = cov.get_option('report:fail_under')
         if coverage < fail_under:
-            print('ERROR: coverage %.2f%% was less than fail_under=%s%%' % (
-                  coverage, fail_under))
+            print(
+                'ERROR: coverage %.2f%% was less than fail_under=%s%%'
+                % (coverage, fail_under)
+            )
             raise SystemExit(1)
 
 
@@ -50,10 +54,7 @@ INSTALL_REQUIRES = open('requirements.txt').read().splitlines()
 TESTS_REQUIRE = open('test_requirements.txt').read().splitlines()
 
 PACKAGES = setuptools.find_packages(exclude=['test'])
-CMDCLASS = {
-    'coverage': RunCoverage,
-    'test': RunTests,
-}
+CMDCLASS = {'coverage': RunCoverage, 'test': RunTests}
 
 CLASSIFIERS = [
     'Development Status :: 5 - Production/Stable',

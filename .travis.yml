@@ -15,5 +15,6 @@ install:
 - pip install -r test_requirements.txt
 
 script:
-- flake8
+- flake8 nc test
+# - mypy nc test  # Doesn't work in Python 3.4
 - pytest test

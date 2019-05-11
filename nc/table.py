@@ -92,7 +92,7 @@ class Table:
 def _from_hex(s):
     for prefix in '0x', '#':
         if s.startswith(prefix):
-            return int(s[len(prefix):], 16)
+            return int(s[len(prefix) :], 16)
 
 
 def _from_number(s):
