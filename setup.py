@@ -1,4 +1,6 @@
-import os, setuptools, sys
+import os
+import setuptools
+import sys
 from setuptools.command.test import test as TestCommand
 
 

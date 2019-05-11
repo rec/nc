@@ -58,7 +58,7 @@ class Table:
         try:
             n = float(c) if self.normal else int(c)
             return n, n, n
-        except:
+        except Exception:
             raise ValueError('Do not understand color name %s' % c)
 
     def toggle(self, s):
@@ -82,7 +82,7 @@ class Table:
             if not isinstance(x, str):
                 x = self.to_string(x)
             return bool(tables.get_colors(x))
-        except:
+        except Exception:
             return False
 
     def __iter__(self):
