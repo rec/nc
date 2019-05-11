@@ -1,7 +1,4 @@
 """
-A longer list of color names.
-
-These colors come from:
 
 https://github.com/ManiacalLabs/BiblioPixel/blob
 /master/bibliopixel/colors/juce.py
