@@ -1,4 +1,4 @@
-from . import juce, wikipedia
+from .schemes import juce, wikipedia
 
 
 def get_color(c):
