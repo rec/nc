@@ -1,4 +1,4 @@
 nc
 ====
 
-Named colors for Python
+🚥 Extensible color names in Python 🚥
