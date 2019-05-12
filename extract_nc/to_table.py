@@ -2,11 +2,13 @@ from .wikipedia import wikipedia_colors
 import datetime
 import sys
 
-HEADER = """# This file was automatically generated on {timestamp}
-# by script {script} from the Wikipedia English color pages.
+HEADER = """# This file was automatically generated on {}
+# by script {}
+# from {}.
 
 COLORS = {{"""
 
+NAME = 'the Wikipedia English color pages'
 FOOTER = '}'
 
 SPECIAL_COLORS = {
@@ -25,10 +27,20 @@ def get_name(color):
     return name.split('|')[-1].strip().replace("'", "\\'")
 
 
+def run_one(colors, fp, name):
+    timestamp = datetime.datetime.now().isoformat()
+    header = HEADER.format(timestamp, sys.argv[0], name)
+    print(header, file=fp)
+
+    for name, hexname in colors:
+        print("    '{}': 0x{},".format(get_name(name), hexname))
+    print(FOOTER)
+
+
 def run_all(colors=None):
     timestamp = datetime.datetime.now().isoformat()
     script = sys.argv[0]
-    print(HEADER.format(**locals()))
+    print(HEADER.format(timestamp, script, NAME))
     colors = wikipedia_colors() if colors is None else colors
     for color in colors:
         name = get_name(color)
