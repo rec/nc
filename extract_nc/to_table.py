@@ -1,4 +1,4 @@
-from . import extract_colors
+from .wikipedia import wikipedia_colors
 import datetime
 import sys
 
@@ -29,7 +29,7 @@ def run_all(colors=None):
     timestamp = datetime.datetime.now().isoformat()
     script = sys.argv[0]
     print(HEADER.format(**locals()))
-    colors = extract_colors.get_lines() if colors is None else colors
+    colors = wikipedia_colors() if colors is None else colors
     for color in colors:
         name = get_name(color)
         hex = color['hex'].strip().upper()

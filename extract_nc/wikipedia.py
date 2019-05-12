@@ -22,7 +22,7 @@ PREFIX = '{{Colort/Color|'
 SUFFIX = '}}'
 
 
-def get_lines():
+def wikipedia_colors():
     for begin, end in 'AF', 'GM', 'NZ':
         url = _BASE.format(begin, end)
         text = requests.get(url).text
@@ -78,7 +78,7 @@ def run_test():
 def run_all():
     import yaml
 
-    yaml.dump_all(get_lines(), sys.stdout)
+    yaml.dump_all(wikipedia_colors(), sys.stdout)
 
 
 if __name__ == '__main__':
