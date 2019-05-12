@@ -1,5 +1,5 @@
+from . import extract_colors
 import datetime
-import extract_colors
 import sys
 
 HEADER = """# This file was automatically generated on {timestamp}
