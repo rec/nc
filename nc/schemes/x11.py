@@ -1,6 +1,6 @@
-# This file was automatically generated on 2019-05-13T18:05:53.106955
+# This file was automatically generated on 2019-05-13T19:27:17.819854
 # by script /code/nc/extract_nc/wikipedia.py
-# from X11 colors.
+# from X11 colors
 
 COLORS = {
     'Alice Blue': 0xF0F8FF,

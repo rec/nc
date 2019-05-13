@@ -8,7 +8,7 @@ import sys
 
 HEADER = """# This file was automatically generated on {}
 # by script {}
-# from {}.
+# from {}
 
 COLORS = {{"""
 
@@ -18,13 +18,14 @@ WIKI_URL = 'https://en.wikipedia.org/w/index.php?title='
 EDIT_STRING = '&action=edit'
 _BF = 'List_of_colors:_{0}%E2%80%93{1}'.format
 SOURCES = {
-    'x11': ('X11 colors', 'X11_color_names&section=2'),
     'wikipedia': (
         'the Wikipedia English color pages',
         _BF('A', 'F'),
         _BF('G', 'M'),
         _BF('N', 'Z'),
     ),
+    'x11': ('X11 colors', 'X11_color_names&section=2'),
+    'pwg': ('PWG 5101.1 colors', 'X11_color_names&section=10'),
 }
 
 TABLE_END = '|}'

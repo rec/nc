@@ -1,6 +1,6 @@
-# This file was automatically generated on 2019-05-13T18:05:53.903723
+# This file was automatically generated on 2019-05-13T19:27:13.821851
 # by script /code/nc/extract_nc/wikipedia.py
-# from the Wikipedia English color pages.
+# from the Wikipedia English color pages
 
 COLORS = {
     'Absolute Zero': 0x0048BA,
