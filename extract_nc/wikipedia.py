@@ -1,13 +1,24 @@
 from . import extract_color
 import bs4
+import datetime
 import requests
 import sys
 
+HEADER = """# This file was automatically generated on {}
+# by script {}
+# from {}.
+
+COLORS = {{"""
+
+FOOTER = '}'
+
+NAME = 'the Wikipedia English color pages'
 WIKI_URL = 'https://en.wikipedia.org/w/index.php?title='
 EDIT_STRING = '&action=edit'
 _BASE = 'List_of_colors:_{0}%E2%80%93{1}'
-PAGES = _BASE.format('A', 'F'), _BASE.format('G', 'M'), _BASE.format('N', 'Z')
+WPAGES = _BASE.format('A', 'F'), _BASE.format('G', 'M'), _BASE.format('N', 'Z')
 X11_PAGE = 'X11_color_names'
+
 SPECIAL_COLORS = {
     ('Peach', 0xFFCBA4): 'Deep peach',
     ('Vermilion', 0xD9381E): 'Medium vermillion',
@@ -26,13 +37,16 @@ def wikibox(url):
     return soup.find(id='wpTextbox1').text
 
 
-def colors(*urls):
+def colors(urls, fp, page_name):
+    timestamp = datetime.datetime.now().isoformat()
+    header = HEADER.format(timestamp, sys.argv[0], page_name)
+    print(header, file=fp)
+
     for url in urls:
         for line in wikibox(url).splitlines():
             color = extract_color.extract_color(line)
             if color:
                 hexname = color['hex'].strip().upper()
-
                 name = color['name'].strip()
                 if name.startswith('[['):
                     name = name[2:]
@@ -40,23 +54,10 @@ def colors(*urls):
                     name = name[:-2]
                 name = name.split('|')[-1].strip().replace("'", "\\'")
                 name = SPECIAL_COLORS.get((name, int(hexname, 16)), name)
-                yield name, hexname
+                print("    '{}': 0x{},".format(name, hexname), file=fp)
 
-
-def wikipedia():
-    return colors(*PAGES)
-
-
-def x11():
-    return colors(X11_PAGE)
-
-
-def run_all():
-    import yaml
-
-    # yaml.dump_all(wikipedia(), sys.stdout)
-    yaml.dump_all(x11(), sys.stdout)
+    print(FOOTER, file=fp)
 
 
 if __name__ == '__main__':
-    run_all()
+    colors(WPAGES, sys.stdout, NAME)
