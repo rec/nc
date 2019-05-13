@@ -1,4 +1,4 @@
-from . import process_line
+from . import extract_color
 import bs4
 import requests
 import sys
@@ -8,6 +8,11 @@ EDIT_STRING = '&action=edit'
 _BASE = 'List_of_colors:_{0}%E2%80%93{1}'
 PAGES = _BASE.format('A', 'F'), _BASE.format('G', 'M'), _BASE.format('N', 'Z')
 X11_PAGE = 'X11_color_names'
+SPECIAL_COLORS = {
+    ('Peach', 0xFFCBA4): 'Deep peach',
+    ('Vermilion', 0xD9381E): 'Medium vermillion',
+    ('Tea rose', 0xF88379): 'Tea rose orange',
+}
 
 
 def wikibox(url):
@@ -21,27 +26,36 @@ def wikibox(url):
     return soup.find(id='wpTextbox1').text
 
 
-def _colors(*urls):
+def colors(*urls):
     for url in urls:
         for line in wikibox(url).splitlines():
-            p = process_line.process_line(line)
-            if p:
-                yield p
+            color = extract_color.extract_color(line)
+            if color:
+                hexname = color['hex'].strip().upper()
+
+                name = color['name'].strip()
+                if name.startswith('[['):
+                    name = name[2:]
+                if name.endswith(']]'):
+                    name = name[:-2]
+                name = name.split('|')[-1].strip().replace("'", "\\'")
+                name = SPECIAL_COLORS.get((name, int(hexname, 16)), name)
+                yield name, hexname
 
 
-def wikipedia_colors():
-    return _colors(*PAGES)
+def wikipedia():
+    return colors(*PAGES)
 
 
-def x11_colors():
-    return _colors(X11_PAGE)
+def x11():
+    return colors(X11_PAGE)
 
 
 def run_all():
     import yaml
 
-    # yaml.dump_all(wikipedia_colors(), sys.stdout)
-    yaml.dump_all(x11_colors(), sys.stdout)
+    # yaml.dump_all(wikipedia(), sys.stdout)
+    yaml.dump_all(x11(), sys.stdout)
 
 
 if __name__ == '__main__':

@@ -2,7 +2,7 @@ PREFIX = '{{Colort/Color|'
 SUFFIX = '}}'
 
 
-def process_line(line):
+def extract_color(line):
     if not (line.endswith(SUFFIX) and line.startswith(PREFIX)):
         return None
 
@@ -50,8 +50,8 @@ name=[[Tawny (color)|Tenné]] (tawny)}}'
 
 
 def run_test():
-    print(process_line(TEST_DATA))
-    print(process_line(TEST_DATA2))
+    print(extract_color(TEST_DATA))
+    print(extract_color(TEST_DATA2))
 
 
 if __name__ == '__main__':
