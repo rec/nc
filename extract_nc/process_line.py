@@ -3,8 +3,9 @@ SUFFIX = '}}'
 
 
 def process_line(line):
-    assert line.endswith(SUFFIX)
-    assert line.startswith(PREFIX)
+    if not (line.endswith(SUFFIX) and line.startswith(PREFIX)):
+        return None
+
     line = line[len(PREFIX) : -len(SUFFIX)]
 
     result = {}
