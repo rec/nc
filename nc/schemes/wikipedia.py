@@ -1,5 +1,5 @@
-# This file was automatically generated on 2019-05-12T22:02:15.897723
-# by script /code/nc/extract_nc/to_table.py
+# This file was automatically generated on 2019-05-13T18:05:53.903723
+# by script /code/nc/extract_nc/wikipedia.py
 # from the Wikipedia English color pages.
 
 COLORS = {
