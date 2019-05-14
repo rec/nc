@@ -3,7 +3,9 @@ Table of named colors
 """
 
 import numbers
-from . import tables, util
+from . import old_util
+from . import tables
+from . import util
 
 
 class Table:
@@ -20,7 +22,7 @@ class Table:
         function).
         """
         if self.normal:
-            c = util.unscale(color)
+            c = old_util.unscale(color)
         else:
             color = c = tuple(color)
 
@@ -48,12 +50,12 @@ class Table:
 
         if ',' in c:
             c = c.lstrip('(').rstrip(')').lstrip('[').rstrip(']')
-            return tuple(util.from_number(i) for i in c.split(','))
+            return tuple(old_util.from_number(i) for i in c.split(','))
 
         h = util.from_hex(c)
         if h is not None:
-            t = util.to_triplet(h)
-            return util.scale(t) if self.normal else t
+            t = util.to_rgb(h)
+            return old_util.scale(t) if self.normal else t
 
         try:
             n = float(c) if self.normal else int(c)

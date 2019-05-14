@@ -499,6 +499,8 @@ COLORS = {
 Some colors have more than one name.  This is a list of the secondary names for
 Juce colors.  We need this to reliably go from color back to color name and
 get the same result each time.
+
+TODO: Invert these to be PRIMARY_NAMES
 """
 SECONDARY_NAMES = {
     'aqua',

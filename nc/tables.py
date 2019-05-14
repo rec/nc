@@ -1,6 +1,7 @@
 """Functions that depend on the juce + wikipedia NameColors"""
 
 from .schemes import juce, wikipedia
+from . import old_util
 from . import util
 
 
@@ -17,7 +18,7 @@ def color_names():
 
 
 def _make_tables():
-    colors, names, canonical = util.one_table(wikipedia.COLORS)
+    colors, names, canonical = old_util.one_table(wikipedia.COLORS)
 
     juce_tables = [{}, {}]
     for k, v in juce.COLORS.items():
@@ -27,7 +28,7 @@ def _make_tables():
         table[k.replace('grey', 'gray')] = v
 
     for i in 1, 0:
-        jcolors, jnames, jcanonical = util.one_table(juce_tables[i])
+        jcolors, jnames, jcanonical = old_util.one_table(juce_tables[i])
         colors.update(jcolors)
         names.update(jnames)
         canonical.update(jcanonical)
