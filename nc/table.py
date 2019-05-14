@@ -48,9 +48,9 @@ class Table:
 
         if ',' in c:
             c = c.lstrip('(').rstrip(')').lstrip('[').rstrip(']')
-            return tuple(_from_number(i) for i in c.split(','))
+            return tuple(util.from_number(i) for i in c.split(','))
 
-        h = _from_hex(c)
+        h = util.from_hex(c)
         if h is not None:
             t = util.to_triplet(h)
             return util.scale(t) if self.normal else t
@@ -87,14 +87,3 @@ class Table:
 
     def __iter__(self):
         return tables.color_names()
-
-
-def _from_hex(s):
-    for prefix in '0x', '#':
-        if s.startswith(prefix):
-            return int(s[len(prefix) :], 16)
-
-
-def _from_number(s):
-    h = _from_hex(s)
-    return float(s) if h is None else h

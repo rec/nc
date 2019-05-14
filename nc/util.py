@@ -15,6 +15,17 @@ def unscale(color):
     return tuple(round(c * 255) for c in color)
 
 
+def from_hex(s):
+    for prefix in '0x', '#':
+        if s.startswith(prefix):
+            return int(s[len(prefix) :], 16)
+
+
+def from_number(s):
+    h = from_hex(s)
+    return float(s) if h is None else h
+
+
 def canonical_name(name):
     return ''.join(i for i in name.lower() if i not in _DISALLOWED)
 
