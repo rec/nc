@@ -2,14 +2,6 @@ from . import util
 import importlib
 
 
-"""
-Some colors have multiple names; a best name needs to be chosen.
-module.PRIMARY_NAMES is a list of names to use by preference.
-Otherwise the shortest color name is chosen, and in a tie, the
-alphabetically first one.
-"""
-
-
 class Colors:
     def __init__(self, *modules, gray_munging=True):
         self._items = {}
@@ -21,6 +13,7 @@ class Colors:
             self._add_module(module)
 
         self._modules = modules
+        self._items = sorted(self._items.items())
 
     def to_color(self, c):
         """Try to coerce the argument into an rgb color"""
@@ -38,6 +31,9 @@ class Colors:
 
     def __len__(self):
         return len(self._items)
+
+    def __iter__(self):
+        return iter(self._items)
 
     def __getitem__(self, name):
         """Try to convert  string item into a color"""
@@ -64,14 +60,8 @@ class Colors:
             self[name] = value
 
     def __contains__(self, x):
-        """Return true if this string or integer tuple appears in the table"""
-        if isinstance(x, str):
-            return util.canonical_name(x) in self._to_rgb
-        if isinstance(x, tuple):
-            return x in self._to_name
-
-    def __iter__(self):
-        return iter(self._items.items())
+        """Return true if this string name appears in the table canonically"""
+        return util.canonical_name(x) in self._to_rgb
 
     def _add_module(self, module):
         original_module = module
@@ -106,3 +96,10 @@ class Colors:
 
         best_names = {k: best_name(v) for k, v in to_names.items()}
         self._to_name.update(best_names)
+
+
+"""Some colors have multiple names; a best name needs to be chosen.
+   module.PRIMARY_NAMES is a list of names to use by preference.
+   Otherwise the shortest color name is chosen, and in a tie, the
+   alphabetically first one.
+"""

@@ -1,6 +1,6 @@
-from nc.default import nc
 from nc import util
 from nc.schemes import juce
+import nc
 import unittest
 
 
