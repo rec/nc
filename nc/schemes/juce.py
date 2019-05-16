@@ -495,6 +495,26 @@ COLORS = {
     'Yellow': 0xFFFF00,
 }
 
+NEW_PRIMARY_NAMES = {
+    'Black',
+    'Cyan',
+    'Dark blue',
+    'Dark cyan',
+    'Dark magenta',
+    'Dark olive green',
+    'Dark red',
+    'Green',
+    'Lime green',
+    'Magenta',
+    'Medium aquamarine',
+    'Medium blue',
+    'Medium sea green',
+    'Medium slate blue',
+    'Medium violet red',
+    'Saddle brown',
+    'Yellow green',
+}
+
 """
 Some colors have more than one name.  This is a list of the secondary names for
 Juce colors.  We need this to reliably go from color back to color name and

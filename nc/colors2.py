@@ -20,6 +20,8 @@ class Colors:
         for module in reversed(modules):
             self._add_module(module)
 
+        self._modules = modules
+
     def to_color(self, c):
         """Try to coerce the argument into an rgb color"""
         try:
@@ -30,7 +32,7 @@ class Colors:
     def to_string(self, c):
         """Convert a tuple to a string name"""
         try:
-            return self._to_name(c)
+            return self._to_name[c]
         except Exception:
             return str(c)
 

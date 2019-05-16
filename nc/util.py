@@ -12,6 +12,10 @@ def to_rgb(color):
     return r, g, b
 
 
+def to_int(r, g, b):
+    return 0x10000 * r + 0x100 * g + b
+
+
 def from_hex(s):
     for prefix in '0x', '#':
         if s.startswith(prefix):
