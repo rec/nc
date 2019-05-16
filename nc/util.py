@@ -12,14 +12,12 @@ def to_rgb(color):
     return r, g, b
 
 
-def to_int(r, g, b):
-    return 0x10000 * r + 0x100 * g + b
-
-
 def from_hex(s):
+    s = s.strip()
     for prefix in '0x', '#':
         if s.startswith(prefix):
-            return int(s[len(prefix) :], 16)
+            p = s[len(prefix) :].lstrip('0')
+            return int(p or '0', 16)
 
 
 def from_int(s):
@@ -33,16 +31,14 @@ def canonical_name(name):
 
 def to_color(c):
     """Try to coerce the argument into an rgb color"""
-    if isinstance(c, numbers.Number):
+    if not isinstance(c, bool) and isinstance(c, numbers.Number):
         return c, c, c
-    if not c:
-        raise ValueError('Cannot create color from empty "%s"' % c)
     if isinstance(c, tuple):
         return c
     if isinstance(c, list):
         return tuple(c)
     if not isinstance(c, str):
-        raise ValueError('Do not understand color type %s' % c)
+        raise TypeError('Do not understand color type %s' % c)
 
     if ',' in c:
         c = c.lstrip('(').rstrip(')').lstrip('[').rstrip(']')
@@ -52,9 +48,4 @@ def to_color(c):
     if h is not None:
         return to_rgb(h)
 
-    try:
-        n = int(c)
-    except Exception:
-        raise ValueError('Do not understand color name %s' % c)
-
-    return n, n, n
+    raise ValueError('Do not understand color %s' % h)
