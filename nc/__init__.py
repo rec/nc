@@ -1,4 +1,5 @@
 from . import _colors
+from . import _util  # noqa: F401
 import sys
 
 _DEFAULT_SCHEMES = 'html', 'pwg', 'juce', 'wikipedia'

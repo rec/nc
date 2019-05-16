@@ -17,5 +17,4 @@ install:
 
 script:
 - flake8 nc test
-# - mypy nc test  # Doesn't work in Python 3.4
 - pytest test

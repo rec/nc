@@ -37,7 +37,6 @@ class ColorsTest(unittest.TestCase):
         all_colors = sorted(colors)
         self.assertEqual(1353, len(all_colors))
         actual = all_colors[:4] + all_colors[-4:]
-        print(actual)
         expected = [
             ('Absolute Zero', (0, 72, 186)),
             ('Acid green', (176, 191, 26)),
@@ -50,3 +49,52 @@ class ColorsTest(unittest.TestCase):
         ]
 
         self.assertEqual(actual, expected)
+
+    def test_contains(self):
+        for i in 'red', 'white', 'verdigris', 'vegas-gold':
+            self.assertIn(i, nc.COLORS)
+            nc.COLORS[i]
+
+        for i in 'rod', 'wart', 'verd', 'vegas-mud':
+            self.assertNotIn(i, nc.COLORS)
+            with self.assertRaises(KeyError):
+                nc.COLORS[i]
+
+    def test_errors(self):
+        with self.assertRaises(AttributeError):
+            nc.COLORS.red = 0, 0, 0
+
+        with self.assertRaises(KeyError):
+            nc.COLORS['red'] = 0, 0, 0
+
+    def test_dict_module(self):
+        cdict = {'red': (0x80, 0, 0), 'grey': (0x80, 0x80, 0x80)}
+        with self.assertRaises(AttributeError):
+            nc.Colors({'COLOURS': cdict})
+        colors = nc.Colors({'COLORS': cdict})
+        self.assertIn('grey', colors)
+        self.assertIn('gray', colors)
+
+        colors = nc.Colors({'COLORS': cdict}, gray_munging=False)
+        self.assertIn('grey', colors)
+        self.assertNotIn('gray', colors)
+
+    def test_import_XXX(self):
+        colors = nc.Colors('test.nc._colors_test')
+        self.assertEqual(colors.red, (0xFF, 0, 0))
+        self.assertEqual(colors.rad, (0xFF, 0, 0))
+        self.assertEqual(colors.to_string(colors.groan), 'Green')
+        self.assertEqual(colors.to_string(colors.Blaue), 'Blue')
+        self.assertEqual(colors.to_string(colors.rad), 'Red')
+
+
+COLORS = {
+    'Red': (0xFF, 0, 0),
+    'Rad': (0xFF, 0, 0),
+    'Groan': (0, 0xFF, 0),
+    'Green': (0, 0xFF, 0),
+    'Blue': (0, 0, 0xFF),
+    'Blaue': (0, 0, 0xFF),
+}
+
+PRIMARY_NAMES = {'Red'}

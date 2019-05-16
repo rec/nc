@@ -43,9 +43,7 @@ class Colors:
             raise KeyError(name)
 
     def __setitem__(self, name, rgb):
-        if not (isinstance(rgb, tuple) and len(rgb) == 3):
-            raise ValueError('Bad color %s' % rgb)
-        self._to_rgb[_util.canonical_name(name)] = rgb
+        raise KeyError(name)
 
     def __getattr__(self, name):
         try:
@@ -54,10 +52,9 @@ class Colors:
             raise AttributeError(name)
 
     def __setattr__(self, name, value):
-        if name.startswith('_'):
-            super().__setattr__(name, value)
-        else:
-            self[name] = value
+        if not name.startswith('_'):
+            raise AttributeError(name)
+        super().__setattr__(name, value)
 
     def __contains__(self, x):
         """Return true if this string name appears in the table canonically"""
@@ -80,7 +77,7 @@ class Colors:
 
         primary_names = set(module.get('PRIMARY_NAMES') or ())
         for name, color in colors.items():
-            rgb = _util.to_rgb(color)
+            rgb = color if isinstance(color, tuple) else _util.to_rgb(color)
             to_names.setdefault(rgb, []).append(name)
             self._items[name] = rgb
             cname = _util.canonical_name(name)
