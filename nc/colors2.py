@@ -84,11 +84,12 @@ class Colors:
         if not isinstance(module, dict):
             module = module.__dict__
 
-        mcolors = module.get('COLORS', None)
-        if mcolors is None:
+        colors = module.get('COLORS', None)
+        if colors is None:
             raise AttributeError('No COLORS %s' % original_module)
 
-        for name, color in mcolors.items():
+        primary_names = set(module.get('PRIMARY_NAMES') or ())
+        for name, color in colors.items():
             rgb = util.to_rgb(color)
             to_names.setdefault(rgb, []).append(name)
             self._items[name] = rgb
@@ -97,8 +98,6 @@ class Colors:
             if self._gray_munging:
                 self._to_rgb[cname.replace('gray', 'grey')] = rgb
                 self._to_rgb[cname.replace('grey', 'gray')] = rgb
-
-        primary_names = set(getattr(module, 'PRIMARY_NAMES', ()))
 
         def best_name(names):
             names.sort(key=lambda n: (len(n), n.lower()))

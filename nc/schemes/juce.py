@@ -495,7 +495,7 @@ COLORS = {
     'Yellow': 0xFFFF00,
 }
 
-NEW_PRIMARY_NAMES = {
+PRIMARY_NAMES = {
     'Black',
     'Cyan',
     'Dark blue',

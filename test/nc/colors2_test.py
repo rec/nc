@@ -26,4 +26,4 @@ class ColorsTest(unittest.TestCase):
                 dupes.remove(primary)
                 primaries.append(sorted(dupes)[0])
 
-        self.assertEqual(sorted(primaries), sorted(juce.NEW_PRIMARY_NAMES))
+        self.assertEqual(sorted(primaries), [])
