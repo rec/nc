@@ -3,7 +3,7 @@
 [run]
 
 branch = True
-source = timedata
+source =  nc/colors2.py
 
 [report]
 

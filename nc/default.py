@@ -1,11 +1,10 @@
-from .colors import COLORS, COLORS_255  # noqa: F401
-from .colors2 import Colors as Colors2
+from .colors import Colors as _Colors
 
-_DEFAULT_SCHEMES = 'html', 'pwg', 'juce'
+_DEFAULT_SCHEMES = 'html', 'pwg', 'juce', 'wikipedia'
 
 
 class _NC:
-    Colors = Colors2
+    Colors = _Colors
 
     @property  # noqa: F811
     def COLORS(self):
