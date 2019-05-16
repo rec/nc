@@ -1,5 +1,5 @@
 from nc import COLORS
-from nc.util import to_color
+from nc._util import to_color
 import unittest
 
 

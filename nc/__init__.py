@@ -1,11 +1,11 @@
-from . import colors
+from . import _colors
 import sys
 
 _DEFAULT_SCHEMES = 'html', 'pwg', 'juce', 'wikipedia'
 
 
 class _NC:
-    Colors = colors.Colors
+    Colors = _colors.Colors
     _COLORS = None
 
     @property  # noqa: F811

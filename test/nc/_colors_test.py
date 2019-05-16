@@ -1,4 +1,4 @@
-from nc import util
+from nc import _util
 from nc.schemes import juce
 import nc
 import unittest
@@ -23,7 +23,7 @@ class ColorsTest(unittest.TestCase):
             rgb = colors[secondary]
             primary = colors.to_string(rgb)
             if primary == secondary:
-                int_color = util.to_int(*rgb)
+                int_color = _util.to_int(*rgb)
                 dupes = set(
                     k for k, v in juce.COLORS.items() if v == int_color
                 )
