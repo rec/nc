@@ -1,4 +1,4 @@
 nc
 ====
 
-🚥 Extensible color names in Python 🚥
+🎨 Extensible color names in Python 🎨
