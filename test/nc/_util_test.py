@@ -4,16 +4,15 @@ import unittest
 
 
 class ToColorTest(unittest.TestCase):
+    def test_empty(self):
+        for n in None, False, {}, set(), '':
+            self.assertEqual(to_color(n), COLORS.Black)
+
     def test_numbers(self):
         self.assertEqual(to_color(0), COLORS.Black)
-        self.assertEqual(to_color(255), COLORS.White)
+        self.assertEqual(to_color(0xFFFFFF), COLORS.White)
 
     def test_fail(self):
-        for n in None, False, {}, set():
-            with self.assertRaises(TypeError):
-                to_color(n)
-        with self.assertRaises(ValueError):
-            to_color('')
         with self.assertRaises(ValueError):
             to_color('rod')
 
@@ -27,8 +26,11 @@ class ToColorTest(unittest.TestCase):
 
     def test_commas(self):
         self.assertEqual(to_color('(0, 0, 0)'), COLORS.Black)
-        self.assertEqual(to_color('[255, 255, 255)'), COLORS.White)
-        self.assertEqual(to_color('[0xFF, 0xFF, 0xFF)'), COLORS.White)
+        self.assertEqual(to_color('[255, 255, 255]'), COLORS.White)
+        with self.assertRaises(ValueError):
+            to_color('[255, 255, 255)')
+        with self.assertRaises(ValueError):
+            to_color('(255, 255, 255]')
         with self.assertRaises(ValueError):
             to_color(']255, 255, 255[')
 

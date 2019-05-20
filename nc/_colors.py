@@ -1,5 +1,8 @@
 from . import _util
 import importlib
+import string
+
+_ALLOWED = set(string.ascii_letters + string.digits)
 
 
 class Colors:
@@ -38,7 +41,7 @@ class Colors:
     def __getitem__(self, name):
         """Try to convert  string item into a color"""
         try:
-            return self._to_rgb[_util.canonical_name(name)]
+            return self._to_rgb[self.canonical_name(name)]
         except KeyError:
             raise KeyError(name)
 
@@ -58,7 +61,7 @@ class Colors:
 
     def __contains__(self, x):
         """Return true if this string name appears in the table canonically"""
-        return _util.canonical_name(x) in self._to_rgb
+        return self.canonical_name(x) in self._to_rgb
 
     def _add_module(self, module):
         original_module = module
@@ -79,12 +82,9 @@ class Colors:
         for name, color in colors.items():
             rgb = color if isinstance(color, tuple) else _util.to_rgb(color)
             to_names.setdefault(rgb, []).append(name)
-            self._items[name] = rgb
-            cname = _util.canonical_name(name)
-            self._to_rgb[cname] = rgb
-            if self._gray_munging:
-                self._to_rgb[cname.replace('gray', 'grey')] = rgb
-                self._to_rgb[cname.replace('grey', 'gray')] = rgb
+
+            cname = self.canonical_name(name)
+            self._items[name] = self._to_rgb[cname] = rgb
 
         def best_name(names):
             names.sort(key=lambda n: (len(n), n.lower()))
@@ -93,6 +93,12 @@ class Colors:
 
         best_names = {k: best_name(v) for k, v in to_names.items()}
         self._to_name.update(best_names)
+
+    def canonical_name(self, name):
+        name = name.lower()
+        if self._gray_munging:
+            name = name.replace('grey', 'gray')
+        return ''.join(i for i in name if i in _ALLOWED)
 
 
 """Some colors have multiple names; a best name needs to be chosen.
