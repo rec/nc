@@ -69,23 +69,29 @@ class ColorsTest(unittest.TestCase):
 
     def test_dict_module(self):
         cdict = {'red': (0x80, 0, 0), 'grey': (0x80, 0x80, 0x80)}
-        with self.assertRaises(AttributeError):
+        with self.assertRaises(TypeError):
             nc.Colors({'COLOURS': cdict})
         colors = nc.Colors({'COLORS': cdict})
         self.assertIn('grey', colors)
         self.assertIn('gray', colors)
 
-        colors = nc.Colors({'COLORS': cdict}, gray_munging=False)
+        colors = nc.Colors({'COLORS': cdict}, canonicalize_gray=False)
         self.assertIn('grey', colors)
         self.assertNotIn('gray', colors)
 
-    def test_import_XXX(self):
+    def test_import(self):
         colors = nc.Colors('test.nc._colors_test')
         self.assertEqual(colors.red, (0xFF, 0, 0))
         self.assertEqual(colors.rad, (0xFF, 0, 0))
         self.assertEqual(colors.to_string(colors.groan), 'Green')
         self.assertEqual(colors.to_string(colors.Blaue), 'Blue')
         self.assertEqual(colors.to_string(colors.rad), 'Red')
+
+    def test_addition(self):
+        c1 = nc.Colors('test.nc._colors_test')
+        self.assertEqual(c1, c1)
+        self.assertEqual(c1, c1 + c1)
+        # c2 = c1 +
 
 
 COLORS = {

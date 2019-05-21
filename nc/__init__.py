@@ -2,7 +2,7 @@ from . import _colors
 from . import _util  # noqa: F401
 import sys
 
-_DEFAULT_SCHEMES = 'html', 'pwg', 'juce', 'wikipedia'
+_DEFAULT_SCHEMES = 'wikipedia', 'juce', 'pwg', 'html'
 
 
 class _NC:
