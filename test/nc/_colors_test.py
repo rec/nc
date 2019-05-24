@@ -37,6 +37,7 @@ class ColorsTest(unittest.TestCase):
         all_colors = sorted(colors)
         self.assertEqual(1353, len(all_colors))
         actual = all_colors[:4] + all_colors[-4:]
+        actual = [(a, colors[a]) for a in actual]
         expected = [
             ('Absolute Zero', (0, 72, 186)),
             ('Acid green', (176, 191, 26)),
@@ -69,9 +70,11 @@ class ColorsTest(unittest.TestCase):
 
     def test_dict_module(self):
         cdict = {'red': (0x80, 0, 0), 'grey': (0x80, 0x80, 0x80)}
-        with self.assertRaises(TypeError):
-            nc.Colors({'COLOURS': cdict})
         colors = nc.Colors({'COLORS': cdict})
+        with self.assertRaises(ValueError):
+            nc.Colors({'COLOURS': cdict})
+
+        print(list(colors))
         self.assertIn('grey', colors)
         self.assertIn('gray', colors)
 
@@ -91,7 +94,10 @@ class ColorsTest(unittest.TestCase):
         c1 = nc.Colors('test.nc._colors_test')
         self.assertEqual(c1, c1)
         self.assertEqual(c1, c1 + c1)
-        # c2 = c1 +
+        c2 = c1 + {'Red': (0x80, 0, 0)}
+        self.assertEqual(c2.red, (0x80, 0, 0))
+        self.assertEqual(c2, COLORS + nc.Colors({'Red': (0x80, 0, 0)}))
+        self.assertNotEqual({'Red': (0x80, 0, 0)} + c1, c2)
 
 
 COLORS = {

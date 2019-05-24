@@ -38,6 +38,7 @@ def _to_color(c):
     if isinstance(c, list):
         return tuple(c)
 
+    assert isinstance(c, str)
     if ',' in c:
         if c.startswith('(') and c.endswith(')'):
             c = c[1:-1]
