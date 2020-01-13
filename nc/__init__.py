@@ -5,7 +5,7 @@ import sys
 _DEFAULT_SCHEMES = 'wikipedia', 'juce', 'pwg', 'html'
 
 
-class _NC:
+class NC:
     Colors = _colors.Colors
     _COLORS = None
 
@@ -17,7 +17,15 @@ class _NC:
         return self._COLORS
 
     def __getattr__(self, name):
-        return globals()[name]
+        try:
+            return getattr(self.COLORS, name)
+        except Exception:
+            pass
+        try:
+            return globals()[name]
+        except KeyError:
+            pass
+        raise AttributeError(name)
 
 
-sys.modules[__name__] = _NC()
+sys.modules[__name__] = NC()

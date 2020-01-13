@@ -5,6 +5,14 @@ import unittest
 
 
 class ColorsTest(unittest.TestCase):
+    def test_namespace(self):
+        # colors from nc.COLORS appear in the nc. namespace
+        self.assertEqual(nc.red, (0xFF, 0, 0))
+        self.assertEqual(nc.to_string(nc.orange), 'Orange')
+        self.assertEqual(nc.BurntSienna, (0x8A, 0x36, 0x0F))
+        with self.assertRaises(AttributeError):
+            nc.rod
+
     def test_colors(self):
         colors = nc.COLORS
         self.assertEqual(colors.red, (0xFF, 0, 0))
@@ -15,6 +23,8 @@ class ColorsTest(unittest.TestCase):
         self.assertEqual(colors.to_string((0x8A, 0x36, 0x0F)), 'Burnt sienna')
         with self.assertRaises(ValueError):
             colors.to_color('rod')
+        with self.assertRaises(AttributeError):
+            colors.rod
 
     def test_secondaries(self):
         colors = nc.Colors('juce')
