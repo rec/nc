@@ -1,4 +1,4 @@
-# This file was automatically generated on 2019-05-13T19:27:13.821851
+# This file was automatically generated on 2020-01-13T19:40:15.347135
 # by script /code/nc/extract_nc/wikipedia.py
 # from the Wikipedia English color pages
 
@@ -336,7 +336,7 @@ COLORS = {
     'Fuchsia purple': 0xCC397B,
     'Fuchsia rose': 0xC74375,
     'Fulvous': 0xE48400,
-    'Fuzzy Wuzzy': 0xCC6666,
+    'Fuzzy Wuzzy': 0x87421F,
     'Gainsboro': 0xDCDCDC,
     'Gamboge': 0xE49B0F,
     'Generic viridian': 0x007F66,
@@ -486,7 +486,7 @@ COLORS = {
     'Magenta (process)': 0xFF0090,
     'Magenta haze': 0x9F4576,
     'Magic mint': 0xAAF0D1,
-    'Magnolia': 0xF8F4FF,
+    'Magnolia': 0xF2E8D7,
     'Mahogany': 0xC04000,
     'Maize': 0xFBEC5D,
     'Maize (Crayola)': 0xF2C649,
@@ -704,7 +704,7 @@ COLORS = {
     'Raspberry': 0xE30B5D,
     'Raspberry glace': 0x915F6D,
     'Raspberry rose': 0xB3446C,
-    'Raw Sienna': 0xD68A59,
+    'Raw sienna': 0xD68A59,
     'Raw umber': 0x826644,
     'Razzle dazzle rose': 0xFF33CC,
     'Razzmatazz': 0xE3256B,
@@ -870,8 +870,9 @@ COLORS = {
     'Timberwolf': 0xDBD7D2,
     'Titanium yellow': 0xEEE600,
     'Tomato': 0xFF6347,
-    'Tropical rain forest': 0x00755E,
+    'Tropical rainforest': 0x00755E,
     'True Blue': 0x2D68C4,
+    'Trypan Blue': 0x1C05B3,
     'Tufts blue': 0x3E8EDE,
     'Tumbleweed': 0xDEAA88,
     'Turquoise': 0x40E0D0,
@@ -938,6 +939,9 @@ COLORS = {
     'Wintergreen Dream': 0x56887D,
     'Wisteria': 0xC9A0DC,
     'Wood brown': 0xC19A6B,
+    'Xanthic': 0xEEED09,
+    'Xanadu': 0x738678,
+    'Xiketic': 0x0C020F,
     'Yale Blue': 0x0F4D92,
     'Yellow': 0xFFFF00,
     'Yellow (Crayola)': 0xFCE883,

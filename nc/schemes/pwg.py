@@ -1,4 +1,4 @@
-# This file was automatically generated on 2019-05-13T19:27:19.006391
+# This file was automatically generated on 2020-01-13T19:40:18.877479
 # by script /code/nc/extract_nc/wikipedia.py
 # from PWG 5101.1 colors
 
