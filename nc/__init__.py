@@ -17,10 +17,7 @@ class _NC:
         return self._COLORS
 
     def __getattr__(self, name):
-        try:
-            return super().__getattribute__(name)
-        except Exception:
-            return globals()[name]
+        return globals()[name]
 
 
 sys.modules[__name__] = _NC()
