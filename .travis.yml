@@ -4,6 +4,11 @@ python:
 - '3.5'
 - '3.6'
 
+branches:
+  only:
+  - master
+  - /^_gitz_stripe_.*$/
+
 matrix:
   include:
     - python: 3.7
