@@ -21,8 +21,12 @@ class ColorsTest(unittest.TestCase):
         self.assertEqual(colors.to_string((0, 0, 0)), 'Black')
         self.assertEqual(colors.BurntSienna, (0x8A, 0x36, 0x0F))
         self.assertEqual(colors.to_string((0x8A, 0x36, 0x0F)), 'Burnt sienna')
-        with self.assertRaises(ValueError):
-            colors.to_color('rod')
+
+    def test_error(self):
+        colors = nc.COLORS
+        colors['red']
+        with self.assertRaises(KeyError):
+            colors['rod']
         with self.assertRaises(AttributeError):
             colors.rod
 

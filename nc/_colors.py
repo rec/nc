@@ -1,12 +1,28 @@
 from . import _util
+import collections
 import importlib
 import string
 
 _ALLOWED = set(string.ascii_letters + string.digits)
+_COLOR_BASE_CLASS = collections.namedtuple('Color', 'r g b')
 
 
 class Colors:
     def __init__(self, *schemes, canonicalize_gray=True):
+        class Color(_COLOR_BASE_CLASS):
+            COLORS = self
+
+            def __str__(self):
+                return self.COLORS.to_string(self)
+
+            def __repr__(self):
+                s = str(self)
+                if ',' not in s:
+                    s = "('%s')"
+                return __name__ + s
+
+        super().__setattr__('Color', Color)
+
         self._canonicalize_gray = bool(canonicalize_gray)
         self._schemes = schemes
         self._name_to_rgb = {}
@@ -24,7 +40,7 @@ class Colors:
         try:
             return self[c]
         except Exception:
-            return _util.to_color(c)
+            return self.Color(_util.to_color(c))
 
     def to_string(self, c):
         """Convert a tuple to a string name"""
@@ -37,7 +53,7 @@ class Colors:
         return self._name_to_rgb.items()
 
     def __getitem__(self, name):
-        """Try to convert  string item into a color"""
+        """Try to convert string item into a color"""
         canonical = self._canonical_name(name)
         rgb = self._canonical_to_rgb.get(canonical)
         if rgb is None:
@@ -105,7 +121,7 @@ class Colors:
             colors = scheme
             primary_names = ()
 
-        colors = {k: _util.to_color(v) for k, v in colors.items()}
+        colors = {k: self.Color(*_util.to_color(v)) for k, v in colors.items()}
         self._name_to_rgb.update(colors)
 
         def best_name(names):
