@@ -7,6 +7,13 @@ class ToColorTest(unittest.TestCase):
     def test_empty(self):
         self.assertEqual(Color.make(), COLORS.Black)
 
+    def test_as_int(self):
+        self.assertEqual(COLORS.Black.as_int(), 0)
+        self.assertEqual(COLORS.red.as_int(), 0xFF0000)
+        self.assertEqual(tuple(COLORS.green), (0, 255, 0))
+        self.assertEqual(COLORS.green.as_int(), 0x00FF00)
+        self.assertEqual(COLORS.teal.as_int(), 0x008080)
+
     def test_numbers(self):
         self.assertEqual(Color.make(0), COLORS.Black)
         self.assertEqual(Color.make(0xFFFFFF), COLORS.White)

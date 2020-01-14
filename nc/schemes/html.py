@@ -10,7 +10,7 @@ COLORS = {
     'Yellow': 0xFFFF00,
     'Olive': 0x808000,
     'Lime': 0x00FF00,
-    'Green': 0x008000,
+    'Green': 0x00FF00,
     'Aqua': 0x00FFFF,
     'Teal': 0x008080,
     'Blue': 0x0000FF,

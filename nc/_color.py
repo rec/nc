@@ -18,7 +18,7 @@ class Color(COLOR_TUPLE):
         return 'Color' + name
 
     def as_int(self):
-        return self.red * 0x10000 + self.green * 0x100 + self.blue
+        return self.r * 0x10000 + self.g * 0x100 + self.b
 
     @classmethod
     def make(cls, *args):

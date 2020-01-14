@@ -1,7 +1,7 @@
 from . import _colors
 import sys
 
-_DEFAULT_SCHEMES = 'wikipedia', 'juce', 'pwg', 'html'
+_DEFAULT_SCHEMES = 'wikipedia', 'juce', 'x11'
 
 
 class NamedColors:

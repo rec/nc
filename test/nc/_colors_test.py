@@ -48,7 +48,7 @@ class ColorsTest(unittest.TestCase):
 
     def test_all_named_colors(self):
         all_colors = sorted(nc)
-        self.assertEqual(1356, len(all_colors))
+        self.assertEqual(1409, len(all_colors))
         actual = all_colors[:4] + all_colors[-4:]
         actual = [(a, nc[a]) for a in actual]
         expected = [
