@@ -1,25 +1,14 @@
-from . import _util
-import collections
+from . import _color
 import importlib
 import string
 
 _ALLOWED = set(string.ascii_letters + string.digits)
-_COLOR_BASE_CLASS = collections.namedtuple('Color', 'r g b')
 
 
 class Colors:
-    def __init__(self, *schemes, canonicalize_gray=True):
-        class Color(_COLOR_BASE_CLASS):
+    def __init__(self, *schemes, canonicalize_gray=True, default='black'):
+        class Color(_color.Color):
             COLORS = self
-
-            def __str__(self):
-                return self.COLORS.to_string(self)
-
-            def __repr__(self):
-                s = str(self)
-                if ',' not in s:
-                    s = "('%s')"
-                return __name__ + s
 
         super().__setattr__('Color', Color)
 
@@ -34,31 +23,28 @@ class Colors:
         self._canonical_to_rgb = {
             self._canonical_name(k): v for k, v in self._name_to_rgb.items()
         }
+        self._default = self.get(str(default)) or next(iter(self._rgb_to_name))
 
-    def to_color(self, c):
-        """Try to coerce the argument into an rgb color"""
+    def get(self, key, default=None):
         try:
-            return self[c]
-        except Exception:
-            return self.Color(_util.to_color(c))
-
-    def to_string(self, c):
-        """Convert a tuple to a string name"""
-        try:
-            return self._rgb_to_name[c]
-        except Exception:
-            return str(c)
+            return self[key]
+        except KeyError:
+            return default
 
     def items(self):
         return self._name_to_rgb.items()
 
+    def __call__(self, *args, **kwds):
+        return self.Color.make(*args, **kwds)
+
     def __getitem__(self, name):
         """Try to convert string item into a color"""
         canonical = self._canonical_name(name)
-        rgb = self._canonical_to_rgb.get(canonical)
-        if rgb is None:
-            raise KeyError(name)
-        return rgb
+        try:
+            return self._canonical_to_rgb[canonical]
+        except KeyError:
+            pass
+        raise KeyError(name)
 
     def __setitem__(self, name, rgb):
         raise KeyError(name)
@@ -93,17 +79,16 @@ class Colors:
         return not (self == x)
 
     def __add__(self, x):
-        if not isinstance(x, __class__):
-            x = __class__(x, canonicalize_gray=self._canonicalize_gray)
-        elif self._canonicalize_gray != x._canonicalize_gray:
-            raise ValueError('canonicalize_gray must be the same')
-        return __class__(
-            *(self._schemes + x._schemes),
-            canonicalize_gray=self._canonicalize_gray,
-        )
+        cg, d = self._canonicalize_gray, self._default
+        c = x if isinstance(x, __class__) else __class__(x)
+        schemes = self._schemes + c._schemes
+        return __class__(*schemes, canonicalize_gray=cg, default=d)
 
     def __radd__(self, x):
-        return __class__(x, canonicalize_gray=self._canonicalize_gray) + self
+        return __class__(
+            x,
+            canonicalize_gray=self._canonicalize_gray,
+            default=self._default) + self
 
     def _add_scheme(self, scheme):
         if isinstance(scheme, str):
@@ -121,7 +106,7 @@ class Colors:
             colors = scheme
             primary_names = ()
 
-        colors = {k: self.Color(*_util.to_color(v)) for k, v in colors.items()}
+        colors = {k: self.Color.make(v) for k, v in colors.items()}
         self._name_to_rgb.update(colors)
 
         def best_name(names):

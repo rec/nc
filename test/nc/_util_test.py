@@ -1,39 +1,38 @@
 from nc import COLORS
-from nc._util import to_color
+from nc import Color
 import unittest
 
 
 class ToColorTest(unittest.TestCase):
     def test_empty(self):
-        for n in None, False, {}, set(), '':
-            self.assertEqual(to_color(n), COLORS.Black)
+        self.assertEqual(Color.make(), COLORS.Black)
 
     def test_numbers(self):
-        self.assertEqual(to_color(0), COLORS.Black)
-        self.assertEqual(to_color(0xFFFFFF), COLORS.White)
+        self.assertEqual(Color.make(0), COLORS.Black)
+        self.assertEqual(Color.make(0xFFFFFF), COLORS.White)
 
     def test_fail(self):
         with self.assertRaises(ValueError):
-            to_color('rod')
+            Color.make('rod')
 
     def test_tuple(self):
-        self.assertEqual(to_color(COLORS.Black), COLORS.Black)
-        self.assertEqual(to_color(COLORS.Yellow), COLORS.Yellow)
+        self.assertEqual(Color.make(COLORS.Black), COLORS.Black)
+        self.assertEqual(Color.make(COLORS.Yellow), COLORS.Yellow)
 
     def test_list(self):
-        self.assertEqual(to_color([0, 0, 0]), COLORS.Black)
-        self.assertEqual(to_color([255, 255, 255]), COLORS.White)
+        self.assertEqual(Color.make([0, 0, 0]), COLORS.Black)
+        self.assertEqual(Color.make([255, 255, 255]), COLORS.White)
 
     def test_commas(self):
-        self.assertEqual(to_color('(0, 0, 0)'), COLORS.Black)
-        self.assertEqual(to_color('[255, 255, 255]'), COLORS.White)
+        self.assertEqual(Color.make('(0, 0, 0)'), COLORS.Black)
+        self.assertEqual(Color.make('[255, 255, 255]'), COLORS.White)
         with self.assertRaises(ValueError):
-            to_color('[255, 255, 255)')
+            Color.make('[255, 255, 255)')
         with self.assertRaises(ValueError):
-            to_color('(255, 255, 255]')
+            Color.make('(255, 255, 255]')
         with self.assertRaises(ValueError):
-            to_color(']255, 255, 255[')
+            Color.make(']255, 255, 255[')
 
     def test_hex(self):
-        self.assertEqual(to_color('0x00000'), COLORS.Black)
-        self.assertEqual(to_color('#FFFFFF'), COLORS.White)
+        self.assertEqual(Color.make('0x00000'), COLORS.Black)
+        self.assertEqual(Color.make('#FFFFFF'), COLORS.White)

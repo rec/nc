@@ -1,4 +1,3 @@
-from nc import _util
 from nc.schemes import juce
 import nc
 import unittest
@@ -8,50 +7,50 @@ class ColorsTest(unittest.TestCase):
     def test_namespace(self):
         # colors from nc.COLORS appear in the nc. namespace
         self.assertEqual(nc.red, (0xFF, 0, 0))
-        self.assertEqual(nc.to_string(nc.orange), 'Orange')
+        self.assertEqual(str(nc.orange), 'Orange')
         self.assertEqual(nc.BurntSienna, (0x8A, 0x36, 0x0F))
         with self.assertRaises(AttributeError):
             nc.rod
 
     def test_colors(self):
         colors = nc.COLORS
+        Color = colors.Color
         self.assertEqual(colors.red, (0xFF, 0, 0))
-        self.assertEqual(colors.to_string(colors.red), 'Red')
-        self.assertEqual(colors.to_string((0xFE, 0, 0)), '(254, 0, 0)')
-        self.assertEqual(colors.to_string((0, 0, 0)), 'Black')
+        self.assertEqual(str(colors.red), 'Red')
+        self.assertEqual(str(Color(0xFE, 0, 0)), '(254, 0, 0)')
+        self.assertEqual(str(Color(0, 0, 0)), 'Black')
         self.assertEqual(colors.BurntSienna, (0x8A, 0x36, 0x0F))
-        self.assertEqual(colors.to_string((0x8A, 0x36, 0x0F)), 'Burnt sienna')
+        self.assertEqual(str(colors.BurntSienna), 'Burnt sienna')
 
     def test_error(self):
-        colors = nc.COLORS
-        colors['red']
+        nc['red']
         with self.assertRaises(KeyError):
-            colors['rod']
+            nc['rod']
         with self.assertRaises(AttributeError):
-            colors.rod
+            nc.rod
+
+    def test_bug(self):
+        self.assertEqual(nc.red, nc('red'))
 
     def test_secondaries(self):
         colors = nc.Colors('juce')
         primaries = []
         for secondary in juce.SECONDARY_NAMES:
             rgb = colors[secondary]
-            primary = colors.to_string(rgb)
+            primary = str(rgb)
             if primary == secondary:
-                int_color = _util.to_int(*rgb)
-                dupes = set(
-                    k for k, v in juce.COLORS.items() if v == int_color
-                )
+                i_color = rgb.as_int()
+                dupes = set(k for k, v in juce.COLORS.items() if v == i_color)
                 dupes.remove(primary)
                 primaries.append(sorted(dupes)[0])
 
         self.assertEqual(sorted(primaries), [])
 
     def test_all_named_colors(self):
-        colors = nc.COLORS
-        all_colors = sorted(colors)
+        all_colors = sorted(nc)
         self.assertEqual(1356, len(all_colors))
         actual = all_colors[:4] + all_colors[-4:]
-        actual = [(a, colors[a]) for a in actual]
+        actual = [(a, nc[a]) for a in actual]
         expected = [
             ('Absolute Zero', (0, 72, 186)),
             ('Acid green', (176, 191, 26)),
@@ -100,9 +99,9 @@ class ColorsTest(unittest.TestCase):
         colors = nc.Colors('test.nc._colors_test')
         self.assertEqual(colors.red, (0xFF, 0, 0))
         self.assertEqual(colors.rad, (0xFF, 0, 0))
-        self.assertEqual(colors.to_string(colors.groan), 'Green')
-        self.assertEqual(colors.to_string(colors.Blaue), 'Blue')
-        self.assertEqual(colors.to_string(colors.rad), 'Red')
+        self.assertEqual(str(colors.groan), 'Green')
+        self.assertEqual(str(colors.Blaue), 'Blue')
+        self.assertEqual(str(colors.rad), 'Red')
 
     def test_addition(self):
         c1 = nc.Colors('test.nc._colors_test')

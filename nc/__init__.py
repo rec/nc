@@ -1,11 +1,10 @@
 from . import _colors
-from . import _util  # noqa: F401
 import sys
 
 _DEFAULT_SCHEMES = 'wikipedia', 'juce', 'pwg', 'html'
 
 
-class NC:
+class NamedColors:
     Colors = _colors.Colors
     _COLORS = None
 
@@ -18,14 +17,31 @@ class NC:
 
     def __getattr__(self, name):
         try:
-            return getattr(self.COLORS, name)
-        except Exception:
+            return super().__getattribute__(name)
+        except AttributeError:
             pass
         try:
             return globals()[name]
         except KeyError:
             pass
-        raise AttributeError(name)
+        c = self.COLORS
+        return getattr(c, name)
+
+    def __getitem__(self, name):
+        return self.COLORS[name]
+
+    def __call__(self, *args, **kwds):
+        return self.COLORS(*args, **kwds)
+
+    def __contains__(self, x):
+        return x in self.COLORSz
+
+    def __len__(self):
+        return len(self.COLORS)
+
+    def __iter__(self):
+        return iter(self.COLORS)
 
 
-sys.modules[__name__] = NC()
+sys.modules[__name__] = NamedColors()
+NamedColors.__doc__ = """NamedColors"""
