@@ -17,7 +17,8 @@ class Color(COLOR_TUPLE):
             return "Color('%s')" % name
         return 'Color' + name
 
-    def as_int(self):
+    @property
+    def rgb(self):
         return self.r * 0x10000 + self.g * 0x100 + self.b
 
     @classmethod
