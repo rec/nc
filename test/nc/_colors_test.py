@@ -13,6 +13,7 @@ class ColorsTest(unittest.TestCase):
         self.assertEqual(str(Color(0, 0, 0)), 'Black')
         self.assertEqual(COLORS.BurntSienna, (0x8A, 0x36, 0x0F))
         self.assertEqual(str(COLORS.BurntSienna), 'Burnt sienna')
+        self.assertEqual(str(COLORS.green), 'Green')
 
     def test_error(self):
         COLORS['red']

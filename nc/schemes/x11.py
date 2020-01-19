@@ -149,3 +149,7 @@ COLORS = {
     'Yellow': 0xFFFF00,
     'Yellow Green': 0x9ACD32,
 }
+
+PRIMARY_NAMES = {
+    'Green',
+}
