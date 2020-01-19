@@ -1,39 +1,31 @@
 from nc.schemes import juce
-import nc
+from nc import Color
+from nc import Colors
+from nc import COLORS
 import unittest
 
 
 class ColorsTest(unittest.TestCase):
-    def test_namespace(self):
-        # colors from nc.COLORS appear in the nc. namespace
-        self.assertEqual(nc.red, (0xFF, 0, 0))
-        self.assertEqual(str(nc.orange), 'Orange')
-        self.assertEqual(nc.BurntSienna, (0x8A, 0x36, 0x0F))
-        with self.assertRaises(AttributeError):
-            nc.rod
-
     def test_colors(self):
-        colors = nc.COLORS
-        Color = colors.Color
-        self.assertEqual(colors.red, (0xFF, 0, 0))
-        self.assertEqual(str(colors.red), 'Red')
+        self.assertEqual(COLORS.red, (0xFF, 0, 0))
+        self.assertEqual(str(COLORS.red), 'Red')
         self.assertEqual(str(Color(0xFE, 0, 0)), '(254, 0, 0)')
         self.assertEqual(str(Color(0, 0, 0)), 'Black')
-        self.assertEqual(colors.BurntSienna, (0x8A, 0x36, 0x0F))
-        self.assertEqual(str(colors.BurntSienna), 'Burnt sienna')
+        self.assertEqual(COLORS.BurntSienna, (0x8A, 0x36, 0x0F))
+        self.assertEqual(str(COLORS.BurntSienna), 'Burnt sienna')
 
     def test_error(self):
-        nc['red']
+        COLORS['red']
         with self.assertRaises(KeyError):
-            nc['rod']
+            COLORS['rod']
         with self.assertRaises(AttributeError):
-            nc.rod
+            COLORS.rod
 
     def test_bug(self):
-        self.assertEqual(nc.red, nc('red'))
+        self.assertEqual(COLORS.red, COLORS('red'))
 
     def test_secondaries(self):
-        colors = nc.Colors('juce')
+        colors = Colors('juce')
         primaries = []
         for secondary in juce.SECONDARY_NAMES:
             rgb = colors[secondary]
@@ -47,10 +39,10 @@ class ColorsTest(unittest.TestCase):
         self.assertEqual(sorted(primaries), [])
 
     def test_all_named_colors(self):
-        all_colors = sorted(nc)
+        all_colors = sorted(COLORS)
         self.assertEqual(1409, len(all_colors))
         actual = all_colors[:4] + all_colors[-4:]
-        actual = [(a, nc[a]) for a in actual]
+        actual = [(a, COLORS[a]) for a in actual]
         expected = [
             ('Absolute Zero', (0, 72, 186)),
             ('Acid green', (176, 191, 26)),
@@ -66,17 +58,17 @@ class ColorsTest(unittest.TestCase):
 
     def test_contains(self):
         for i in 'red', 'white', 'verdigris', 'vegas-gold':
-            self.assertIn(i, nc.COLORS)
-            nc.COLORS[i]
+            self.assertIn(i, COLORS)
+            COLORS[i]
 
         for i in 'rod', 'wart', 'verd', 'vegas-mud':
-            self.assertNotIn(i, nc.COLORS)
+            self.assertNotIn(i, COLORS)
             with self.assertRaises(KeyError):
-                nc.COLORS[i]
+                COLORS[i]
 
     def test_errors(self):
         with self.assertRaises(AttributeError):
-            nc.COLORS.red = 0, 0, 0
+            COLORS.red = 0, 0, 0
 
         with self.assertRaises(KeyError):
-            nc.COLORS['red'] = 0, 0, 0
+            COLORS['red'] = 0, 0, 0
