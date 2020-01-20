@@ -34,6 +34,12 @@ class Colors:
     def items(self):
         return self._name_to_rgb.items()
 
+    def values(self):
+        return self._name_to_rgb.values()
+
+    def keys(self):
+        return self._name_to_rgb.keys()
+
     def __call__(self, *args, **kwds):
         return self.Color.make(*args, **kwds)
 
