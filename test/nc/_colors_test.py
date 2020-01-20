@@ -39,6 +39,11 @@ class ColorsTest(unittest.TestCase):
 
         self.assertEqual(sorted(primaries), [])
 
+    def test_roundtrips(self):
+        # Make sure some famous colors roundtrip correctly
+        for c in _ROUNDTRIP:
+            self.assertEqual(str(Color.make(c)), c)
+
     def test_all_named_colors(self):
         all_colors = sorted(COLORS)
         self.assertEqual(1409, len(all_colors))
@@ -73,3 +78,9 @@ class ColorsTest(unittest.TestCase):
 
         with self.assertRaises(KeyError):
             COLORS['red'] = 0, 0, 0
+
+
+_ROUNDTRIP = (
+    'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet', 'Black',
+    'White', 'Purple', 'Gray', 'Cyan', 'Magenta', 'Olive',
+)
