@@ -113,6 +113,9 @@ class Colors:
             primary_names = ()
 
         colors = {k: self.Color.make(v) for k, v in colors.items()}
+        if not scheme.get('PRESERVE_CAPITALIZATION'):
+            colors = {k.capitalize(): v for k, v in colors.items()}
+
         self._name_to_rgb.update(colors)
 
         def best_name(names):

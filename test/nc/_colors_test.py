@@ -44,9 +44,41 @@ class ColorsTest(unittest.TestCase):
         for c in _ROUNDTRIP:
             self.assertEqual(str(Color.make(c)), c)
 
+    def test_non_roundtrips(self):
+        def canon(s):
+            s = str(s).lower()
+
+            for w in ' (web)', ' (x11/web color)', ' (pantone)':
+                if s.endswith(w):
+                    s = s[:-len(w)]
+
+            w = 'web '
+            if s.startswith(w):
+                s = s[len(w):]
+
+            for c in ' 0123456789()#-':
+                s = s.replace(c, '')
+
+            return s
+
+        non = sorted((k, v) for k, v in COLORS.items() if canon(v) != canon(k))
+        self.assertEqual(len(non), 108)
+        actual = non[:4] + non[-4:]
+        expected = [
+            ('Ao (English)', Color.make('Web green')),
+            ('Aqua', Color.make('Cyan')),
+            ('Aquamarine 3', Color.make('Medium aquamarine')),
+            ('Arylide yellow', Color.make('Hansa yellow')),
+            ('Wood brown', Color.make('Lion')),
+            ('Yellow (NCS)', Color.make('Cyber yellow')),
+            ('Yellow (process)', Color.make('Canary yellow')),
+            ('Yellow Sunshine', Color.make('Lemon'))
+        ]
+        self.assertEqual(actual, expected)
+
     def test_all_named_colors(self):
         all_colors = sorted(COLORS)
-        self.assertEqual(1409, len(all_colors))
+        self.assertEqual(1326, len(all_colors))
         actual = all_colors[:4] + all_colors[-4:]
         actual = [(a, COLORS[a]) for a in actual]
         expected = [
@@ -82,5 +114,6 @@ class ColorsTest(unittest.TestCase):
 
 _ROUNDTRIP = (
     'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet', 'Black',
-    'White', 'Purple', 'Gray', 'Cyan', 'Magenta', 'Olive',
+    'White', 'Purple', 'Gray', 'Cyan', 'Magenta', 'Olive', 'Silver',
+    'Navy', 'Chartreuse'
 )

@@ -960,3 +960,5 @@ COLORS = {
     'Zaffre': 0x0014A8,
     'Zomp': 0x39A78E,
 }
+
+PRESERVE_CAPITALIZATION = True

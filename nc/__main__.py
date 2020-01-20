@@ -23,9 +23,7 @@ def main():
                 errors.append(c)
 
     if errors:
-        print('Do not understand colors:', *errors, file=sys.stderr)
-        if colors:
-            print(file=sys.stderr)
+        print('Do not understand:', *errors, file=sys.stderr)
 
     if not colors:
         print('No valid colors specified!', file=sys.stderr)
