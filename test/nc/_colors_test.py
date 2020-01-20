@@ -42,7 +42,7 @@ class ColorsTest(unittest.TestCase):
     def test_roundtrips(self):
         # Make sure some famous colors roundtrip correctly
         for c in _ROUNDTRIP:
-            self.assertEqual(str(Color.make(c)), c)
+            self.assertEqual(str(Color(c)), c)
 
     def test_non_roundtrips(self):
         def canon(s):
@@ -65,14 +65,14 @@ class ColorsTest(unittest.TestCase):
         self.assertEqual(len(non), 108)
         actual = non[:4] + non[-4:]
         expected = [
-            ('Ao (English)', Color.make('Web green')),
-            ('Aqua', Color.make('Cyan')),
-            ('Aquamarine 3', Color.make('Medium aquamarine')),
-            ('Arylide yellow', Color.make('Hansa yellow')),
-            ('Wood brown', Color.make('Lion')),
-            ('Yellow (NCS)', Color.make('Cyber yellow')),
-            ('Yellow (process)', Color.make('Canary yellow')),
-            ('Yellow Sunshine', Color.make('Lemon'))
+            ('Ao (English)', Color('Web green')),
+            ('Aqua', Color('Cyan')),
+            ('Aquamarine 3', Color('Medium aquamarine')),
+            ('Arylide yellow', Color('Hansa yellow')),
+            ('Wood brown', Color('Lion')),
+            ('Yellow (NCS)', Color('Cyber yellow')),
+            ('Yellow (process)', Color('Canary yellow')),
+            ('Yellow Sunshine', Color('Lemon'))
         ]
         self.assertEqual(actual, expected)
 

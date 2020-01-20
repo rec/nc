@@ -18,7 +18,7 @@ def main():
         colors = []
         for c in args.colors:
             try:
-                colors.append(Color.make(c))
+                colors.append(Color(c))
             except ValueError:
                 errors.append(c)
 

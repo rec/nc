@@ -7,6 +7,9 @@ COLOR_TUPLE = collections.namedtuple('Color', 'r g b')
 class Color(COLOR_TUPLE):
     COLORS = None
 
+    def __new__(cls, *args):
+        return super().__new__(cls, *_make(cls, args))
+
     def __str__(self):
         return (self.COLORS._rgb_to_name.get(self)
                 or '({}, {}, {})'.format(*self))
@@ -23,37 +26,36 @@ class Color(COLOR_TUPLE):
 
     @classmethod
     def make(cls, *args):
-        if not args:
-            return cls.COLORS._default
+        return cls(*args)
 
-        c = args[0] if len(args) == 1 else args
-        if isinstance(c, cls):
-            return c
 
-        if isinstance(c, numbers.Number):
-            return cls(*_int_to_tuple(c))
+def _make(cls, args):
+    if not args:
+        return cls.COLORS._default
 
-        if not isinstance(c, str):
-            if len(c) == 3:
-                return cls(*c)
-            raise ValueError('Color needs exactly three components: r, g, b')
+    a = args[0] if len(args) == 1 else args
+    if isinstance(a, numbers.Number):
+        return _int_to_tuple(a)
 
-        try:
-            return cls.COLORS[c]
-        except KeyError:
-            pass
+    if not isinstance(a, str):
+        if len(a) == 3:
+            return tuple(int(i) for i in a)
+        raise ValueError(_COLOR_ERROR)
 
-        if ',' not in c:
-            i = _string_to_int(c)
-            return cls(*_int_to_tuple(i))
+    try:
+        return cls.COLORS[a]
+    except KeyError:
+        pass
 
-        if c.startswith('(') and c.endswith(')'):
-            c = c[1:-1]
-        if c.startswith('[') and c.endswith(']'):
-            c = c[1:-1]
+    if ',' not in a:
+        return _int_to_tuple(_string_to_int(a))
 
-        components = [_string_to_int(i) for i in c.split(',')]
-        return cls(*components)
+    if a.startswith('(') and a.endswith(')'):
+        a = a[1:-1]
+    if a.startswith('[') and a.endswith(']'):
+        a = a[1:-1]
+
+    return tuple(_string_to_int(i) for i in a.split(','))
 
 
 def _int_to_tuple(color):
@@ -71,3 +73,6 @@ def _string_to_int(s):
             return int(p or '0', 16)
 
     return int(s)
+
+
+_COLOR_ERROR = 'Colors must have three components: r, g, b'

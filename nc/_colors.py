@@ -41,7 +41,7 @@ class Colors:
         return self._name_to_rgb.keys()
 
     def __call__(self, *args, **kwds):
-        return self.Color.make(*args, **kwds)
+        return self.Color(*args, **kwds)
 
     def __getitem__(self, name):
         """Try to convert string item into a color"""
@@ -112,7 +112,7 @@ class Colors:
             colors = scheme
             primary_names = ()
 
-        colors = {k: self.Color.make(v) for k, v in colors.items()}
+        colors = {k: self.Color(v) for k, v in colors.items()}
         if not scheme.get('PRESERVE_CAPITALIZATION'):
             colors = {k.capitalize(): v for k, v in colors.items()}
 
