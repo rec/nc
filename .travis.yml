@@ -16,7 +16,7 @@ matrix:
 install:
 - pip install -r requirements.txt
 - pip install -r test_requirements.txt
-- pip install -r extract_requirements.txt
+- pip install -r extract_nc/extract_requirements.txt
 
 script:
 - flake8 nc test
