@@ -94,6 +94,11 @@ class ColorsTest(unittest.TestCase):
 
         self.assertEqual(actual, expected)
 
+    def test_keys_and_values(self):
+        colors = {k: v for k, v in COLORS.items()}
+        self.assertEqual(sorted(COLORS.keys()), sorted(colors.keys()))
+        self.assertEqual(sorted(COLORS.values()), sorted(colors.values()))
+
     def test_contains(self):
         for i in 'red', 'white', 'verdigris', 'vegas-gold':
             self.assertIn(i, COLORS)

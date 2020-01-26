@@ -24,10 +24,6 @@ class Color(COLOR_TUPLE):
     def rgb(self):
         return self.r * 0x10000 + self.g * 0x100 + self.b
 
-    @classmethod
-    def make(cls, *args):
-        return cls(*args)
-
 
 def _make(cls, args):
     if not args:
