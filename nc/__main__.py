@@ -1,5 +1,5 @@
 from nc import Color, COLORS
-from nc.schemes import terminal
+from nc import terminal
 import argparse
 import sys
 
