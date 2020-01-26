@@ -1,11 +1,11 @@
-from . import _colors
+from . import colors
 import sys
 
 _DEFAULT_SCHEMES = 'wikipedia', 'x11', 'juce'
 
 
 class NamedColors:
-    Colors = _colors.Colors
+    Colors = colors.Colors
     _COLORS = None
 
     @property

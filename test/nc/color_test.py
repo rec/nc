@@ -43,3 +43,7 @@ class ToColorTest(unittest.TestCase):
     def test_hex(self):
         self.assertEqual(Color('0x00000'), COLORS.Black)
         self.assertEqual(Color('#FFFFFF'), COLORS.White)
+
+    def test_repr(self):
+        self.assertEqual(repr(COLORS.red), "Color('Red')")
+        self.assertEqual(repr(Color(2, 3, 4)), "Color(2, 3, 4)")

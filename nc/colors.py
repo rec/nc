@@ -1,4 +1,4 @@
-from . import _color
+from . import color
 import importlib
 import string
 
@@ -7,7 +7,7 @@ _ALLOWED = set(string.ascii_letters + string.digits)
 
 class Colors:
     def __init__(self, *schemes, canonicalize_gray=True, default='black'):
-        class Color(_color.Color):
+        class Color(color.Color):
             COLORS = self
 
         super().__setattr__('Color', Color)
@@ -124,8 +124,8 @@ class Colors:
             return next(pnames, names[0])
 
         names = {}
-        for name, color in colors.items():
-            names.setdefault(color, []).append(name)
+        for n, c in colors.items():
+            names.setdefault(c, []).append(n)
 
         self._rgb_to_name.update((k, best_name(v)) for k, v in names.items())
 

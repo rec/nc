@@ -18,7 +18,7 @@ class ModuleTest(unittest.TestCase):
         self.assertNotIn('gray', colors)
 
     def test_import(self):
-        colors = nc.Colors('test.nc._module_test')
+        colors = nc.Colors('test.nc.module_test')
         self.assertEqual(colors.red, (0xFF, 0, 0))
         self.assertEqual(colors.rad, (0xFF, 0, 0))
         self.assertEqual(str(colors.groan), 'Green')
@@ -26,7 +26,7 @@ class ModuleTest(unittest.TestCase):
         self.assertEqual(str(colors.rad), 'Red')
 
     def test_addition(self):
-        c1 = nc.Colors('test.nc._module_test')
+        c1 = nc.Colors('test.nc.module_test')
         self.assertEqual(c1, c1)
         self.assertEqual(c1, c1 + c1)
         c2 = c1 + {'Red': (0x80, 0, 0)}
