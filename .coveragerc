@@ -3,7 +3,7 @@
 [run]
 
 branch = True
-source =  nc/colors2.py
+source =  nc/
 
 [report]
 
