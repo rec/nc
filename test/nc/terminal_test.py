@@ -1,14 +1,12 @@
+from . import results_printer
 from nc import terminal
 import nc
-import io
-import unittest
 
 
-class TestTerminal(unittest.TestCase):
+class TerminalTest(results_printer._ResultsPrinter):
     def test_demo(self):
-        results, printer = _results_printer()
-        terminal.demo(print=printer, sleep=lambda x: None)
-        lines = results()
+        terminal.demo(print=self.print, sleep=None)
+        lines = self.results()
         expected = [
             '\x1b[30;40m',
             'Black, Black\x1b[0;0m\x1b[31;40m',
@@ -24,16 +22,14 @@ class TestTerminal(unittest.TestCase):
         self.assertEqual(lines[:10], expected)
 
     def test_color_context(self):
-        results, printer = _results_printer()
-
-        with terminal.color_context(print=printer):
-            printer('one')
-        with terminal.color_context(fg=nc.red, print=printer):
-            printer('two')
-        with terminal.color_context(bg=nc.yellow, print=printer):
-            printer('three')
-        with terminal.color_context(fg=nc.cyan, bg=nc.green, print=printer):
-            printer('four')
+        with terminal.color_context(print=self.print):
+            self.print('one')
+        with terminal.color_context(fg=nc.red, print=self.print):
+            self.print('two')
+        with terminal.color_context(bg=nc.yellow, print=self.print):
+            self.print('three')
+        with terminal.color_context(fg=nc.cyan, bg=nc.green, print=self.print):
+            self.print('four')
 
         expected = [
             'one',
@@ -42,16 +38,4 @@ class TestTerminal(unittest.TestCase):
             '\x1b[0;0m\x1b[96;102mfour',
             '\x1b[0;0m',
         ]
-        self.assertEqual(results(), expected)
-
-
-def _results_printer():
-    sio = io.StringIO()
-
-    def printer(*args, **kwds):
-        print(*args, **kwds, file=sio)
-
-    def results():
-        return sio.getvalue().splitlines()
-
-    return results, printer
+        self.assertEqual(self.results(), expected)

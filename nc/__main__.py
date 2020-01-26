@@ -4,7 +4,7 @@ import argparse
 import sys
 
 
-def main():
+def main(sys_args=None, print=print, exit=sys.exit):
     parser = argparse.ArgumentParser()
     sp = parser.add_subparsers(dest='command')
 
@@ -14,20 +14,19 @@ def main():
     c.add_argument('colors', nargs='+', help=_HELP_COLOR)
 
     t = sp.add_parser('terminal', help=_HELP_TERM)
-    t.add_argument('speed', default=40, type=int, help=_HELP_SPEED)
+    t.add_argument('-s', '--speed', default=40, type=int, help=_HELP_SPEED)
 
-    args = parser.parse_args()
+    args = parser.parse_args(sys_args)
     args.command = args.command or 'terminal'
 
     if args.command == 'terminal':
-        return terminal.demo(getattr(args, 'speed', 40))
+        return terminal.demo(getattr(args, 'speed', 40), print=print)
 
     errors = []
     if args.command == 'all':
         _, colors = zip(*sorted(COLORS.items()))
     else:
         colors = []
-        print(args.command, dir(args))
         for c in args.colors:
             try:
                 colors.append(Color(c))
@@ -39,7 +38,7 @@ def main():
 
     if not colors:
         print('No valid colors specified!', file=sys.stderr)
-        sys.exit(-1)
+        exit(-1)
 
     for color in colors:
         print('%s: %s' % (color, tuple(color)))
@@ -53,5 +52,5 @@ _HELP_SPEED = 'Terminal demo speed in lines per second'
 _HELP_TERM = 'Demonstrate terminal colors'
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     main()
