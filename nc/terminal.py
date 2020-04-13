@@ -41,6 +41,7 @@ CODES = {
 
 
 def _closest(color):
+    # TODO: this duplicates code in colors.py
     def dist(c):
         return sum(abs(i - j) for i, j in zip(c, color))
 

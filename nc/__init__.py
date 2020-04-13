@@ -15,10 +15,6 @@ class NamedColors:
 
         return self._COLORS
 
-    @property
-    def Color(self):
-        return self.COLORS.Color
-
     def __getattr__(self, name):
         try:
             return globals()[name]

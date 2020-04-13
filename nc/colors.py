@@ -40,6 +40,12 @@ class Colors:
     def keys(self):
         return self._name_to_rgb.keys()
 
+    def closest(self, color):
+        def dist(c):
+            return sum(abs(i - j) for i, j in zip(c, color))
+
+        return min((dist(c), c) for c in self.values())[1]
+
     def __call__(self, *args, **kwds):
         return self.Color(*args, **kwds)
 
@@ -91,10 +97,10 @@ class Colors:
         return __class__(*schemes, canonicalize_gray=cg, default=d)
 
     def __radd__(self, x):
-        return __class__(
-            x,
-            canonicalize_gray=self._canonicalize_gray,
-            default=self._default) + self
+        other = __class__(
+            x, canonicalize_gray=self._canonicalize_gray, default=self._default
+        )
+        return other + self
 
     def _add_scheme(self, scheme):
         if isinstance(scheme, str):
