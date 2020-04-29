@@ -11,8 +11,9 @@ class Color(COLOR_TUPLE):
         return super().__new__(cls, *_make(cls, args))
 
     def __str__(self):
-        return (self.COLORS._rgb_to_name.get(self)
-                or '({}, {}, {})'.format(*self))
+        return self.COLORS._rgb_to_name.get(self) or '({}, {}, {})'.format(
+            *self
+        )
 
     def __repr__(self):
         name = str(self)

@@ -50,11 +50,11 @@ class ColorsTest(unittest.TestCase):
 
             for w in ' (web)', ' (x11/web color)', ' (pantone)':
                 if s.endswith(w):
-                    s = s[:-len(w)]
+                    s = s[: -len(w)]
 
             w = 'web '
             if s.startswith(w):
-                s = s[len(w):]
+                s = s[len(w) :]
 
             for c in ' 0123456789()#-':
                 s = s.replace(c, '')
@@ -72,7 +72,7 @@ class ColorsTest(unittest.TestCase):
             ('Wood brown', Color('Lion')),
             ('Yellow (NCS)', Color('Cyber yellow')),
             ('Yellow (process)', Color('Canary yellow')),
-            ('Yellow Sunshine', Color('Lemon'))
+            ('Yellow Sunshine', Color('Lemon')),
         ]
         self.assertEqual(actual, expected)
 
@@ -118,7 +118,21 @@ class ColorsTest(unittest.TestCase):
 
 
 _ROUNDTRIP = (
-    'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet', 'Black',
-    'White', 'Purple', 'Gray', 'Cyan', 'Magenta', 'Olive', 'Silver',
-    'Navy', 'Chartreuse'
+    'Red',
+    'Orange',
+    'Yellow',
+    'Green',
+    'Blue',
+    'Indigo',
+    'Violet',
+    'Black',
+    'White',
+    'Purple',
+    'Gray',
+    'Cyan',
+    'Magenta',
+    'Olive',
+    'Silver',
+    'Navy',
+    'Chartreuse',
 )
