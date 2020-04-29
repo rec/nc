@@ -44,7 +44,7 @@ class RunCoverage(RunTests):
 
 
 NAME = 'nc'
-OWNER = 'timedata-org'
+OWNER = 'rec'
 
 VERSION_FILE = os.path.join(os.path.dirname(__file__), NAME, 'VERSION')
 VERSION = open(VERSION_FILE).read().strip()
@@ -64,6 +64,7 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
 ]
 
 SETUPTOOLS_VERSION = '18.5'
