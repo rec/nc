@@ -1,5 +1,5 @@
-# This file was automatically generated on 2020-04-30T15:14:59.304646
-# by script /code/nc/extract_nc/wikipedia.py
+# This file was automatically generated on 2020-04-30T17:45:31.692176
+# by script /code/nc/extract_nc/ansi_escape_code.py
 # from ASCII escape codes
 
 VGA = (
@@ -11,10 +11,14 @@ VGA = (
     ('Magenta', (170, 0, 170)),
     ('Cyan', (0, 170, 170)),
     ('White', (170, 170, 170)),
+    ('Bright Black', (85, 85, 85)),
+    ('Bright Red', (255, 85, 85)),
     ('Bright Green', (85, 255, 85)),
     ('Bright Yellow', (255, 255, 85)),
     ('Bright Blue', (85, 85, 255)),
+    ('Bright Magenta', (255, 85, 255)),
     ('Bright Cyan', (85, 255, 255)),
+    ('Bright White', (255, 255, 255)),
 )
 
 WINDOWS_CONSOLE = (
@@ -26,10 +30,14 @@ WINDOWS_CONSOLE = (
     ('Magenta', (128, 0, 128)),
     ('Cyan', (0, 128, 128)),
     ('White', (192, 192, 192)),
+    ('Bright Black', (128, 128, 128)),
+    ('Bright Red', (255, 0, 0)),
     ('Bright Green', (0, 255, 0)),
     ('Bright Yellow', (255, 255, 0)),
     ('Bright Blue', (0, 0, 255)),
+    ('Bright Magenta', (255, 0, 255)),
     ('Bright Cyan', (0, 255, 255)),
+    ('Bright White', (255, 255, 255)),
 )
 
 WINDOWS_POWERSHELL = (
@@ -41,10 +49,14 @@ WINDOWS_POWERSHELL = (
     ('Magenta', (1, 36, 86)),
     ('Cyan', (0, 128, 128)),
     ('White', (192, 192, 192)),
+    ('Bright Black', (128, 128, 128)),
+    ('Bright Red', (255, 0, 0)),
     ('Bright Green', (0, 255, 0)),
     ('Bright Yellow', (255, 255, 0)),
     ('Bright Blue', (0, 0, 255)),
+    ('Bright Magenta', (255, 0, 255)),
     ('Bright Cyan', (0, 255, 255)),
+    ('Bright White', (255, 255, 255)),
 )
 
 VISUAL_STUDIO_CODE = (
@@ -56,10 +68,14 @@ VISUAL_STUDIO_CODE = (
     ('Magenta', (188, 63, 188)),
     ('Cyan', (17, 168, 205)),
     ('White', (229, 229, 229)),
+    ('Bright Black', (102, 102, 102)),
+    ('Bright Red', (241, 76, 76)),
     ('Bright Green', (35, 209, 139)),
     ('Bright Yellow', (245, 245, 67)),
     ('Bright Blue', (59, 142, 234)),
+    ('Bright Magenta', (214, 112, 214)),
     ('Bright Cyan', (41, 184, 219)),
+    ('Bright White', (229, 229, 229)),
 )
 
 WINDOWS_10_CONSOLE = (
@@ -71,10 +87,14 @@ WINDOWS_10_CONSOLE = (
     ('Magenta', (136, 23, 152)),
     ('Cyan', (58, 150, 221)),
     ('White', (204, 204, 204)),
+    ('Bright Black', (118, 118, 118)),
+    ('Bright Red', (231, 72, 86)),
     ('Bright Green', (22, 198, 12)),
     ('Bright Yellow', (249, 241, 165)),
     ('Bright Blue', (59, 120, 255)),
+    ('Bright Magenta', (180, 0, 158)),
     ('Bright Cyan', (97, 214, 214)),
+    ('Bright White', (242, 242, 242)),
 )
 
 TERMINAL_APP = (
@@ -86,10 +106,14 @@ TERMINAL_APP = (
     ('Magenta', (211, 56, 211)),
     ('Cyan', (51, 187, 200)),
     ('White', (203, 204, 205)),
+    ('Bright Black', (129, 131, 131)),
+    ('Bright Red', (252, 57, 31)),
     ('Bright Green', (49, 231, 34)),
     ('Bright Yellow', (234, 236, 35)),
     ('Bright Blue', (88, 51, 255)),
+    ('Bright Magenta', (249, 53, 248)),
     ('Bright Cyan', (20, 240, 240)),
+    ('Bright White', (233, 235, 235)),
 )
 
 PUTTY = (
@@ -101,10 +125,14 @@ PUTTY = (
     ('Magenta', (187, 0, 187)),
     ('Cyan', (0, 187, 187)),
     ('White', (187, 187, 187)),
+    ('Bright Black', (85, 85, 85)),
+    ('Bright Red', (255, 85, 85)),
     ('Bright Green', (85, 255, 85)),
     ('Bright Yellow', (255, 255, 85)),
     ('Bright Blue', (85, 85, 255)),
+    ('Bright Magenta', (255, 85, 255)),
     ('Bright Cyan', (85, 255, 255)),
+    ('Bright White', (255, 255, 255)),
 )
 
 MIRC = (
@@ -116,10 +144,14 @@ MIRC = (
     ('Magenta', (156, 0, 156)),
     ('Cyan', (0, 147, 147)),
     ('White', (210, 210, 210)),
+    ('Bright Black', (127, 127, 127)),
+    ('Bright Red', (255, 0, 0)),
     ('Bright Green', (0, 252, 0)),
     ('Bright Yellow', (255, 255, 0)),
     ('Bright Blue', (0, 0, 252)),
+    ('Bright Magenta', (255, 0, 255)),
     ('Bright Cyan', (0, 255, 255)),
+    ('Bright White', (255, 255, 255)),
 )
 
 XTERM = (
@@ -131,10 +163,14 @@ XTERM = (
     ('Magenta', (205, 0, 205)),
     ('Cyan', (0, 205, 205)),
     ('White', (229, 229, 229)),
+    ('Bright Black', (127, 127, 127)),
+    ('Bright Red', (255, 0, 0)),
     ('Bright Green', (0, 255, 0)),
     ('Bright Yellow', (255, 255, 0)),
     ('Bright Blue', (92, 92, 255)),
+    ('Bright Magenta', (255, 0, 255)),
     ('Bright Cyan', (0, 255, 255)),
+    ('Bright White', (255, 255, 255)),
 )
 
 X = (
@@ -146,10 +182,14 @@ X = (
     ('Magenta', (255, 0, 255)),
     ('Cyan', (0, 255, 255)),
     ('White', (255, 255, 255)),
+    ('Bright Black', None),
+    ('Bright Red', None),
     ('Bright Green', (144, 238, 144)),
     ('Bright Yellow', (255, 255, 224)),
     ('Bright Blue', (173, 216, 230)),
+    ('Bright Magenta', None),
     ('Bright Cyan', (224, 255, 255)),
+    ('Bright White', None),
 )
 
 UBUNTU = (
@@ -161,8 +201,12 @@ UBUNTU = (
     ('Magenta', (118, 38, 113)),
     ('Cyan', (44, 181, 233)),
     ('White', (204, 204, 204)),
+    ('Bright Black', (128, 128, 128)),
+    ('Bright Red', (255, 0, 0)),
     ('Bright Green', (0, 255, 0)),
     ('Bright Yellow', (255, 255, 0)),
     ('Bright Blue', (0, 0, 255)),
+    ('Bright Magenta', (255, 0, 255)),
     ('Bright Cyan', (0, 255, 255)),
+    ('Bright White', (255, 255, 255)),
 )
