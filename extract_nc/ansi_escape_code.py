@@ -6,6 +6,7 @@ COLSPAN_RE = re.compile('colspan="(.)"')
 ANSI_ESCAPE_PAGE = 'ANSI_escape_code&section=12'
 TABLE_BEGIN = '{| '
 TABLE_LINE = '|-\n'
+FILE = wikipedia.SCHEME_DIR / '_terminal16.py'
 
 
 def write_escapes():
@@ -29,20 +30,18 @@ def write_escapes():
 
     nv = {k: v for (k, v) in nv.items() if not any(i is None for i in v)}
 
-    with safer.printer(wikipedia.SCHEME_DIR / 'escapes.py') as print:
-        wikipedia.print_header('ASCII escape codes', print)
-        first = True
-        for name, values in nv.items():
-            if first:
-                first = False
-            else:
-                print()
+    with safer.printer(FILE) as print:
+        wikipedia.print_header('ANSI escape code', print)
+        print('TERMINAL_COLORS = {')
 
+        for name, values in nv.items():
             name = ''.join(i if i.isalnum() else '_' for i in name)
-            print(name.replace('__', '_').upper(), '= (')
+            name = name.replace('__', '_').lower()
+            print(f"    '{name}': {{")
             for color, value in values.items():
-                print("    ('%s', %s)," % (color, value))
-            print(')')
+                print(f"        '{color}': {value},")
+            print('    },')
+        print('}')
 
 
 def _read_row(row):
