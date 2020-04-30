@@ -6,7 +6,7 @@ COLSPAN_RE = re.compile('colspan="(.)"')
 ANSI_ESCAPE_PAGE = 'ANSI_escape_code&section=12'
 TABLE_BEGIN = '{| '
 TABLE_LINE = '|-\n'
-FILE = wikipedia.SCHEME_DIR / '_terminal16.py'
+DIR = wikipedia.SCHEME_DIR / 'terminal16'
 
 
 def write_escapes():
@@ -28,20 +28,9 @@ def write_escapes():
         for name, value in zip(names, values):
             nv.setdefault(name, {})[color] = value
 
-    nv = {k: v for (k, v) in nv.items() if not any(i is None for i in v)}
-
-    with safer.printer(FILE) as print:
-        wikipedia.print_header('ANSI escape code', print)
-        print('TERMINAL_COLORS = {')
-
-        for name, values in nv.items():
-            name = ''.join(i if i.isalnum() else '_' for i in name)
-            name = name.replace('__', '_').lower()
-            print(f"    '{name}': {{")
-            for color, value in values.items():
-                print(f"        '{color}': {value},")
-            print('    },')
-        print('}')
+    for name, values in nv.items():
+        if not any(i is None for i in values):
+            _write_file(name, values)
 
 
 def _read_row(row):
@@ -74,6 +63,17 @@ def _read_header(header):
                 yield link.split('|')[-1]
             elif '||' not in line:
                 yield line.split('<')[0]
+
+
+def _write_file(name, values):
+    name = ''.join(i if i.isalnum() else '_' for i in name)
+    name = name.replace('__', '_').lower()
+    with safer.printer(DIR / (name + '.py')) as print:
+        wikipedia.print_header('ANSI escape codes', print)
+        print('COLORS = {')
+        for color, value in values.items():
+            print(f"    '{color}': {value},")
+        print('}')
 
 
 if __name__ == '__main__':

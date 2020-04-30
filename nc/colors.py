@@ -105,7 +105,10 @@ class Colors:
     def _add_scheme(self, scheme):
         if isinstance(scheme, str):
             if '.' not in scheme:
-                scheme = 'nc.schemes.' + scheme
+                scheme = '.' + scheme
+            if scheme.startswith('.'):
+                scheme = 'nc.schemes' + scheme
+
             scheme = importlib.import_module(scheme)
 
         if not isinstance(scheme, dict):

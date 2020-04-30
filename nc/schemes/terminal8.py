@@ -1,5 +1,12 @@
-from .terminal16 import fg, bg  # noqa: F401
-from .terminal16 import COLORS as _COLORS, CODES as _CODES  # noqa: F401
+from .terminal16 import CODES, fg, bg  # noqa: F401
 
-COLORS = {k: v for k, v in _COLORS.items() if not k.startswith('Bright')}
-CODES = {k: v for k, v in _CODES.items() if not k.startswith('Bright')}
+COLORS = {
+    'Black': (0, 0, 0),
+    'Red': (255, 0, 0),
+    'Green': (0, 255, 0),
+    'Yellow': (255, 255, 0),
+    'Blue': (0, 0, 255),
+    'Magenta': (255, 0, 255),
+    'Cyan': (0, 255, 255),
+    'White': (255, 255, 255),
+}
