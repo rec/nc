@@ -44,14 +44,14 @@ def main(sys_args=None, print=print, exit=sys.exit):
 
     context = terminal.Context()
     if context:
-        for color in context.colors.values():
+        for color in colors:
             background = nc.black if sum(color) >= 0x180 else nc.white
             with context(color, background, print):
                 print('\n%s: %s' % (color, tuple(color)), end='')
         print('\n')
 
     else:
-        for color in nc.values():
+        for color in colors:
             print('%s: %s' % (color, tuple(color)))
 
 
