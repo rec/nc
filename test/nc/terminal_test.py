@@ -5,19 +5,19 @@ import nc
 
 class TerminalTest(results_printer._ResultsPrinter):
     def test_demo(self):
-        terminal.demo(print=self.print, sleep=None)
+        terminal.demo(print=self.print, sleep=None, count=16)
         lines = self.results()
         expected = [
             '\x1b[30;40m',
-            'Black, Black\x1b[0;0m\x1b[31;40m',
-            'Red, Black\x1b[0;0m\x1b[32;40m',
-            'Green, Black\x1b[0;0m\x1b[33;40m',
-            'Yellow, Black\x1b[0;0m\x1b[34;40m',
-            'Blue, Black\x1b[0;0m\x1b[35;40m',
-            'Magenta, Black\x1b[0;0m\x1b[36;40m',
-            'Cyan, Black\x1b[0;0m\x1b[37;40m',
-            'White, Black\x1b[0;0m\x1b[90;40m',
-            'Bright black, Black\x1b[0;0m\x1b[91;40m',
+            'Black, Black\x1b[m\x1b[31;40m',
+            'Red, Black\x1b[m\x1b[32;40m',
+            'Green, Black\x1b[m\x1b[33;40m',
+            'Yellow, Black\x1b[m\x1b[34;40m',
+            'Blue, Black\x1b[m\x1b[35;40m',
+            'Magenta, Black\x1b[m\x1b[36;40m',
+            'Cyan, Black\x1b[m\x1b[37;40m',
+            'White, Black\x1b[m\x1b[90;40m',
+            'Bright black, Black\x1b[m\x1b[91;40m',
         ]
         self.assertEqual(lines[:10], expected)
 
@@ -35,9 +35,9 @@ class TerminalTest(results_printer._ResultsPrinter):
 
         expected = [
             'one',
-            '\x1b[91;0mtwo',
-            '\x1b[0;0m\x1b[0;103mthree',
-            '\x1b[0;0m\x1b[96;102mfour',
-            '\x1b[0;0m',
+            '\x1b[91mtwo',
+            '\x1b[m\x1b[103mthree',
+            '\x1b[m\x1b[96;102mfour',
+            '\x1b[m',
         ]
         self.assertEqual(self.results(), expected)

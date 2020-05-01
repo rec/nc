@@ -16,12 +16,13 @@ def main(sys_args=None, print=print, exit=sys.exit):
 
     t = sp.add_parser('terminal', help=_HELP_TERM)
     t.add_argument('-s', '--speed', default=40, type=int, help=_HELP_SPEED)
+    t.add_argument('-c', '--colors', help=_HELP_COLORS)
 
     args = parser.parse_args(sys_args)
     args.command = args.command or 'terminal'
 
     if args.command == 'terminal':
-        return terminal.demo(getattr(args, 'speed', 40), print=print)
+        return terminal.demo(args.speed, print=print, count=args.colors)
 
     errors = []
 
@@ -56,6 +57,7 @@ def main(sys_args=None, print=print, exit=sys.exit):
 
 
 COMMANDS = 'all', 'colors', 'terminal'
+_HELP_COLORS = 'How many terminal colors to use?  Defaults to a good guess'
 _HELP_COMMAND = 'Which command to execute'
 _HELP_ALL = 'List all colors'
 _HELP_COLOR = 'Names and values for colors'

@@ -15,13 +15,14 @@ def demo(lines_per_second=32, print=print, sleep=time.sleep, count=None):
     sleep_time = lines_per_second and (1 / lines_per_second)
     context = Context(count)
 
-    items = [('None', None)] + list(context.colors.items())
+    # items = [('None', None)] + list(context.colors.items())
+    colors = context.colors.values()
 
-    for n1, c1 in items:
-        for n2, c2 in items:
-            with context(c2, c1, print):
+    for bg in colors:
+        for fg in colors:
+            with context(fg, bg, print):
                 print()
-                print(n1, n2, sep=', ', end='')
+                print(fg, bg, sep=', ', end='')
                 sleep_time and sleep and sleep(sleep_time)
     print()
 
@@ -47,7 +48,7 @@ def color_count():
 class Context:
     def __init__(self, count=None):
         self.count = color_count() if count is None else count
-        self.colors = Colors('terminal%d' % count) if count else None
+        self.colors = Colors('terminal%s' % count) if count else None
         scheme = self.colors._schemes[0] if count else {}
         self.CODES = scheme.get('CODES')
         self.fg = scheme.get('fg')
@@ -59,24 +60,24 @@ class Context:
     @contextlib.contextmanager
     def __call__(self, fg=None, bg=None, print=print):
         def print_codes(*codes):
-            result = '\33[%sm' % ';'.join(str(c) for c in codes)
+            result = '\x1b[%sm' % ';'.join(str(c) for c in codes)
             print(result, end='')
 
         def color_codes(color, coder):
+            if not color:
+                return ()
             closest = self.colors.closest(color)
             code = self.CODES[str(closest)]
-            print_codes(*coder(code))
+            return coder(code)
 
-        if self.CODES:
-            if fg:
-                color_codes(fg, self.fg)
-            if bg:
-                color_codes(bg, self.bg)
+        if self.CODES and (fg or bg):
+            codes = color_codes(fg, self.fg) + color_codes(bg, self.bg)
+            print_codes(*codes)
 
         yield
 
         if self.CODES and (fg or bg):
-            print_codes(0)
+            print_codes()
 
 
 if __name__ == '__main__':  # pragma: no cover

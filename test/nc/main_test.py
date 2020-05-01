@@ -27,18 +27,20 @@ class TestMain(results_printer._ResultsPrinter):
         ]
         self.main(expected, 'all')
 
+    maxDiff = 10000
+
     def test_terminal(self):
         expected = [
             '\x1b[30;40m',
-            'Black, Black\x1b[0;0m\x1b[31;40m',
-            'Red, Black\x1b[0;0m\x1b[32;40m',
-            'Green, Black\x1b[0;0m\x1b[33;40m',
-            'Yellow, Black\x1b[0;0m\x1b[34;40m',
-            'Blue, Black\x1b[0;0m\x1b[35;40m',
-            'Magenta, Black\x1b[0;0m\x1b[36;40m',
-            'Cyan, Black\x1b[0;0m\x1b[37;40m',
+            'Black, Black\x1b[m\x1b[31;40m',
+            'Red, Black\x1b[m\x1b[32;40m',
+            'Green, Black\x1b[m\x1b[33;40m',
+            'Yellow, Black\x1b[m\x1b[34;40m',
+            'Blue, Black\x1b[m\x1b[35;40m',
+            'Magenta, Black\x1b[m\x1b[36;40m',
+            'Cyan, Black\x1b[m\x1b[37;40m',
         ]
-        self.main(expected, 'terminal', '-s0')
+        self.main(expected, 'terminal', '-s0', '-c16')
 
     def test_errors(self):
         with self.assertRaises(ValueError):
