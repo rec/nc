@@ -13,12 +13,9 @@ class Colors:
         super().__setattr__('Color', Color)
 
         self._canonicalize_gray = bool(canonicalize_gray)
-        self._schemes = schemes
         self._name_to_rgb = {}
         self._rgb_to_name = {}
-
-        for s in schemes:
-            self._add_scheme(s)
+        self._schemes = [self._add_scheme(s) for s in schemes]
 
         self._canonical_to_rgb = {
             self._canonical_name(k): v for k, v in self._name_to_rgb.items()
@@ -43,7 +40,7 @@ class Colors:
     def closest(self, color):
         """
         Return the closest named color to `color`.  This is quite slow,
-        particularly in large schemes.
+        particularly if there are many colors.
         """
         return min((c.distance2(color), c) for c in self.values())[1]
 
@@ -118,7 +115,9 @@ class Colors:
         if 'COLORS' in scheme:
             colors = scheme['COLORS']
             primary_names = scheme.get('PRIMARY_NAMES', ())
+
         else:
+            scheme = {'COLORS': scheme}
             colors = scheme
             primary_names = ()
 
@@ -138,6 +137,7 @@ class Colors:
             names.setdefault(c, []).append(n)
 
         self._rgb_to_name.update((k, best_name(v)) for k, v in names.items())
+        return scheme
 
     def _canonical_name(self, name):
         name = name.lower()

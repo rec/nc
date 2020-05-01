@@ -22,13 +22,14 @@ class TerminalTest(results_printer._ResultsPrinter):
         self.assertEqual(lines[:10], expected)
 
     def test_color_context(self):
-        with terminal.color_context(print=self.print):
+        context = terminal.TerminalContext(count=16, print=self.print)
+        with context.context():
             self.print('one')
-        with terminal.color_context(fg=nc.red, print=self.print):
+        with context.context(fg=nc.red):
             self.print('two')
-        with terminal.color_context(bg=nc.yellow, print=self.print):
+        with context.context(bg=nc.yellow):
             self.print('three')
-        with terminal.color_context(fg=nc.cyan, bg=nc.green, print=self.print):
+        with context.context(fg=nc.cyan, bg=nc.green):
             self.print('four')
 
         expected = [

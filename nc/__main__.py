@@ -1,4 +1,5 @@
-from nc import Color, COLORS
+from nc import Color
+import nc
 from nc import terminal
 import argparse
 import sys
@@ -23,8 +24,9 @@ def main(sys_args=None, print=print, exit=sys.exit):
         return terminal.demo(getattr(args, 'speed', 40), print=print)
 
     errors = []
+
     if args.command == 'all':
-        _, colors = zip(*sorted(COLORS.items()))
+        _, colors = zip(*sorted(nc.items()))
     else:
         colors = []
         for c in args.colors:
@@ -40,8 +42,17 @@ def main(sys_args=None, print=print, exit=sys.exit):
         print('No valid colors specified!', file=sys.stderr)
         exit(-1)
 
-    for color in colors:
-        print('%s: %s' % (color, tuple(color)))
+    context = terminal.Context()
+    if context:
+        for color in context.colors.values():
+            background = nc.black if sum(color) >= 0x180 else nc.white
+            with context(color, background, print):
+                print('\n%s: %s' % (color, tuple(color)), end='')
+        print('\n')
+
+    else:
+        for color in nc.values():
+            print('%s: %s' % (color, tuple(color)))
 
 
 COMMANDS = 'all', 'colors', 'terminal'
