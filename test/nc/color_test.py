@@ -3,7 +3,7 @@ from nc import Color
 import unittest
 
 
-class ToColorTest(unittest.TestCase):
+class ColorTest(unittest.TestCase):
     def test_empty(self):
         self.assertEqual(Color(), COLORS.Black)
 
@@ -47,3 +47,8 @@ class ToColorTest(unittest.TestCase):
     def test_repr(self):
         self.assertEqual(repr(COLORS.red), "Color('Red')")
         self.assertEqual(repr(Color(2, 3, 4)), "Color(2, 3, 4)")
+
+    def test_closest(self):
+        values = list(COLORS.values())[:10]
+        for c in values:
+            assert c.closest() == c

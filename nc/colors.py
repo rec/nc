@@ -41,10 +41,11 @@ class Colors:
         return self._name_to_rgb.keys()
 
     def closest(self, color):
-        def dist(c):
-            return sum(abs(i - j) for i, j in zip(c, color))
-
-        return min((dist(c), c) for c in self.values())[1]
+        """
+        Return the closest named color to `color`.  This is quite slow,
+        particularly in large schemes.
+        """
+        return min((c.distance2(color), c) for c in self.values())[1]
 
     def __call__(self, *args, **kwds):
         return self.Color(*args, **kwds)

@@ -116,6 +116,13 @@ class ColorsTest(unittest.TestCase):
         with self.assertRaises(KeyError):
             COLORS['red'] = 0, 0, 0
 
+    def test_closest(self):
+        colors = [[6, 57, 54], [118, 99, 74], [25, 111, 106], [122, 222, 176]]
+        actual = [str(COLORS.closest(c)) for c in colors]
+
+        ex = ['Rich black', 'Raw umber', 'Pine green', 'Medium aquamarine']
+        assert ex == actual
+
 
 _ROUNDTRIP = (
     'Red',

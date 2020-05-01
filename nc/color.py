@@ -1,4 +1,5 @@
 import collections
+import math
 import numbers
 
 COLOR_TUPLE = collections.namedtuple('Color', 'r g b')
@@ -20,6 +21,21 @@ class Color(COLOR_TUPLE):
         if not name.startswith('('):
             return "Color('%s')" % name
         return 'Color' + name
+
+    def closest(self):
+        """
+        Return the closest named color to `self`.  This is quite slow,
+        particularly in large schemes.
+        """
+        return self.COLORS.closest(self)
+
+    def distance2(self, other):
+        """Return the square of the distance between this and anotther color"""
+        d = (i - j for i, j in zip(self, other))
+        return sum(i * i for i in d)
+
+    def distance(self, other):
+        return math.sqrt(self.distance2(other))
 
     @property
     def rgb(self):
