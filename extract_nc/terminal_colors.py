@@ -5,9 +5,9 @@ https://serverfault.com/a/91873
 import nc
 import safer
 from . import wikipedia
-from nc.schemes.terminal16 import xterm
+from nc.palette.terminal16 import xterm
 
-FILE = wikipedia.SCHEME_DIR / '_terminal256.py'
+FILE = wikipedia.PALETTE_DIR / '_terminal256.py'
 
 COLORS = nc.Colors('juce', 'x11', 'html', 'pwg')
 old_print = print

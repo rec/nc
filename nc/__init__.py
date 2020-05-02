@@ -1,7 +1,7 @@
 from . import colors
 import sys
 
-_DEFAULT_SCHEMES = 'wikipedia', 'x11', 'juce'
+_DEFAULT_PALETTES = 'wikipedia', 'x11', 'juce'
 
 
 class NamedColors:
@@ -11,7 +11,7 @@ class NamedColors:
     @property
     def COLORS(self):
         if not self._COLORS:
-            self._COLORS = self.Colors(*_DEFAULT_SCHEMES)
+            self._COLORS = self.Colors(*_DEFAULT_PALETTES)
 
         return self._COLORS
 

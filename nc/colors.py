@@ -9,7 +9,7 @@ _GREY_RES = re.compile(r'\bgrey\b')
 
 
 class Colors:
-    def __init__(self, *schemes, canonicalize_gray='gray', default='black'):
+    def __init__(self, *palettes, canonicalize_gray='gray', default='black'):
         class Color(color.Color):
             COLORS = self
 
@@ -31,7 +31,7 @@ class Colors:
 
         self._name_to_rgb = {}
         self._rgb_to_name = {}
-        self._schemes = [self._add_scheme(s) for s in schemes]
+        self._palettes = [self._add_palette(s) for s in palettes]
 
         self._canonical_to_rgb = {
             self._canonical_name(k): v for k, v in self._name_to_rgb.items()
@@ -107,8 +107,8 @@ class Colors:
     def __add__(self, x):
         cg, d = self._canonicalize_gray, self._default
         c = x if isinstance(x, __class__) else __class__(x)
-        schemes = self._schemes + c._schemes
-        return __class__(*schemes, canonicalize_gray=cg, default=d)
+        palettes = self._palettes + c._palettes
+        return __class__(*palettes, canonicalize_gray=cg, default=d)
 
     def __radd__(self, x):
         other = __class__(
@@ -116,29 +116,29 @@ class Colors:
         )
         return other + self
 
-    def _add_scheme(self, scheme):
-        if isinstance(scheme, str):
-            if '.' not in scheme:
-                scheme = '.' + scheme
-            if scheme.startswith('.'):
-                scheme = 'nc.schemes' + scheme
+    def _add_palette(self, palette):
+        if isinstance(palette, str):
+            if '.' not in palette:
+                palette = '.' + palette
+            if palette.startswith('.'):
+                palette = 'nc.palette' + palette
 
-            scheme = importlib.import_module(scheme)
+            palette = importlib.import_module(palette)
 
-        if not isinstance(scheme, dict):
-            scheme = scheme.__dict__
+        if not isinstance(palette, dict):
+            palette = palette.__dict__
 
-        if 'COLORS' in scheme:
-            colors = scheme['COLORS']
-            primary_names = scheme.get('PRIMARY_NAMES', ())
+        if 'COLORS' in palette:
+            colors = palette['COLORS']
+            primary_names = palette.get('PRIMARY_NAMES', ())
 
         else:
-            colors = scheme
-            scheme = {'COLORS': scheme}
+            colors = palette
+            palette = {'COLORS': palette}
             primary_names = ()
 
         colors = {k: self.Color(v) for k, v in colors.items()}
-        if not scheme.get('PRESERVE_CAPITALIZATION'):
+        if not palette.get('PRESERVE_CAPITALIZATION'):
             colors = {k.capitalize(): v for k, v in colors.items()}
 
         for sub, rep in self._replacements:
@@ -156,7 +156,7 @@ class Colors:
             names.setdefault(c, []).append(n)
 
         self._rgb_to_name.update((k, best_name(v)) for k, v in names.items())
-        return scheme
+        return palette
 
     def _canonical_name(self, name):
         name = name.lower()
@@ -166,7 +166,7 @@ class Colors:
 
 
 """Some colors have multiple names; a best name needs to be chosen.
-   scheme.PRIMARY_NAMES is a list of names to use by preference.
+   palette.PRIMARY_NAMES is a list of names to use by preference.
    Otherwise the shortest color name is chosen, and in a tie, the
    alphabetically first one.
 """

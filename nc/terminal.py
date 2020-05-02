@@ -46,11 +46,11 @@ class Context:
         if self.count:
             self.colors = Colors('terminal%s' % self.count)
             # Color = self.colors.Color
-            scheme = self.colors._schemes[0]
-            codes = scheme['CODES']
+            palette = self.colors._palettes[0]
+            codes = palette['CODES']
             self.CODES = {self.colors[k]: v for k, v in codes.items()}
-            self.fg = scheme['fg']
-            self.bg = scheme['bg']
+            self.fg = palette['fg']
+            self.bg = palette['bg']
 
     def __bool__(self):
         return bool(self.count)

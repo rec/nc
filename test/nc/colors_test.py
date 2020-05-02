@@ -1,4 +1,4 @@
-from nc.schemes import juce
+from nc.palette import juce
 from nc import Color
 from nc import Colors
 from nc import COLORS

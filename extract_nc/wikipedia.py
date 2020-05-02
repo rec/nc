@@ -28,7 +28,7 @@ SOURCES = {
 }
 
 TABLE_END = '|}\n'
-SCHEME_DIR = pathlib.Path(__file__).parents[1] / 'nc' / 'schemes'
+PALETTE_DIR = pathlib.Path(__file__).parents[1] / 'nc' / 'palette'
 
 SPECIAL_COLORS = {
     ('Peach', 0xFFCBA4): 'Deep peach',
@@ -83,7 +83,7 @@ def colors(urls, title, print):
 
 def write_colors():
     for name, (title, *urls) in SOURCES.items():
-        filename = (SCHEME_DIR / name).with_suffix('.py')
+        filename = (PALETTE_DIR / name).with_suffix('.py')
         print('Creating', filename, '...', end='')
         with safer.printer(filename, 'w') as pr:
             colors(urls, title, pr)

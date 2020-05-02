@@ -10,7 +10,7 @@ COLSPAN_RE = re.compile('colspan="(.)"')
 ANSI_ESCAPE_PAGE = 'ANSI_escape_code&section=12'
 TABLE_BEGIN = '{| '
 TABLE_LINE = '|-\n'
-DIR = wikipedia.SCHEME_DIR / 'terminal16'
+DIR = wikipedia.PALETTE_DIR / 'terminal16'
 
 
 def write_escapes():

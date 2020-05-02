@@ -9,7 +9,7 @@ WIKIPEDIA = Colors('wikipedia')
 X11 = Colors('x11')
 
 
-class SchemeTest(unittest.TestCase):
+class PaletteTest(unittest.TestCase):
     def test_terminal256(self):
         assert len(TERMINAL_256) == 256
 
