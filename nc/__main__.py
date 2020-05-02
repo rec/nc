@@ -1,4 +1,5 @@
 from nc import Color
+from nc import demo
 from nc import terminal
 import argparse
 import nc
@@ -30,7 +31,7 @@ def main(sys_args=None, print=print, color_count=None):
         args.colors = None
 
     if args.command == 'terminal':
-        return terminal.demo(args.speed, print=print, count=args.colors)
+        return demo.demo(args.speed, print=print, count=args.colors)
 
     errors = []
 

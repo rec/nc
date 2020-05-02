@@ -2,7 +2,6 @@ from .colors import Colors
 import contextlib
 import functools
 import subprocess
-import time
 
 TERMINAL_ENVIRONMENT_VAR = '_NC_TERMINAL_COLOR_COUNT'
 SIZES = 256, 16, 8
@@ -10,22 +9,6 @@ SIZES = 256, 16, 8
 
 def context(fg=None, bg=None, print=print, count=None):
     return Context(count)(fg, bg, print)
-
-
-def demo(lines_per_second=32, print=print, sleep=time.sleep, count=None):
-    sleep_time = lines_per_second and (1 / lines_per_second)
-    context = Context(count)
-
-    # items = [('None', None)] + list(context.colors.items())
-    colors = [None] + list(context.colors.values())
-
-    for bg in colors:
-        for fg in colors:
-            with context(fg, bg, print):
-                print()
-                print(fg, bg, sep=', ', end='')
-                sleep_time and sleep and sleep(sleep_time)
-    print()
 
 
 @functools.lru_cache()
@@ -45,7 +28,6 @@ class Context:
         self.count = color_count() if count is None else count
         if self.count:
             self.colors = Colors('terminal%s' % self.count)
-            # Color = self.colors.Color
             palette = self.colors._palettes[0]
             codes = palette['CODES']
             self.CODES = {self.colors[k]: v for k, v in codes.items()}
@@ -57,10 +39,6 @@ class Context:
 
     @contextlib.contextmanager
     def __call__(self, fg=None, bg=None, print=print):
-        if not (self.count and (fg or bg)):
-            yield
-            return
-
         def print_codes(*codes):
             result = '\x1b[%sm' % ';'.join(str(c) for c in codes)
             print(result, end='')
@@ -69,18 +47,13 @@ class Context:
             if not color:
                 return ()
             closest = self.colors.closest(color)
-            try:
-                code = self.CODES[closest]
-            except KeyError:
-                __builtins__['print']('!!!', color, closest, *color, *closest)
-                raise
-            return coder(code)
+            return coder(self.CODES[closest])
 
-        codes = color_codes(fg, self.fg) + color_codes(bg, self.bg)
-        print_codes(*codes)
-        yield
-        print_codes()
+        if self and (fg or bg):
+            codes = color_codes(fg, self.fg) + color_codes(bg, self.bg)
+            print_codes(*codes)
+            yield
+            print_codes()
 
-
-if __name__ == '__main__':  # pragma: no cover
-    demo()
+        else:
+            yield

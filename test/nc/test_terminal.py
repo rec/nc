@@ -1,5 +1,6 @@
 from . import results_printer
 from nc import terminal
+from nc import demo
 import nc
 
 
@@ -10,7 +11,7 @@ class TerminalTest(results_printer._ResultsPrinter):
 
     def test_demo16(self):
         with self.print_until(10):
-            terminal.demo(print=self.print, sleep=None, count=16)
+            demo.demo(print=self.print, sleep=None, count=16)
 
         actual = self.results()
         expected = [
@@ -33,7 +34,7 @@ class TerminalTest(results_printer._ResultsPrinter):
 
     def test_demo256(self):
         with self.print_until(512):
-            terminal.demo(print=self.print, sleep=None, count=256)
+            demo.demo(print=self.print, sleep=None, count=256)
 
         actual = self.results()[:8]
         expected = [
