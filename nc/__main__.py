@@ -1,10 +1,13 @@
-from nc import Color, COLORS
+from nc import Color
 from nc import terminal
 import argparse
+import nc
 import sys
 
+DEFAULT_SPEED = 40
 
-def main(sys_args=None, print=print, exit=sys.exit):
+
+def main(sys_args=None, print=print, color_count=None):
     parser = argparse.ArgumentParser()
     sp = parser.add_subparsers(dest='command')
 
@@ -14,17 +17,25 @@ def main(sys_args=None, print=print, exit=sys.exit):
     c.add_argument('colors', nargs='+', help=_HELP_COLOR)
 
     t = sp.add_parser('terminal', help=_HELP_TERM)
-    t.add_argument('-s', '--speed', default=40, type=int, help=_HELP_SPEED)
+    t.add_argument(
+        '-s', '--speed', default=DEFAULT_SPEED, type=int, help=_HELP_SPEED
+    )
+    t.add_argument('-c', '--colors', help=_HELP_COLORS)
 
     args = parser.parse_args(sys_args)
-    args.command = args.command or 'terminal'
+    if not args.command:
+        args.command = 'terminal'
+        # See https://stackoverflow.com/questions/46963172
+        args.speed = DEFAULT_SPEED
+        args.colors = None
 
     if args.command == 'terminal':
-        return terminal.demo(getattr(args, 'speed', 40), print=print)
+        return terminal.demo(args.speed, print=print, count=args.colors)
 
     errors = []
+
     if args.command == 'all':
-        _, colors = zip(*sorted(COLORS.items()))
+        _, colors = zip(*sorted(nc.items()))
     else:
         colors = []
         for c in args.colors:
@@ -38,13 +49,23 @@ def main(sys_args=None, print=print, exit=sys.exit):
 
     if not colors:
         print('No valid colors specified!', file=sys.stderr)
-        exit(-1)
+        return -1
 
-    for color in colors:
-        print('%s: %s' % (color, tuple(color)))
+    context = terminal.Context(color_count)
+    if context:
+        for color in colors:
+            background = nc.black if sum(color) >= 0x180 else nc.white
+            with context(color, background, print):
+                print('\n%s: %s' % (color, tuple(color)), end='')
+        print('\n')
+
+    else:
+        for color in colors:
+            print('%s: %s' % (color, tuple(color)))
 
 
 COMMANDS = 'all', 'colors', 'terminal'
+_HELP_COLORS = 'How many terminal colors to use?  Defaults to a good guess'
 _HELP_COMMAND = 'Which command to execute'
 _HELP_ALL = 'List all colors'
 _HELP_COLOR = 'Names and values for colors'
@@ -53,4 +74,4 @@ _HELP_TERM = 'Demonstrate terminal colors'
 
 
 if __name__ == '__main__':  # pragma: no cover
-    main()
+    sys.exit(main())

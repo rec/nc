@@ -1,24 +1,37 @@
 from . import color
 import importlib
 import string
+import re
 
 _ALLOWED = set(string.ascii_letters + string.digits)
+_GRAY_RES = re.compile(r'\bgray\b')
+_GREY_RES = re.compile(r'\bgrey\b')
 
 
 class Colors:
-    def __init__(self, *schemes, canonicalize_gray=True, default='black'):
+    def __init__(self, *schemes, canonicalize_gray='gray', default='black'):
         class Color(color.Color):
             COLORS = self
 
         super().__setattr__('Color', Color)
 
-        self._canonicalize_gray = bool(canonicalize_gray)
-        self._schemes = schemes
+        gt = self._canonicalize_gray = canonicalize_gray
+        if not gt:
+            self._replacements = ()
+        else:
+            if gt is True:
+                gt = 'gray'
+            if gt not in ('gray', 'grey'):
+                raise ValueError('Don\'t understand canonicalize_gray=%s' % gt)
+            gf = 'grey' if gt == 'gray' else 'gray'
+            self._replacements = (
+                (re.compile(r'\b%s\b' % gf).sub, gt),
+                (re.compile(r'\b%s\b' % gf.capitalize()).sub, gt.capitalize()),
+            )
+
         self._name_to_rgb = {}
         self._rgb_to_name = {}
-
-        for s in schemes:
-            self._add_scheme(s)
+        self._schemes = [self._add_scheme(s) for s in schemes]
 
         self._canonical_to_rgb = {
             self._canonical_name(k): v for k, v in self._name_to_rgb.items()
@@ -43,7 +56,7 @@ class Colors:
     def closest(self, color):
         """
         Return the closest named color to `color`.  This is quite slow,
-        particularly in large schemes.
+        particularly if there are many colors.
         """
         return min((c.distance2(color), c) for c in self.values())[1]
 
@@ -118,13 +131,18 @@ class Colors:
         if 'COLORS' in scheme:
             colors = scheme['COLORS']
             primary_names = scheme.get('PRIMARY_NAMES', ())
+
         else:
             colors = scheme
+            scheme = {'COLORS': scheme}
             primary_names = ()
 
         colors = {k: self.Color(v) for k, v in colors.items()}
         if not scheme.get('PRESERVE_CAPITALIZATION'):
             colors = {k.capitalize(): v for k, v in colors.items()}
+
+        for sub, rep in self._replacements:
+            colors = {sub(rep, k): v for k, v in colors.items()}
 
         self._name_to_rgb.update(colors)
 
@@ -138,6 +156,7 @@ class Colors:
             names.setdefault(c, []).append(n)
 
         self._rgb_to_name.update((k, best_name(v)) for k, v in names.items())
+        return scheme
 
     def _canonical_name(self, name):
         name = name.lower()

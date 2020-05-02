@@ -34,6 +34,9 @@ class ModuleTest(unittest.TestCase):
         self.assertEqual(c2, COLORS + nc.Colors({'Red': (0x80, 0, 0)}))
         self.assertNotEqual({'Red': (0x80, 0, 0)} + c1, c2)
 
+    def test_simple_XXX(self):
+        nc.Colors({'Red': (0x80, 0, 0)})
+
 
 COLORS = {
     'Red': (0xFF, 0, 0),

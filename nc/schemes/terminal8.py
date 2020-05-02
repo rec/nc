@@ -1,4 +1,7 @@
-from .terminal16 import CODES, fg, bg  # noqa: F401
+from . import terminal16
+
+fg = terminal16.fg
+bg = terminal16.bg
 
 COLORS = {
     'Black': (0, 0, 0),
@@ -10,3 +13,5 @@ COLORS = {
     'Cyan': (0, 255, 255),
     'White': (255, 255, 255),
 }
+
+CODES = {c: terminal16.CODES[c] for c in COLORS}

@@ -1,3 +1,7 @@
+"""
+Scrape https://en.wikipedia.org/wiki/ANSI_escape_code
+"""
+
 import re
 import safer
 from . import wikipedia

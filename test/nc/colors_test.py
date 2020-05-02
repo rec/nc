@@ -62,7 +62,7 @@ class ColorsTest(unittest.TestCase):
             return s
 
         non = sorted((k, v) for k, v in COLORS.items() if canon(v) != canon(k))
-        self.assertEqual(len(non), 108)
+        self.assertEqual(len(non), 102)
         actual = non[:4] + non[-4:]
         expected = [
             ('Ao (English)', Color('Web green')),
@@ -78,7 +78,7 @@ class ColorsTest(unittest.TestCase):
 
     def test_all_named_colors(self):
         all_colors = sorted(COLORS)
-        self.assertEqual(1326, len(all_colors))
+        self.assertEqual(1319, len(all_colors))
         actual = all_colors[:4] + all_colors[-4:]
         actual = [(a, COLORS[a]) for a in actual]
         expected = [

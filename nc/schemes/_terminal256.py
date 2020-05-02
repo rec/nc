@@ -1,4 +1,4 @@
-# This file was automatically generated on 2020-05-02T11:53:07.168242
+# This file was automatically generated on 2020-05-02T12:55:58.633773
 # by script /code/nc/extract_nc/terminal_colors.py
 # from an algorithm
 
@@ -103,14 +103,14 @@ COLORS = (
     ('Chartreuse 3 B', (102, 204, 51)),
     ('Pale green 3', (102, 204, 102)),
     ('Medium aquamarine', (102, 204, 153)),
-    ('Dark slate grey 3', (102, 204, 204)),
+    ('Dark slate gray 3', (102, 204, 204)),
     ('Steel blue 1 B', (102, 204, 255)),
     ('Lawn green', (102, 255, 0)),
     ('Lawn green B', (102, 255, 51)),
     ('Sea green 2 C', (102, 255, 102)),
     ('Sea green 1', (102, 255, 153)),
     ('Aquamarine 2', (102, 255, 204)),
-    ('Dark slate grey 2', (102, 255, 255)),
+    ('Dark slate gray 2', (102, 255, 255)),
     ('Dark red', (153, 0, 0)),
     ('Deep pink 4 B', (153, 0, 51)),
     ('Deep pink 4 C', (153, 0, 102)),
@@ -146,7 +146,7 @@ COLORS = (
     ('Dark olivegreen 2', (153, 255, 102)),
     ('Pale green 1', (153, 255, 153)),
     ('Aquamarine', (153, 255, 204)),
-    ('Dark slate grey 1', (153, 255, 255)),
+    ('Dark slate gray 1', (153, 255, 255)),
     ('Red 3', (204, 0, 0)),
     ('Crimson', (204, 0, 51)),
     ('Deep pink 3', (204, 0, 102)),
@@ -226,10 +226,10 @@ COLORS = (
     ('Dark gray B', (52, 52, 52)),
     ('Dark gray C', (62, 62, 62)),
     ('Dark gray D', (72, 72, 72)),
-    ('Dark grey', (82, 82, 82)),
-    ('Dark grey B', (92, 92, 92)),
-    ('Dim gray B', (102, 102, 102)),
-    ('Dim gray C', (112, 112, 112)),
+    ('Dark gray E', (82, 82, 82)),
+    ('Dim gray B', (92, 92, 92)),
+    ('Dim gray C', (102, 102, 102)),
+    ('Dim gray D', (112, 112, 112)),
     ('Gray', (122, 122, 122)),
     ('Gray B', (132, 132, 132)),
     ('Snow 4 B', (142, 142, 142)),
@@ -244,3 +244,5 @@ COLORS = (
     ('Snow 2', (232, 232, 232)),
     ('White smoke', (242, 242, 242)),
 )
+
+PRESERVE_CAPITALIZATION = True
