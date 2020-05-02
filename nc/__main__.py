@@ -1,8 +1,10 @@
 from nc import Color
-import nc
 from nc import terminal
 import argparse
+import nc
 import sys
+
+DEFAULT_SPEED = 40
 
 
 def main(sys_args=None, print=print, exit=sys.exit):
@@ -15,11 +17,17 @@ def main(sys_args=None, print=print, exit=sys.exit):
     c.add_argument('colors', nargs='+', help=_HELP_COLOR)
 
     t = sp.add_parser('terminal', help=_HELP_TERM)
-    t.add_argument('-s', '--speed', default=40, type=int, help=_HELP_SPEED)
+    t.add_argument(
+        '-s', '--speed', default=DEFAULT_SPEED, type=int, help=_HELP_SPEED
+    )
     t.add_argument('-c', '--colors', help=_HELP_COLORS)
 
     args = parser.parse_args(sys_args)
-    args.command = args.command or 'terminal'
+    if not args.command:
+        args.command = 'terminal'
+        # See https://stackoverflow.com/questions/46963172
+        args.speed = DEFAULT_SPEED
+        args.colors = None
 
     if args.command == 'terminal':
         return terminal.demo(args.speed, print=print, count=args.colors)

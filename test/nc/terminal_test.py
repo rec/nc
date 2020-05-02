@@ -41,3 +41,8 @@ class TerminalTest(results_printer._ResultsPrinter):
             '\x1b[m',
         ]
         self.assertEqual(self.results(), expected)
+
+    def test_color_context_256(self):
+        context = terminal.Context(count=256)
+        assert context.count == 256
+        assert context.colors

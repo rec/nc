@@ -117,8 +117,8 @@ class Colors:
             primary_names = scheme.get('PRIMARY_NAMES', ())
 
         else:
-            scheme = {'COLORS': scheme}
             colors = scheme
+            scheme = {'COLORS': scheme}
             primary_names = ()
 
         colors = {k: self.Color(v) for k, v in colors.items()}
