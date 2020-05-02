@@ -11,7 +11,7 @@ class TerminalTest(results_printer._ResultsPrinter):
 
     def test_demo16(self):
         with self.print_until(10):
-            demo.demo(print=self.print, sleep=None, count=16)
+            demo.long_demo(print=self.print, sleep=None, count=16)
 
         actual = self.results()
         expected = [
@@ -25,6 +25,7 @@ class TerminalTest(results_printer._ResultsPrinter):
             'Magenta, None\x1b[m\x1b[36m',
             'Cyan, None\x1b[m\x1b[37m',
             'White, None\x1b[m\x1b[90m',
+            '\x1b[m',
         ]
         if expected != actual:
             print(*map(repr, actual), sep='\n')
@@ -34,7 +35,7 @@ class TerminalTest(results_printer._ResultsPrinter):
 
     def test_demo256(self):
         with self.print_until(512):
-            demo.demo(print=self.print, sleep=None, count=256)
+            demo.long_demo(print=self.print, sleep=None, count=256)
 
         actual = self.results()[:8]
         expected = [

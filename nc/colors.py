@@ -58,6 +58,8 @@ class Colors:
         Return the closest named color to `color`.  This is quite slow,
         particularly if there are many colors.
         """
+        if isinstance(color, list):
+            color = tuple(color)
         try:
             if color in self._rgb_to_name:
                 return color

@@ -31,7 +31,7 @@ def main(sys_args=None, print=print, color_count=None):
         args.colors = None
 
     if args.command == 'terminal':
-        return demo.demo(args.speed, print=print, count=args.colors)
+        return demo.long_demo(args.speed, print=print, count=args.colors)
 
     errors = []
 

@@ -22,8 +22,7 @@ def color_count():
     return next((s for s in SIZES if count >= s), 0)
 
 
-@functools.lru_cache()
-class Context:
+class _Context:
     def __init__(self, count=None):
         self.count = color_count() if count is None else count
         if self.count:
@@ -37,12 +36,12 @@ class Context:
     def __bool__(self):
         return bool(self.count)
 
+    def print_codes(self, *codes, print=print):
+        result = '\x1b[%sm' % ';'.join(str(c) for c in codes)
+        print(result, end='')
+
     @contextlib.contextmanager
     def __call__(self, fg=None, bg=None, print=print):
-        def print_codes(*codes):
-            result = '\x1b[%sm' % ';'.join(str(c) for c in codes)
-            print(result, end='')
-
         def color_codes(color, coder):
             if not color:
                 return ()
@@ -51,9 +50,14 @@ class Context:
 
         if self and (fg or bg):
             codes = color_codes(fg, self.fg) + color_codes(bg, self.bg)
-            print_codes(*codes)
-            yield
-            print_codes()
+            self.print_codes(*codes, print=print)
+            try:
+                yield
+            finally:
+                self.print_codes(print=print)
 
         else:
             yield
+
+
+Context = functools.lru_cache()(_Context)
