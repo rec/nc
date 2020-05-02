@@ -58,6 +58,11 @@ class Colors:
         Return the closest named color to `color`.  This is quite slow,
         particularly if there are many colors.
         """
+        try:
+            if color in self._rgb_to_name:
+                return color
+        except TypeError:
+            pass
         return min((c.distance2(color), c) for c in self.values())[1]
 
     def __call__(self, *args, **kwds):
