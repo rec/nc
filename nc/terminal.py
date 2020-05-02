@@ -17,7 +17,7 @@ def demo(lines_per_second=32, print=print, sleep=time.sleep, count=None):
     context = Context(count)
 
     # items = [('None', None)] + list(context.colors.items())
-    colors = context.colors.values()
+    colors = [None] + list(context.colors.values())
 
     for bg in colors:
         for fg in colors:

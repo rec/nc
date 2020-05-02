@@ -5,7 +5,10 @@ from . import results_printer
 class TestMain(results_printer._ResultsPrinter):
     def main(self, expected, *args, color_count=0, **kwds):
         result = main(args, self.print, color_count=color_count, **kwds)
-        assert expected == self.results()[:8]
+        actual = self.results()[:8]
+        if expected != actual:
+            print(*map(repr, actual), sep='\n')
+        assert expected == actual
         return result
 
     def test_color(self):
@@ -42,14 +45,14 @@ class TestMain(results_printer._ResultsPrinter):
 
     def test_terminal(self):
         expected = [
-            '\x1b[30;40m',
-            'Black, Black\x1b[m\x1b[31;40m',
-            'Red, Black\x1b[m\x1b[32;40m',
-            'Green, Black\x1b[m\x1b[33;40m',
-            'Yellow, Black\x1b[m\x1b[34;40m',
-            'Blue, Black\x1b[m\x1b[35;40m',
-            'Magenta, Black\x1b[m\x1b[36;40m',
-            'Cyan, Black\x1b[m\x1b[37;40m',
+            '',
+            'None, None\x1b[30m',
+            'Black, None\x1b[m\x1b[31m',
+            'Red, None\x1b[m\x1b[32m',
+            'Green, None\x1b[m\x1b[33m',
+            'Yellow, None\x1b[m\x1b[34m',
+            'Blue, None\x1b[m\x1b[35m',
+            'Magenta, None\x1b[m\x1b[36m',
         ]
         self.main(expected, 'terminal', '-s0', '-c16')
 
