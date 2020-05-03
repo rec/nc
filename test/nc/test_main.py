@@ -4,7 +4,9 @@ from . import results_printer
 
 class TestMain(results_printer._ResultsPrinter):
     def main(self, expected, *args, color_count=0, **kwds):
-        result = main(args, self.print, color_count=color_count, **kwds)
+        result = main(
+            list(args), self.print, color_count=color_count, sleep=None, **kwds
+        )
         actual = self.results()[:8]
         if expected != actual:
             print(*map(repr, actual), sep='\n')
@@ -54,7 +56,7 @@ class TestMain(results_printer._ResultsPrinter):
             'Blue, None\x1b[m\x1b[35m',
             'Magenta, None\x1b[m\x1b[36m',
         ]
-        self.main(expected, 'terminal', '-s0', '-c16')
+        self.main(expected, 'terminal', '-c16', '-l')
 
     def test_errors(self):
         expected = [
