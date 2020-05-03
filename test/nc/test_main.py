@@ -1,23 +1,23 @@
 from nc.__main__ import main
+from unittest import mock
 from . import results_printer
 
 
+@mock.patch('time.sleep', return_value=None)
 class TestMain(results_printer._ResultsPrinter):
     def main(self, expected, *args, color_count=0, **kwds):
-        result = main(
-            list(args), self.print, color_count=color_count, sleep=None, **kwds
-        )
+        result = main(list(args), self.print, color_count=color_count, **kwds)
         actual = self.results()[:8]
         if expected != actual:
             print(*map(repr, actual), sep='\n')
         assert expected == actual
         return result
 
-    def test_color(self):
+    def test_color(self, sleep):
         expected = ['Red: (255, 0, 0)', 'Cyan: (0, 255, 255)']
         self.main(expected, 'color', 'red', '(0, 0xff, 0xff)')
 
-    def test_all(self):
+    def test_all(self, sleep):
         expected = [
             'Absolute Zero: (0, 72, 186)',
             'Acid green: (176, 191, 26)',
@@ -30,7 +30,7 @@ class TestMain(results_printer._ResultsPrinter):
         ]
         self.main(expected, 'all')
 
-    def test_all8(self):
+    def test_all8(self, sleep):
         expected = [
             '\x1b[34;47m',
             'Absolute Zero: (0, 72, 186)\x1b[m\x1b[33;40m',
@@ -45,7 +45,7 @@ class TestMain(results_printer._ResultsPrinter):
 
     maxDiff = 10000
 
-    def test_terminal(self):
+    def test_terminal(self, sleep):
         expected = [
             '',
             'None, None\x1b[30m',
@@ -58,7 +58,7 @@ class TestMain(results_printer._ResultsPrinter):
         ]
         self.main(expected, 'terminal', '-c16', '-l')
 
-    def test_errors(self):
+    def test_errors(self, sleep):
         expected = [
             'Do not understand: rod groan',
             'No valid colors specified!',

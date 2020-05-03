@@ -4,10 +4,9 @@ from nc import terminal
 import argparse
 import nc
 import sys
-import time
 
 
-def main(sys_args=None, print=print, color_count=None, sleep=time.sleep):
+def main(sys_args=None, print=print, color_count=None):
     parser = argparse.ArgumentParser()
     sp = parser.add_subparsers(dest='command')
 
@@ -30,7 +29,7 @@ def main(sys_args=None, print=print, color_count=None, sleep=time.sleep):
     args = parser.parse_args(sys_args)
     if args.command == 'terminal':
         colors = int(args.colors) if args.colors else args.colors
-        return demo.demo(print, sleep, colors, args.reverse, args.long)
+        return demo.demo(print, colors, args.reverse, args.long)
 
     errors = []
 
