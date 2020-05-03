@@ -6,7 +6,7 @@ import nc
 import sys
 
 
-def main(sys_args=None, print=print, color_count=None):
+def main(sys_args=None, color_count=None):
     parser = argparse.ArgumentParser()
     sp = parser.add_subparsers(dest='command')
 
@@ -29,7 +29,7 @@ def main(sys_args=None, print=print, color_count=None):
     args = parser.parse_args(sys_args)
     if args.command == 'terminal':
         colors = int(args.colors) if args.colors else args.colors
-        return demo.demo(print, colors, args.reverse, args.long)
+        return demo.demo(colors, args.reverse, args.long)
 
     errors = []
 

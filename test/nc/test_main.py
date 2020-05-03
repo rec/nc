@@ -1,13 +1,14 @@
 from nc.__main__ import main
-from unittest import mock
-from . import results_printer
+from unittest import mock, TestCase
+from .print_mocker import print_mocker
 
 
 @mock.patch('time.sleep', return_value=None)
-class TestMain(results_printer._ResultsPrinter):
+class TestMain(TestCase):
     def main(self, expected, *args, color_count=0, **kwds):
-        result = main(list(args), self.print, color_count=color_count, **kwds)
-        actual = self.results()[:8]
+        with print_mocker() as results:
+            result = main(list(args), color_count=color_count, **kwds)
+        actual = results[:8]
         if expected != actual:
             print(*map(repr, actual), sep='\n')
         assert expected == actual

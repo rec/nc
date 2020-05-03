@@ -1,20 +1,19 @@
-from . import results_printer
-from nc import terminal
+from .print_mocker import print_mocker
 from nc import demo
-from unittest import mock
+from nc import terminal
+from unittest import mock, TestCase
 import nc
 
 
 @mock.patch('time.sleep', return_value=None)
-class TerminalTest(results_printer._ResultsPrinter):
+class TerminalTest(TestCase):
     def test_context256(self, sleep):
         context = terminal.Context(256)
         assert context
 
     def test_demo16(self, sleep):
-        demo.demo(self.print, 16, reverse=False, long=True, steps=9)
-
-        actual = self.results()
+        with print_mocker() as actual:
+            demo.demo(16, reverse=False, long=True, steps=9)
         expected = [
             '',
             'None, None\x1b[30m',
@@ -34,9 +33,10 @@ class TerminalTest(results_printer._ResultsPrinter):
     maxDiff = 10000
 
     def test_demo256(self, sleep):
-        demo.demo(self.print, 256, reverse=False, long=True, steps=512)
+        with print_mocker() as results:
+            demo.demo(256, reverse=False, long=True, steps=512)
+        actual = results[:8]
 
-        actual = self.results()[:8]
         expected = [
             '',
             'None, None\x1b[38;5;16m',
@@ -51,7 +51,7 @@ class TerminalTest(results_printer._ResultsPrinter):
             print(*map(repr, actual), sep='\n')
         self.assertEqual(expected, actual)
 
-        actual = self.results()[252:260]
+        actual = results[252:260]
         expected = [
             'Silver, None\x1b[m\x1b[38;5;251m',
             'Snow 3 B, None\x1b[m\x1b[38;5;252m',
@@ -68,7 +68,11 @@ class TerminalTest(results_printer._ResultsPrinter):
 
     def test_color_context(self, sleep):
         context = terminal.Context(16)
-        pr = self.print
+        actual = []
+
+        def pr(*args, **kwds):
+            actual.extend(args)
+
         with context(print=pr):
             pr('one')
         with context(fg=nc.red, print=pr):
@@ -85,7 +89,7 @@ class TerminalTest(results_printer._ResultsPrinter):
             '\x1b[m\x1b[96;102mfour',
             '\x1b[m',
         ]
-        self.assertEqual(expected, self.results())
+        self.assertEqual(''.join(expected), ''.join(actual))
 
     def test_color_context_256(self, sleep):
         context = terminal.Context(256)

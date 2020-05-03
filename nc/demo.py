@@ -7,8 +7,7 @@ DEFAULT_COLUMNS = 64
 
 
 class Demo:
-    def __init__(self, print, terminal_colors, reverse, steps=0):
-        self.print = print
+    def __init__(self, terminal_colors, reverse, steps=0):
         self.context = terminal.Context(terminal_colors)
         self.reverse = reverse
         self.steps = steps
@@ -38,8 +37,8 @@ class Demo:
         self._run(self._one_short, False)
 
     def _one_long(self, fg, bg):
-        self.print()
-        self.print(fg, bg, sep=', ', end='')
+        print()
+        print(fg, bg, sep=', ', end='')
         sleep_time = 0.01
         sleep_time and time.sleep(sleep_time)
 
@@ -62,12 +61,12 @@ class Demo:
         for c1 in colors:
             for c2 in colors:
                 fg, bg = (c1, c2) if self.reverse else (c2, c1)
-                with self.context(fg, bg, self.print):
+                with self.context(fg, bg, print):
                     demo(fg, bg)
                 self.count += 1
                 if self.steps and self.steps <= self.count:
                     return
 
 
-def demo(print, terminal_colors, reverse, long, steps=0):
-    Demo(print, terminal_colors, reverse, steps).demo(long)
+def demo(terminal_colors, reverse, long, steps=0):
+    Demo(terminal_colors, reverse, steps).demo(long)
