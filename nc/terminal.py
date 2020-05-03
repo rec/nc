@@ -24,17 +24,22 @@ def color_count():
 
 class _Context:
     def __init__(self, count=None):
-        self.count = color_count() if count is None else count
-        if self.count:
-            self.colors = Colors('terminal%s' % self.count)
+        count = color_count() if count is None else count
+        if count:
+            self.colors = Colors('terminal%s' % count)
             palette = self.colors._palettes[0]
             codes = palette['CODES']
             self.CODES = {self.colors[k]: v for k, v in codes.items()}
             self.fg = palette['fg']
             self.bg = palette['bg']
+        else:
+            self.colors = None
 
     def __bool__(self):
-        return bool(self.count)
+        return bool(self.colors)
+
+    def __len__(self):
+        return self.colors and len(self.colors) or 0
 
     def print_codes(self, *codes, print=print):
         result = '\x1b[%sm' % ';'.join(str(c) for c in codes)

@@ -7,9 +7,9 @@ DEFAULT_COLUMNS = 64
 
 
 class Demo:
-    def __init__(self, print, count, reverse):
+    def __init__(self, print, terminal_colors, reverse):
         self.print = print
-        self.context = terminal.Context(count)
+        self.context = terminal.Context(terminal_colors)
         self.reverse = reverse
 
         if not self.context:
@@ -66,5 +66,5 @@ class Demo:
                 self.count += 1
 
 
-def demo(print, count, reverse, long):
-    Demo(print, count, reverse).demo(long)
+def demo(print, terminal_colors, reverse, long):
+    Demo(print, terminal_colors, reverse).demo(long)

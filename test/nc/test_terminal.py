@@ -13,7 +13,9 @@ class TerminalTest(results_printer._ResultsPrinter):
 
     def test_demo16(self, sleep):
         with self.print_until(10):
-            demo.demo(print=self.print, count=16, reverse=False, long=True)
+            demo.demo(
+                print=self.print, terminal_colors=16, reverse=False, long=True
+            )
 
         actual = self.results()
         expected = [
@@ -37,7 +39,9 @@ class TerminalTest(results_printer._ResultsPrinter):
 
     def test_demo256(self, sleep):
         with self.print_until(512):
-            demo.demo(print=self.print, count=256, reverse=False, long=True)
+            demo.demo(
+                print=self.print, terminal_colors=256, reverse=False, long=True
+            )
 
         actual = self.results()[:8]
         expected = [
@@ -70,7 +74,7 @@ class TerminalTest(results_printer._ResultsPrinter):
         self.assertEqual(actual, expected)
 
     def test_color_context(self, sleep):
-        context = terminal.Context(count=16)
+        context = terminal.Context(16)
         pr = self.print
         with context(print=pr):
             pr('one')
@@ -91,6 +95,5 @@ class TerminalTest(results_printer._ResultsPrinter):
         self.assertEqual(self.results(), expected)
 
     def test_color_context_256(self, sleep):
-        context = terminal.Context(count=256)
-        assert context.count == 256
-        assert context.colors
+        context = terminal.Context(256)
+        assert len(context) == 256
