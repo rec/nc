@@ -1,7 +1,14 @@
 🎨 ``nc``: Extensible color names in Python 🎨
 -----------------------------------------------------
 
-``nc`` solves two problems - color to string, and string to color.
+``nc`` names color.
+
+There are two ways to use ``nc``.
+
+The simple way is as an intuitive and forgiving interface to a collection of
+over 2000 named colors, put together from almost 20 color palettes scraped from
+the Internet.
+
 
 In the simplest use, it's a collection of about 1700 colors, some
 scraped from the Wikipedia (which includes some very strange colors),
