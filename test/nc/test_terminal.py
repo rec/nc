@@ -12,10 +12,7 @@ class TerminalTest(results_printer._ResultsPrinter):
         assert context
 
     def test_demo16(self, sleep):
-        with self.print_until(10):
-            demo.demo(
-                print=self.print, terminal_colors=16, reverse=False, long=True
-            )
+        demo.demo(self.print, 16, reverse=False, long=True, steps=9)
 
         actual = self.results()
         expected = [
@@ -28,20 +25,16 @@ class TerminalTest(results_printer._ResultsPrinter):
             'Blue, None\x1b[m\x1b[35m',
             'Magenta, None\x1b[m\x1b[36m',
             'Cyan, None\x1b[m\x1b[37m',
-            'White, None\x1b[m\x1b[90m',
-            '\x1b[m',
+            'White, None\x1b[m',
         ]
         if expected != actual:
             print(*map(repr, actual), sep='\n')
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
 
     maxDiff = 10000
 
     def test_demo256(self, sleep):
-        with self.print_until(512):
-            demo.demo(
-                print=self.print, terminal_colors=256, reverse=False, long=True
-            )
+        demo.demo(self.print, 256, reverse=False, long=True, steps=512)
 
         actual = self.results()[:8]
         expected = [
@@ -56,7 +49,7 @@ class TerminalTest(results_printer._ResultsPrinter):
         ]
         if expected != actual:
             print(*map(repr, actual), sep='\n')
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
 
         actual = self.results()[252:260]
         expected = [
@@ -71,7 +64,7 @@ class TerminalTest(results_printer._ResultsPrinter):
         ]
         if expected != actual:
             print(*map(repr, actual), sep='\n')
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
 
     def test_color_context(self, sleep):
         context = terminal.Context(16)
@@ -92,7 +85,7 @@ class TerminalTest(results_printer._ResultsPrinter):
             '\x1b[m\x1b[96;102mfour',
             '\x1b[m',
         ]
-        self.assertEqual(self.results(), expected)
+        self.assertEqual(expected, self.results())
 
     def test_color_context_256(self, sleep):
         context = terminal.Context(256)

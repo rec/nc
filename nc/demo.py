@@ -7,10 +7,11 @@ DEFAULT_COLUMNS = 64
 
 
 class Demo:
-    def __init__(self, print, terminal_colors, reverse):
+    def __init__(self, print, terminal_colors, reverse, steps=0):
         self.print = print
         self.context = terminal.Context(terminal_colors)
         self.reverse = reverse
+        self.steps = steps
 
         if not self.context:
             raise ValueError('Terminal does not support colors')
@@ -64,7 +65,9 @@ class Demo:
                 with self.context(fg, bg, self.print):
                     demo(fg, bg)
                 self.count += 1
+                if self.steps and self.steps <= self.count:
+                    return
 
 
-def demo(print, terminal_colors, reverse, long):
-    Demo(print, terminal_colors, reverse).demo(long)
+def demo(print, terminal_colors, reverse, long, steps=0):
+    Demo(print, terminal_colors, reverse, steps).demo(long)
