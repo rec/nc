@@ -4,6 +4,7 @@ import sys
 import time
 
 DEFAULT_COLUMNS = 64
+DEMO_CHAR = '•'
 
 
 class Demo:
@@ -12,10 +13,12 @@ class Demo:
         self.reverse = reverse
         self.steps = steps
 
-        if not self.context:
-            raise ValueError('Terminal does not support colors')
-
     def demo(self, is_long):
+        if not self.context:
+            print('Your terminal does not seem to support colors')
+            print('Try `pync all` to see a list of colors')
+            return -1
+
         return self.long() if is_long else self.short()
 
     def long(self):
@@ -43,7 +46,7 @@ class Demo:
         sleep_time and time.sleep(sleep_time)
 
     def _one_short(self, fg, bg):
-        print('•', end='')
+        print(DEMO_CHAR, end='')
         if (self.count + 1) % self.chars:
             sys.stdout.flush()
         else:
