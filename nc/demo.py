@@ -30,7 +30,7 @@ class Demo:
         except Exception:
             columns = DEFAULT_COLUMNS
 
-        self.chars = self.context.count
+        self.chars = len(self.context)
         while self.chars > columns:
             self.chars //= 2
 

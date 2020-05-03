@@ -91,6 +91,32 @@ class TerminalTest(TestCase):
         ]
         self.assertEqual(''.join(expected), ''.join(actual))
 
+    def test_short_demo(self, sleep):
+        with print_mocker() as actual:
+            demo.demo(16, reverse=False, long=False, steps=9)
+        expected = [
+            '\x1b[30;40m•'
+            '\x1b[m'
+            '\x1b[31;40m•'
+            '\x1b[m'
+            '\x1b[32;40m•'
+            '\x1b[m'
+            '\x1b[33;40m•'
+            '\x1b[m'
+            '\x1b[34;40m•'
+            '\x1b[m'
+            '\x1b[35;40m•'
+            '\x1b[m'
+            '\x1b[36;40m•'
+            '\x1b[m'
+            '\x1b[37;40m•'
+            '\x1b[m'
+            '\x1b[90;40m•\x1b[m'
+        ]
+        if expected != actual:
+            print(*map(repr, actual), sep='\n')
+        self.assertEqual(expected, actual)
+
     def test_color_context_256(self, sleep):
         context = terminal.Context(256)
         assert len(context) == 256
