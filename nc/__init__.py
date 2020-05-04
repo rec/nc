@@ -48,4 +48,5 @@ class NamedColors:
 
 
 sys.modules[__name__] = NamedColors()
-NamedColors.__doc__ = """NamedColors"""
+NamedColors.__doc__ = """
+DOX HERE"""

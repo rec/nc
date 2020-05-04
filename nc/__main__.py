@@ -75,7 +75,9 @@ def _parse_args(sys_args):
 
 COMMANDS = 'all', 'colors', 'terminal'
 _DESCRIPTION = """
-pync: Python named color utilities from `nc`
+pync: Named Color utilities from the `nc` Python library
+
+See https://github.com/rec/nc for more information.
 """
 _HELP_ALL = 'List all `nc` colors'
 _HELP_COLOR = 'Convert names to colors and back from the command line'

@@ -6,6 +6,8 @@ COLOR_TUPLE = collections.namedtuple('Color', 'r g b')
 
 
 class Color(COLOR_TUPLE):
+    """DOX HERE"""
+
     COLORS = None
 
     def __new__(cls, *args):

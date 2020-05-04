@@ -4,11 +4,11 @@ import string
 import re
 
 _ALLOWED = set(string.ascii_letters + string.digits)
-_GRAY_RES = re.compile(r'\bgray\b')
-_GREY_RES = re.compile(r'\bgrey\b')
 
 
 class Colors:
+    """DOX HERE"""
+
     def __init__(self, *palettes, canonicalize_gray='gray', default='black'):
         class Color(color.Color):
             COLORS = self
@@ -55,7 +55,7 @@ class Colors:
 
     def closest(self, color):
         """
-        Return the closest named color to `color`.  This is quite slow,
+        Return the closest named color to `color`.  This can be quite slow,
         particularly if there are many colors.
         """
         if isinstance(color, list):
