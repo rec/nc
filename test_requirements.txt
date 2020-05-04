@@ -1,6 +1,6 @@
 coverage
 flake8
-import_all>=0.9.4
+impall
 mypy
 pyfakefs
 pytest
