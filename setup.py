@@ -1,47 +1,4 @@
 import os
-import setuptools
-import sys
-from setuptools.command.test import test as TestCommand
-
-
-# From here: http://pytest.org/2.2.4/goodpractises.html
-class RunTests(TestCommand):
-    DIRECTORY = 'test'
-
-    def finalize_options(self):
-        TestCommand.finalize_options(self)
-        self.test_args = [self.DIRECTORY]
-        self.test_suite = True
-
-    def run_tests(self):
-        # Import here, because outside the eggs aren't loaded.
-        import pytest
-
-        errno = pytest.main(self.test_args)
-        if errno:
-            raise SystemExit(errno)
-
-
-class RunCoverage(RunTests):
-    def run_tests(self):
-        import coverage
-
-        cov = coverage.Coverage(config_file=True)
-
-        cov.start()
-        super().run_tests()
-        cov.stop()
-
-        cov.report(file=sys.stdout)
-        coverage = cov.html_report(directory='htmlcov')
-        fail_under = cov.get_option('report:fail_under')
-        if coverage < fail_under:
-            print(
-                'ERROR: coverage %.2f%% was less than fail_under=%s%%'
-                % (coverage, fail_under)
-            )
-            raise SystemExit(1)
-
 
 NAME = 'nc'
 OWNER = 'rec'
@@ -55,9 +12,6 @@ DOWNLOAD_URL = '{URL}/archive/{VERSION}.tar.gz'.format(**locals())
 INSTALL_REQUIRES = open('requirements.txt').read().splitlines()
 TESTS_REQUIRE = open('test_requirements.txt').read().splitlines()
 
-PACKAGES = setuptools.find_packages(exclude=['test'])
-CMDCLASS = {'coverage': RunCoverage, 'test': RunTests}
-
 CLASSIFIERS = [
     'Development Status :: 5 - Production/Stable',
     'License :: OSI Approved :: MIT License',
@@ -67,37 +21,23 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 3.8',
 ]
 
-SETUPTOOLS_VERSION = '18.5'
-SETUPTOOLS_ERROR = """
+if __name__ == '__main__':
+    import setuptools
 
-Your version of setuptools is %s but this needs version %s or greater.
-
-Please type:
-
-    pip install -U setuptools pip
-
-and then try again.
-"""
-
-sversion = setuptools.version.__version__
-if sversion < SETUPTOOLS_VERSION:
-    raise ValueError(SETUPTOOLS_ERROR % (sversion, SETUPTOOLS_VERSION))
-
-setuptools.setup(
-    name=NAME,
-    version=VERSION,
-    description='Named colors in Python',
-    long_description=open('README.rst').read(),
-    author='Tom Ritchford',
-    author_email='tom@swirly.com',
-    url=URL,
-    download_url=DOWNLOAD_URL,
-    license='MIT',
-    packages=PACKAGES,
-    classifiers=CLASSIFIERS,
-    tests_require=TESTS_REQUIRE,
-    install_requires=INSTALL_REQUIRES,
-    cmdclass=CMDCLASS,
-    include_package_data=True,
-    scripts=['scripts/pync'],
-)
+    setuptools.setup(
+        name=NAME,
+        version=VERSION,
+        description='Named colors in Python',
+        long_description=open('README.rst').read(),
+        author='Tom Ritchford',
+        author_email='tom@swirly.com',
+        url=URL,
+        download_url=DOWNLOAD_URL,
+        license='MIT',
+        packages= ['nc'] ,
+        classifiers=CLASSIFIERS,
+        tests_require=TESTS_REQUIRE,
+        install_requires=INSTALL_REQUIRES,
+        include_package_data=True,
+        scripts=['scripts/pync'],
+    )

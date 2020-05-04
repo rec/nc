@@ -1,5 +1,5 @@
-import import_all
+import impall
 
 
-class ImportAllTest(import_all.ImportAllTest):
+class ImpAllTest(impall.ImpAllTest):
     WARNINGS_ACTION = 'error'
