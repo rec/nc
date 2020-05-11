@@ -33,7 +33,7 @@ class ColorsTest(unittest.TestCase):
             primary = str(rgb)
             if primary == secondary:
                 i_color = rgb.as_int()
-                dupes = set(k for k, v in juce.COLORS.items() if v == i_color)
+                dupes = {k for k, v in juce.COLORS.items() if v == i_color}
                 dupes.remove(primary)
                 primaries.append(sorted(dupes)[0])
 

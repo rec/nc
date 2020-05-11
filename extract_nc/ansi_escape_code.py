@@ -33,7 +33,7 @@ def write_escapes():
             nv.setdefault(name, {})[color] = value
 
     for name, values in nv.items():
-        if not any(i is None for i in values):
+        if all(i is not None for i in values):
             _write_file(name, values)
 
 
