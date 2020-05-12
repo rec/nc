@@ -44,6 +44,12 @@ class ColorTest(unittest.TestCase):
         self.assertEqual(Color('0x00000'), COLORS.Black)
         self.assertEqual(Color('#FFFFFF'), COLORS.White)
 
+    def test_distance(self):
+        self.assertEqual(COLORS.Black.distance2(COLORS.White), 3 * 255 ** 2)
+        self.assertAlmostEqual(
+            COLORS.Black.distance(COLORS.White), 441.6729559300637
+        )
+
     def test_repr(self):
         self.assertEqual(repr(COLORS.red), "Color('Red')")
         self.assertEqual(repr(Color(2, 3, 4)), "Color(2, 3, 4)")

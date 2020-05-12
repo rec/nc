@@ -19,11 +19,11 @@ class Colors:
         if not gt:
             self._replacements = ()
         else:
-            if gt is True:
-                gt = 'gray'
+            gt = 'gray' if gt is True else gt.lower()
+            gf = 'grey' if gt == 'gray' else 'gray'
             if gt not in ('gray', 'grey'):
                 raise ValueError('Don\'t understand canonicalize_gray=%s' % gt)
-            gf = 'grey' if gt == 'gray' else 'gray'
+
             self._replacements = (
                 (re.compile(r'\b%s\b' % gf).sub, gt),
                 (re.compile(r'\b%s\b' % gf.capitalize()).sub, gt.capitalize()),
@@ -60,11 +60,8 @@ class Colors:
         """
         if isinstance(color, list):
             color = tuple(color)
-        try:
-            if color in self._rgb_to_name:
-                return color
-        except TypeError:
-            pass
+        if color in self._rgb_to_name:
+            return color
         return min((c.distance2(color), c) for c in self.values())[1]
 
     def __call__(self, *args, **kwds):

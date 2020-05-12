@@ -34,7 +34,7 @@ if __name__ == '__main__':
         url=URL,
         download_url=DOWNLOAD_URL,
         license='MIT',
-        packages= ['nc'] ,
+        packages=['nc'],
         classifiers=CLASSIFIERS,
         tests_require=TESTS_REQUIRE,
         install_requires=INSTALL_REQUIRES,

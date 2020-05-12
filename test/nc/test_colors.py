@@ -123,6 +123,10 @@ class ColorsTest(unittest.TestCase):
         ex = ['Rich black', 'Raw umber', 'Pine green', 'Medium aquamarine']
         assert ex == actual
 
+    def test_closest_float(self):
+        color = COLORS.closest((204.5, 182.7, 76.22))
+        assert str(color) == 'Vegas gold'
+
 
 _ROUNDTRIP = (
     'Red',

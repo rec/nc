@@ -41,7 +41,7 @@ class TestMain(TestCase):
             'Alabaster: (237, 234, 224)\x1b[m\x1b[37;40m',
             'Alice blue: (240, 248, 255)\x1b[m\x1b[31;47m',
         ]
-        self.main(expected, 'all', color_count=8)
+        self.main(expected, color_count=8)
 
     maxDiff = 10000
 

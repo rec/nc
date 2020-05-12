@@ -25,13 +25,14 @@ class Demo:
         self._run(self._one_long, True)
 
     def short(self):
+        cmd = ['stty', 'size']
         try:
-            cmd = ['stty', 'size']
             out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL)
-            _, columns = out.split()
-            columns = int(columns)
         except Exception:
             columns = DEFAULT_COLUMNS
+        else:
+            _, columns = out.split()
+            columns = int(columns)
 
         self.chars = len(self.context)
         while self.chars > columns:
@@ -72,4 +73,4 @@ class Demo:
 
 
 def demo(terminal_colors, reverse, long, steps=0):
-    Demo(terminal_colors, reverse, steps).demo(long)
+    return Demo(terminal_colors, reverse, steps).demo(long)

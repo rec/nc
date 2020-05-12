@@ -16,7 +16,7 @@ def color_count():
     cmd = 'tput', 'colors'
     try:
         count = int(subprocess.check_output(cmd, stderr=subprocess.STDOUT))
-    except (FileNotFoundError, subprocess.CalledProcessError):
+    except subprocess.CalledProcessError:  # pragma: no cover
         return 0
 
     return next((s for s in SIZES if count >= s), 0)

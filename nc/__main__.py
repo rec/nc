@@ -8,7 +8,7 @@ import sys
 DEFAULT_COMMAND = 'all'
 
 
-def main(sys_args=None, color_count=None):
+def main(sys_args, color_count=None):
     args = _parse_args(sys_args)
     if args.command == 'terminal':
         colors = int(args.colors) if args.colors else args.colors
@@ -64,9 +64,6 @@ def _parse_args(sys_args):
     t.add_argument('-l', '--long', action='store_true', help=_HELP_LONG)
     t.add_argument('-r', '--reverse', action='store_true', help=_HELP_REVERSE)
 
-    if sys_args is None:
-        sys_args = sys.argv[1:]
-
     if '-h' not in sys_args and all(a.startswith('-') for a in sys_args):
         sys_args.insert(0, DEFAULT_COMMAND)
 
@@ -93,4 +90,4 @@ _HELP_TERMINAL = 'Print every combination of foreground and background color'
 
 
 if __name__ == '__main__':  # pragma: no cover
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))

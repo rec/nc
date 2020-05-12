@@ -38,14 +38,6 @@ class NamedColors:
     def __iter__(self):
         return iter(self.COLORS)
 
-    def __eq__(self, x):
-        if isinstance(x, __class__):
-            return self.COLORS == x.COLORS
-        return self.COLORS == x
-
-    def __ne__(self, x):
-        return not (self == x)
-
 
 sys.modules[__name__] = NamedColors()
 NamedColors.__doc__ = """
