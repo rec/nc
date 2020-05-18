@@ -2,9 +2,9 @@
 Scrape https://en.wikipedia.org/wiki/ANSI_escape_code
 """
 
+from . import wikipedia
 import re
 import safer
-from . import wikipedia
 
 COLSPAN_RE = re.compile('colspan="(.)"')
 ANSI_ESCAPE_PAGE = 'ANSI_escape_code&section=12'

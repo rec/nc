@@ -1,6 +1,6 @@
+from .print_mocker import print_mocker
 from nc.__main__ import main
 from unittest import mock, TestCase
-from .print_mocker import print_mocker
 
 
 class TestMain(TestCase):

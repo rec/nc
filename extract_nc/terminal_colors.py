@@ -2,10 +2,10 @@
 https://serverfault.com/a/91873
 """
 
-import nc
-import safer
 from . import wikipedia
 from nc.palette.terminal16 import xterm
+import nc
+import safer
 
 FILE = wikipedia.PALETTE_DIR / '_terminal256.py'
 

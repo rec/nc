@@ -1,7 +1,7 @@
 from . import color
 import importlib
-import string
 import re
+import string
 
 _ALLOWED = set(string.ascii_letters + string.digits)
 

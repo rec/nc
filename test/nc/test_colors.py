@@ -1,7 +1,7 @@
-from nc.palette import juce
+from nc import COLORS
 from nc import Color
 from nc import Colors
-from nc import COLORS
+from nc.palette import juce
 import unittest
 
 
