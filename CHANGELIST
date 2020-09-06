@@ -1,3 +1,11 @@
+## v0.9.4 - 20/09/06
+
+* Modify MANIFEST.in
+* Sort import statements with simp
+* Complete unit test coverage
+* Use impall instead of import_all
+* New `pync` executable
+
 ## v0.9.3 - 2020-05-03
 * Better demos
 * Simpler unit tests
