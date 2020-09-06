@@ -89,5 +89,5 @@ _HELP_REVERSE = 'Reverse foreground and background'
 _HELP_TERMINAL = 'Print every combination of foreground and background color'
 
 
-if __name__ == '__main__':  # pragma: no cover
+if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
