@@ -1,9 +1,11 @@
-include nc/VERSION
+include .coveragerc
+include CHANGELOG
+include LICENSE
 include requirements.txt
-include test_requirements.txt
-include README.rst
-recursive-exclude test *
+include tox.ini
 recursive-exclude bin *
 recursive-exclude build *
-recursive-exclude htmlcov *
 recursive-exclude dist *
+recursive-exclude htmlcov *
+recursive-exclude test *
+recursive-include test *.py
