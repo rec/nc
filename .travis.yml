@@ -10,7 +10,7 @@ branches:
 
 matrix:
   include:
-    - python: 3.8-dev
+    - python: 3.9-dev
       dist: xenial
 
 install:
