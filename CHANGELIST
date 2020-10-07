@@ -1,3 +1,8 @@
+## v0.9.5 - 20/10/07
+
+* Enable Python 3.9
+* Tests of custom colors and the demo
+
 ## v0.9.4 - 20/09/06
 
 * Modify MANIFEST.in
