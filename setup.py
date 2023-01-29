@@ -15,7 +15,6 @@ TESTS_REQUIRE = open('test_requirements.txt').read().splitlines()
 CLASSIFIERS = [
     'Development Status :: 5 - Production/Stable',
     'License :: OSI Approved :: MIT License',
-    'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
@@ -28,7 +27,7 @@ if __name__ == '__main__':
     setuptools.setup(
         name=NAME,
         version=VERSION,
-        description='Named colors in Python',
+        description='🎨 Named colors in Python 🎨',
         long_description=open('README.rst').read(),
         author='Tom Ritchford',
         author_email='tom@swirly.com',
