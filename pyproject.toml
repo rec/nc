@@ -2,3 +2,18 @@
 line-length = 79
 skip-string-normalization = true
 target-version = ['py37']
+
+[tool.poetry]
+name = "nc"
+version = "0.9.5"
+description = "🎨 Named colors in Python 🎨"
+authors = ["Tom Ritchford <tom@swirly.com>"]
+license = "MIT"
+readme = "README.rst"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
