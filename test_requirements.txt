@@ -1,6 +1,0 @@
-coverage
-flake8
-impall
-mypy
-pyfakefs
-pytest
