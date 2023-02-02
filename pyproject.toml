@@ -5,7 +5,7 @@ target-version = ['py37']
 
 [tool.poetry]
 name = "nc"
-version = "0.9.5"
+version = "0.9.6"
 description = "🎨 Named colors in Python 🎨"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
