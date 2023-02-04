@@ -9,7 +9,7 @@ version = "0.9.6"
 description = "🎨 Named colors in Python 🎨"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
-readme = "README.rst"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.7"
