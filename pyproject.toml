@@ -21,6 +21,9 @@ impall = "^1.1.1"
 mypy = "^0.991"
 pyfakefs = "^5.1.0"
 pytest = "^7.2.1"
+beautifulsoup4 = "^4.11.2"
+requests = "^2.28.2"
+safer = "^4.5.0"
 
 [build-system]
 requires = ["poetry-core"]
