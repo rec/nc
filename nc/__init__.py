@@ -1,4 +1,5 @@
 from . import colors
+from functools import cached_property
 import sys
 
 _DEFAULT_PALETTES = 'wikipedia', 'x11', 'juce'
@@ -8,12 +9,9 @@ class NamedColors:
     Colors = colors.Colors
     _COLORS = None
 
-    @property
+    @cached_property
     def COLORS(self):
-        if not self._COLORS:
-            self._COLORS = self.Colors(*_DEFAULT_PALETTES)
-
-        return self._COLORS
+        return self.Colors(*_DEFAULT_PALETTES)
 
     def __getattr__(self, name):
         try:
