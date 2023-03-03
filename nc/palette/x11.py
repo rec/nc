@@ -1,5 +1,5 @@
-# This file was automatically generated on 2020-01-13T19:40:18.189932
-# by script /code/nc/extract_nc/wikipedia.py
+# This file was automatically generated on 2023-03-03T19:29:18.390012
+# by script /Users/tom/synthetic/code/nc/extract_nc/wikipedia.py
 # from X11 colors
 
 COLORS = {
@@ -49,7 +49,7 @@ COLORS = {
     'Floral White': 0xFFFAF0,
     'Forest Green': 0x228B22,
     'Fuchsia': 0xFF00FF,
-    'Gainsboro': 0xDCDCDC,
+    'Gainsboro]]*': 0xDCDCDC,
     'Ghost White': 0xF8F8FF,
     'Gold': 0xFFD700,
     'Goldenrod': 0xDAA520,
@@ -149,5 +149,3 @@ COLORS = {
     'Yellow': 0xFFFF00,
     'Yellow Green': 0x9ACD32,
 }
-
-PRIMARY_NAMES = {'Green'}

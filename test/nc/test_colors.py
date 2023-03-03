@@ -44,6 +44,8 @@ class ColorsTest(unittest.TestCase):
         for c in _ROUNDTRIP:
             self.assertEqual(str(Color(c)), c)
 
+    maxDiff = 100000
+
     def test_non_roundtrips(self):
         def canon(s):
             s = str(s).lower()
@@ -62,37 +64,37 @@ class ColorsTest(unittest.TestCase):
             return s
 
         non = sorted((k, v) for k, v in COLORS.items() if canon(v) != canon(k))
-        self.assertEqual(len(non), 102)
+        self.assertEqual(len(non), 84)
         actual = non[:4] + non[-4:]
         expected = [
-            ('Ao (English)', Color('Web green')),
             ('Aqua', Color('Cyan')),
             ('Aquamarine 3', Color('Medium aquamarine')),
             ('Arylide yellow', Color('Hansa yellow')),
-            ('Wood brown', Color('Lion')),
-            ('Yellow (NCS)', Color('Cyber yellow')),
+            ('Baby pink', Color('Tea rose')),
+            ('Wood brown', Color('Camel')),
+            ('Yellow (ncs)', Color('Cyber yellow')),
             ('Yellow (process)', Color('Canary yellow')),
-            ('Yellow Sunshine', Color('Lemon')),
+            ('Yellow sunshine', Color('Lemon')),
         ]
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
 
     def test_all_named_colors(self):
         all_colors = sorted(COLORS)
-        self.assertEqual(1319, len(all_colors))
+        self.assertEqual(1248, len(all_colors))
         actual = all_colors[:4] + all_colors[-4:]
-        actual = [(a, COLORS[a]) for a in actual]
+        actual = [(a, tuple(COLORS[a])) for a in actual]
         expected = [
-            ('Absolute Zero', (0, 72, 186)),
+            ('Absolute zero', (0, 72, 186)),
             ('Acid green', (176, 191, 26)),
             ('Aero', (124, 185, 232)),
-            ('Aero blue', (201, 255, 229)),
-            ('Yellow-green (Color Wheel)', (48, 178, 26)),
-            ('Yellow-green (Crayola)', (197, 227, 132)),
+            ('African violet', (178, 132, 190)),
+            ('Yellow-green (crayola)', (197, 227, 132)),
+            ('Yinmn blue', (46, 80, 144)),
             ('Zaffre', (0, 20, 168)),
             ('Zomp', (57, 167, 142)),
         ]
 
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
 
     def test_keys_and_values(self):
         colors = {k: v for k, v in COLORS.items()}

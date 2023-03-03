@@ -22,7 +22,7 @@ class TestMain(TestCase):
 
     def test_all_unique(self):
         _, results = self._run('all')
-        assert len(results) > 1300
+        assert len(results) == 1248
         assert len(results) == len(set(results))
 
     def test_dupes_in_all(self):
@@ -32,14 +32,14 @@ class TestMain(TestCase):
     @mock.patch('time.sleep', return_value=None)
     def test_all8(self, sleep):
         expected = [
-            '\x1b[34;47mAbsolute Zero: (0, 72, 186)\x1b[m\x1b[33;40m',
+            '\x1b[34;47mAbsolute zero: (0, 72, 186)\x1b[m\x1b[33;40m',
             'Acid green: (176, 191, 26)\x1b[m\x1b[36;40m',
             'Aero: (124, 185, 232)\x1b[m\x1b[37;40m',
-            'Aero blue: (201, 255, 229)\x1b[m\x1b[37;40m',
             'African violet: (178, 132, 190)\x1b[m\x1b[36;40m',
             'Air superiority blue: (114, 160, 193)\x1b[m\x1b[37;40m',
-            'Alabaster: (237, 234, 224)\x1b[m\x1b[37;40m',
             'Alice blue: (240, 248, 255)\x1b[m\x1b[31;47m',
+            'Alizarin: (219, 45, 67)\x1b[m\x1b[31;47m',
+            'Alloy orange: (196, 98, 16)\x1b[m\x1b[37;40m',
         ]
         self.main(expected, color_count=8)
 

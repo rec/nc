@@ -1,5 +1,5 @@
-# This file was automatically generated on 2020-01-13T19:40:18.877479
-# by script /code/nc/extract_nc/wikipedia.py
+# This file was automatically generated on 2023-03-03T19:29:19.023398
+# by script /Users/tom/synthetic/code/nc/extract_nc/wikipedia.py
 # from PWG 5101.1 colors
 
 COLORS = {
@@ -10,7 +10,7 @@ COLORS = {
     'Light Blue': 0xADD8E6,
     'Brown': 0xA52A2A,
     'Dark Brown': 0x5C4033,
-    'Light Brown': 0x9966FF,
+    'Light Brown': 0x996600,
     'Buff': 0xF0DC82,
     'Dark Buff': 0x976638,
     'Light Buff': 0xECD9B0,

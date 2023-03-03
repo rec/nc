@@ -55,7 +55,7 @@ def wikitext(url):
 
 def colors(urls, title, print):
     print_header(title, print)
-    print('COLORS = {{')
+    print('COLORS = {')
     for url in urls:
         for line in wikitext(url).splitlines():
             if line == TABLE_END:

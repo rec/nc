@@ -16,7 +16,7 @@ class PaletteTest(unittest.TestCase):
         s256 = set(TERMINAL_256.items())
         assert len(s256.intersection(X11.items())) == 4
         assert len(s256.intersection(HTML.items())) == 3
-        assert len(s256.intersection(WIKIPEDIA.items())) == 2
+        assert len(s256.intersection(WIKIPEDIA.items())) == 3
         assert len(s256.intersection(TERMINAL_8.items())) == 1
         assert len(s256.intersection(TERMINAL_16.items())) == 1
 
