@@ -1,0 +1,19 @@
+site_name: '🎨: `nc`: Named colors in Python 🎨'
+
+theme:
+  name: material
+
+  palette:
+    primary:
+      'yellow'
+
+  font:
+    text:
+      Roboto
+    code:
+      Roboto Mono
+
+extra_css: [extra.css]
+
+plugins:
+    - mkdocstrings
