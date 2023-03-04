@@ -9,4 +9,4 @@ class ModuleTest(unittest.TestCase):
         assert 'Taupe' in nc
         assert len(nc) == 1248
 
-        assert next(iter(nc)) == 'Absolute zero'
+        assert str(nc[0]) == 'Absolute zero'

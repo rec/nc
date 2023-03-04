@@ -79,7 +79,7 @@ class ColorsTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_all_named_colors(self):
-        all_colors = sorted(COLORS)
+        all_colors = [str(c) for c in sorted(COLORS, key=str)]
         self.assertEqual(1248, len(all_colors))
         actual = all_colors[:4] + all_colors[-4:]
         actual = [(a, tuple(COLORS[a])) for a in actual]
