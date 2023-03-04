@@ -21,9 +21,7 @@ class Color(COLOR_TUPLE):
 
     def __repr__(self):
         name = str(self)
-        if not name.startswith('('):
-            return "Color('%s')" % name
-        return 'Color' + name
+        return f'Color{name}' if name.startswith('(') else f"Color('{name}')"
 
     def closest(self):
         """
