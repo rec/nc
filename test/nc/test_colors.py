@@ -97,7 +97,7 @@ class ColorsTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_keys_and_values(self):
-        colors = {k: v for k, v in COLORS.items()}
+        colors = dict(COLORS.items())
         self.assertEqual(sorted(COLORS.keys()), sorted(colors.keys()))
         self.assertEqual(sorted(COLORS.values()), sorted(colors.values()))
 

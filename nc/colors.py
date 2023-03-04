@@ -138,9 +138,9 @@ class Colors:
     def _add_palette(self, palette):
         if isinstance(palette, str):
             if '.' not in palette:
-                palette = '.' + palette
+                palette = f'.{palette}'
             if palette.startswith('.'):
-                palette = 'nc.palette' + palette
+                palette = f'nc.palette{palette}'
 
             palette = importlib.import_module(palette)
 
