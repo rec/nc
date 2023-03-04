@@ -1,4 +1,5 @@
 from . import color
+from functools import cached_property
 import importlib
 import re
 import string
@@ -13,22 +14,8 @@ class Colors:
         class Color(color.Color):
             COLORS = self
 
-        super().__setattr__('Color', Color)
-
-        gt = self._canonicalize_gray = canonicalize_gray
-        if not gt:
-            self._replacements = ()
-        else:
-            gt = 'gray' if gt is True else gt.lower()
-            gf = 'grey' if gt == 'gray' else 'gray'
-            if gt not in ('gray', 'grey'):
-                raise ValueError('Don\'t understand canonicalize_gray=%s' % gt)
-
-            self._replacements = (
-                (re.compile(r'\b%s\b' % gf).sub, gt),
-                (re.compile(r'\b%s\b' % gf.capitalize()).sub, gt.capitalize()),
-            )
-
+        self.__dict__['Color'] = Color
+        self._canonicalize_gray = canonicalize_gray
         self._name_to_rgb = {}
         self._rgb_to_name = {}
         self._palettes = [self._add_palette(s) for s in palettes]
@@ -38,6 +25,28 @@ class Colors:
         }
         self._default = self.get(str(default)) or next(iter(self._rgb_to_name))
 
+    @cached_property
+    def _colors(self):
+        return {k: self.Color(*v) for k, v in self._name_to_rgb.items()}
+
+    @cached_property
+    def _color_list(self):
+        return list(self._colors.values())
+
+    @cached_property
+    def _replacements(self):
+        if not (gt := self._canonicalize_gray):
+            return ()
+
+        gt = 'gray' if gt is True else gt.lower()
+        gf = 'grey' if gt == 'gray' else 'gray'
+        if gt not in ('gray', 'grey'):
+            raise ValueError('Don\'t understand canonicalize_gray=%s' % gt)
+
+        regular = re.compile(r'\b%s\b' % gf).sub, gt
+        upper = re.compile(r'\b%s\b' % gf.capitalize()).sub, gt.capitalize()
+        return regular, upper
+
     def get(self, key, default=None):
         try:
             return self[key]
@@ -45,13 +54,13 @@ class Colors:
             return default
 
     def items(self):
-        return self._name_to_rgb.items()
+        return self._colors.items()
 
     def values(self):
-        return self._name_to_rgb.values()
+        return self._colors.values()
 
     def keys(self):
-        return self._name_to_rgb.keys()
+        return self._colors.keys()
 
     def closest(self, color):
         """
@@ -69,6 +78,12 @@ class Colors:
 
     def __getitem__(self, name):
         """Try to convert string item into a color"""
+        if isinstance(name, (int, slice)):
+            return self._color_list[name]
+
+        if isinstance(name, tuple):
+            return self.Color(*name)
+
         canonical = self._canonical_name(name)
         try:
             return self._canonical_to_rgb[canonical]
@@ -97,10 +112,10 @@ class Colors:
         raise AttributeError(name)
 
     def __len__(self):
-        return len(self._name_to_rgb)
+        return len(self._color_list)
 
     def __iter__(self):
-        return iter(self._name_to_rgb)
+        return iter(self._color_list)
 
     def __eq__(self, x):
         return __class__ == x.__class__ and self._name_to_rgb == x._name_to_rgb

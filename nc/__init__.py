@@ -79,7 +79,6 @@ class NamedColors:
     """
     colors = _colors
     Colors = _colors.Colors
-    _COLORS = None
 
     @cached_property
     def COLORS(self):
