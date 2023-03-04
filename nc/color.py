@@ -1,4 +1,5 @@
 import collections
+import colorsys
 import math
 import numbers
 
@@ -42,6 +43,30 @@ class Color(COLOR_TUPLE):
     @property
     def rgb(self):
         return self.r * 0x10000 + self.g * 0x100 + self.b
+
+    @property
+    def hsl(self):
+        return colorsys.rgb_to_hsl(*self)
+
+    @property
+    def hsv(self):
+        return colorsys.rgb_to_hsv(*self)
+
+    @property
+    def yiq(self):
+        return colorsys.rgb_to_yiq(*self)
+
+    @classmethod
+    def from_hsl(cls, h, s, l):  # noqa E741
+        return cls(*colorsys.hsl_to_rgb(h, s, l))
+
+    @classmethod
+    def from_hsv(cls, h, s, v):
+        return cls(*colorsys.hsv_to_rgb(h, s, v))
+
+    @classmethod
+    def from_yiq(cls, y, i, q):
+        return cls(*colorsys.yiq_to_rgb(y, i, q))
 
 
 def _make(cls, args):
