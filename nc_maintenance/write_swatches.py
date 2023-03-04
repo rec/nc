@@ -5,7 +5,7 @@ def _cell(color):
     tup = f'( {color.r:3}, {color.g:3}, {color.b:3} )'
     name = f'{color} {tuple(color)}'
     hex_color = f'#{color.rgb:06x}'
-    style = f'color:{hex_color};'
+    style = f'style="color:{hex_color};"'
     code = f'<code>{hex_color} {tup}</code>'
     return f'    <td "{style}">{code} {color}</td>'
 
@@ -25,6 +25,7 @@ def _table(name, colors, count=3):
 
 
 def write_swatches():
+    print('# swatches!')
     print(_table('All colors', nc))
 
 
