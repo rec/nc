@@ -1,3 +1,4 @@
+from functools import cached_property
 import collections
 import colorsys
 import math
@@ -10,6 +11,7 @@ class Color(COLOR_TUPLE):
     """DOX HERE"""
 
     COLORS = None
+    GAMMA = 2.5
 
     def __new__(cls, *args):
         return super().__new__(cls, *_make(cls, args))
@@ -40,19 +42,24 @@ class Color(COLOR_TUPLE):
     def distance(self, other):
         return math.sqrt(self.distance2(other))
 
-    @property
+    @cached_property
     def rgb(self):
         return self.r * 0x10000 + self.g * 0x100 + self.b
 
-    @property
+    @cached_property
+    def brightness(self):
+        """The root mean square of the r, g, b components"""
+        return (sum(c ** self.GAMMA for c in self) / 3) ** (1 / self.GAMMA)
+
+    @cached_property
     def hsl(self):
         return colorsys.rgb_to_hsl(*self._to())
 
-    @property
+    @cached_property
     def hsv(self):
         return colorsys.rgb_to_hsv(*self._to())
 
-    @property
+    @cached_property
     def yiq(self):
         return colorsys.rgb_to_yiq(*self._to())
 
