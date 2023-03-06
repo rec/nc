@@ -2,8 +2,6 @@
 
 ::: nc
 
-::: nc.colors
-
 ## About this project
 
 * [ Source code ]( https://github.com/rec/nc )
