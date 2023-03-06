@@ -48,7 +48,7 @@ class Color(COLOR_TUPLE):
 
     @cached_property
     def brightness(self):
-        """The root mean square of the r, g, b components"""
+        """The gamma-corrected brightness of this color, in [0, 256.0)"""
         return (sum(c ** self.GAMMA for c in self) / 3) ** (1 / self.GAMMA)
 
     @cached_property
