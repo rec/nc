@@ -1,5 +1,5 @@
 """
-# 🎨 `nc`: Named colors 🎨
+# 🎨 `nc`: Named colors in Python 🎨
 
 `nc` names colors.
 
@@ -15,7 +15,7 @@ with a neat API.
 
 For more precise use, color collections can be put together from schemes
 built into `nc` (currently `html`, `juce`, `pwg`, `wikipedia`, `x11`),
-and from custom color schemes created by the user.
+or from custom color schemes created by the user.
 
 Install `nc` from the command line using
 [pip](https://pypi.org/project/pip/):
@@ -67,46 +67,55 @@ Install `nc` from the command line using
     #   (56, 218, 180) is closest to Turquoise = 64 224 208
 """
 from . import colors as _colors
+from . import color as _color
 from functools import cached_property
+from typing import Iterator
 import sys
 
 _DEFAULT_PALETTES = 'wikipedia', 'x11', 'juce'
 
 
-class NamedColors:
-    """NamedColors is a collection of named colors that can act like
-    an array or a dictionary.
+class NC:
+    """NC is a collection of named colors that acts like both an array and
+    a dictionary, used to replace `sys.modules['nc']`.
     """
     colors = _colors
     Colors = _colors.Colors
 
     @cached_property
-    def COLORS(self):
+    def COLORS(self) -> _colors.Colors:
+        """The underlying instance of `nc.colors.Colors with all the colors"""
         return self.Colors(*_DEFAULT_PALETTES)
 
-    def __getattr__(self, name):
+    def __getattr__(self, name) -> _colors.Colors:
+        """Gets a color as a name attribute"""
         try:
             return globals()[name]
         except KeyError:
             pass
         return getattr(self.COLORS, name)
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> _colors.Colors:
+        """"""
         return self.COLORS(*args, **kwargs)
 
-    def __getitem__(self, name):
+    def __getitem__(self, name) -> _colors.Colors:
+        """Gets a color by name"""
         return self.COLORS[name]
 
-    def __contains__(self, x):
-        """Return true if this string name appears in the table canonically"""
+    def __contains__(self, x) -> bool:
+        """Return true if this string name, tuple or color is in this list"""
         return x in self.COLORS
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """Returns the number of colors"""
         return len(self.COLORS)
 
-    def __iter__(self):
-        """Iterate over all the colors"""
+    def __iter__(self) -> Iterator[_colors.Colors]:
+        """Iterate over all the colors in alphabetical order"""
         return iter(self.COLORS)
 
 
-sys.modules[__name__] = NamedColors()
+NamedColors = NC  # for backwards compatibility
+sys.modules[__name__] = NC()
+_color.Color.COLORS = NC.COLORS

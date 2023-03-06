@@ -1,14 +1,23 @@
 from functools import cached_property
+from typing import Tuple
 import collections
 import colorsys
 import math
 import numbers
 
+try:
+    from typing import Self
+except ImportError:
+    from typing import Any as Self
+
+
 COLOR_TUPLE = collections.namedtuple('Color', 'r g b')
 
 
 class Color(COLOR_TUPLE):
-    """DOX HERE"""
+    """A single Color, represented as a named triple of integers in the range
+    [0, 256).
+    """
 
     COLORS = None
     GAMMA = 2.5
@@ -27,52 +36,54 @@ class Color(COLOR_TUPLE):
             return "Color('%s')" % name
         return 'Color' + name
 
-    def closest(self):
+    def closest(self) -> Self:
         """
         Return the closest named color to `self`.  This is quite slow,
         particularly in large schemes.
         """
         return self.COLORS.closest(self)
 
-    def distance2(self, other):
-        """Return the square of the distance between this and anotther color"""
+    def distance2(self, other) -> int:
+        """Return the square of the distance between this and another color"""
         d = (i - j for i, j in zip(self, other))
         return sum(i * i for i in d)
 
-    def distance(self, other):
+    def distance(self, other) -> float:
+        """Return the distance between this and another color"""
         return math.sqrt(self.distance2(other))
 
     @cached_property
-    def rgb(self):
+    def rgb(self) -> int:
+        """Return an integer between 0 and 0xFFFFFF combining the components"""
         return self.r * 0x10000 + self.g * 0x100 + self.b
 
     @cached_property
-    def brightness(self):
-        """The root mean square of the r, g, b components"""
+    def brightness(self) -> float:
+        """gamma-weighted average of intensities"""
         return (sum(c ** self.GAMMA for c in self) / 3) ** (1 / self.GAMMA)
 
     @cached_property
-    def hsl(self):
+    def hsl(self) -> Tuple[int, int, int]:
         return colorsys.rgb_to_hsl(*self._to())
 
     @cached_property
-    def hsv(self):
+    def hsv(self) -> Tuple[int, int, int]:
         return colorsys.rgb_to_hsv(*self._to())
 
     @cached_property
-    def yiq(self):
+    def yiq(self) -> Tuple[int, int, int]:
         return colorsys.rgb_to_yiq(*self._to())
 
     @classmethod
-    def from_hsl(cls, h, s, l):  # noqa E741
+    def from_hsl(cls, h, s, l) -> Self:  # noqa E741
         return cls._from(colorsys.hsl_to_rgb(h, s, l))
 
     @classmethod
-    def from_hsv(cls, h, s, v):
+    def from_hsv(cls, h, s, v) -> Self:
         return cls._from(colorsys.hsv_to_rgb(h, s, v))
 
     @classmethod
-    def from_yiq(cls, y, i, q):
+    def from_yiq(cls, y, i, q) -> Self:
         return cls._from(colorsys.yiq_to_rgb(y, i, q))
 
     def _to(self):
