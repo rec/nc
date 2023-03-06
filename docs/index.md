@@ -1,6 +1,8 @@
 # 🎨: `nc`: Named colors in Python 🎨
 
 ::: nc
+::: nc.color
+::: nc.colors
 
 ## About this project
 

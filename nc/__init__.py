@@ -1,7 +1,9 @@
 """
 # 🎨 `nc`: Named colors in Python 🎨
 
-`nc` names colors.
+--
+
+The module `nc` collects named colors in Python.
 
 There are two ways to use `nc`.
 
@@ -9,7 +11,7 @@ The simple way is as an intuitive and forgiving interface to a
 collection of over 2000 named colors, put together from almost 20 color
 palettes scraped from the Internet.
 
-In the simplest use, it\'s a collection of about 1700 colors, some
+In the simplest use, it's a collection of about 1700 colors, some
 scraped from the Wikipedia (which includes some very strange colors),
 with a neat API.
 
@@ -17,8 +19,8 @@ For more precise use, color collections can be put together from schemes
 built into `nc` (currently `html`, `juce`, `pwg`, `wikipedia`, `x11`),
 or from custom color schemes created by the user.
 
-Install `nc` from the command line using
-[pip](https://pypi.org/project/pip/):
+There is also a collection of [color swatches](swatches/) for the default
+color collection.
 
 # Examples
 
