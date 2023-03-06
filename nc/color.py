@@ -23,9 +23,7 @@ class Color(COLOR_TUPLE):
 
     def __repr__(self):
         name = str(self)
-        if not name.startswith('('):
-            return "Color('%s')" % name
-        return 'Color' + name
+        return f'Color{name}' if name.startswith('(') else f"Color('{name}')"
 
     def closest(self):
         """
@@ -48,7 +46,7 @@ class Color(COLOR_TUPLE):
 
     @cached_property
     def brightness(self):
-        """The root mean square of the r, g, b components"""
+        """The gamma-corrected brightness of this color, in [0, 256.0)"""
         return (sum(c ** self.GAMMA for c in self) / 3) ** (1 / self.GAMMA)
 
     @cached_property
