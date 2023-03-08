@@ -140,9 +140,9 @@ def _write_main_swatch():
     body = ''.join(row(r) for r in rows)
     table = f'<table><tbody>\n{body}</tbody></table>\n'
 
-    title = '# Color swatches'
-    msg = 'Scroll down each page for the full effect.'
-    page = '\n'.join((title, msg, table))
+    title = '# Automatically generated color swatches'
+    msg = '(Scroll down each page for the full effect.)'
+    page = '\n\n'.join((title, msg, table))
     MAIN_SWATCH.write_text(page)
     print('Wrote', MAIN_SWATCH)
 
