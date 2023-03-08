@@ -136,7 +136,7 @@ def _write_main_swatch():
         return f'  <tr>\n{"".join(cells)}  </tr>'
 
     cells = [cell(s) for s in _swatches()]
-    rows = [cells[0:2], *(cells[i:i+3] for i in range(2, len(cells), 3))]
+    rows = [cells[0:2], *(cells[i:i + 3] for i in range(2, len(cells), 3))]
     body = ''.join(row(r) for r in rows)
     table = f'<table><tbody>\n{body}</tbody></table>\n'
 
