@@ -1,5 +1,7 @@
-# Color swatches
-Scroll down each page for the full effect.
+# Automatically generated color swatches
+
+(Scroll down each page for the full effect.)
+
 <table><tbody>
   <tr>
     <td><a href="contrast-bright-to-dark">Contrast (bright to dark)</a></td>

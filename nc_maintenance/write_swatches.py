@@ -76,13 +76,13 @@ def _swatches():
         sort_by_brightness,
         'Contrast (bright to dark)',
         'contrast-bright-to-dark',
+        reverse=True,
     )
 
     yield Swatch(
         sort_by_brightness,
         'Contrast (dark to bright)',
         'contrast-dark-to-bright',
-        reverse=True,
     )
 
     for gray in (0, 25, 50, 75, 100):
