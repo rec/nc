@@ -5,6 +5,7 @@ import nc
 
 SWATCH_PATH = Path(__file__).parents[1] / 'docs' / 'swatches'
 SWATCH_PATH.mkdir(exist_ok=True, parents=True)
+MAIN_SWATCH = SWATCH_PATH / 'index.md'
 
 """
 sorted by:
@@ -48,9 +49,12 @@ class Swatch:
         title = f'# {self.title}\n'
         document = f'{title}\n{table}'
 
-        path = (SWATCH_PATH / self.filename).with_suffix('.md')
-        path.write_text(document)
-        print('Wrote', path)
+        self.swatch_path.write_text(document)
+        print('Wrote', self.swatch_path)
+
+    @property
+    def swatch_path(self):
+        return (SWATCH_PATH / self.filename).with_suffix('.md')
 
     def row(self, color_row):
         cells = '\n'.join(self.cell(*c) for c in color_row)
@@ -124,7 +128,27 @@ def _background(color):
     return nc.Color(b, b, b)
 
 
+def _write_main_swatch():
+    def cell(s):
+        return f'    <td><a href="{s.filename}">{s.title}</a></td>\n'
+
+    def row(cells):
+        return f'  <tr>\n{"".join(cells)}  </tr>'
+
+    cells = [cell(s) for s in _swatches()]
+    rows = [cells[0:2], *(cells[i:i+3] for i in range(2, len(cells), 3))]
+    body = ''.join(row(r) for r in rows)
+    table = f'<table><tbody>\n{body}</tbody></table>\n'
+
+    title = '# Color swatches'
+    msg = 'Scroll down each page for the full effect.'
+    page = '\n'.join((title, msg, table))
+    MAIN_SWATCH.write_text(page)
+    print('Wrote', MAIN_SWATCH)
+
+
 def write_swatches():
+    _write_main_swatch()
     for s in _swatches():
         s.write()
 
