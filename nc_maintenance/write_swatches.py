@@ -69,9 +69,11 @@ class Swatch:
         cell = f'{hex_color} {triple} {name}'
         bg = not self.background and _background(color)
         style = _add_bg(f'color: {hex_color};', bg)
-        if source := ENABLE_LINKS and color_source(name):
+        if source := ENABLE_LINKS and color_source(name.lower()):
             sstyle = f'{style}text-decoration: underline;'
             cell = f'<a href="{source}" style="{sstyle}"> {cell} </a>'
+        else:
+            assert False, f'|{name}|'
 
         return f'    <td style="{style}"> {cell} </td>'
 
