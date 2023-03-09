@@ -1,3 +1,4 @@
+from .color_source import color_source
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Optional
@@ -65,6 +66,8 @@ class Swatch:
         triple = f'({color.r:3},{color.g:3},{color.b:3})'
         triple = triple.replace(' ', '&nbsp;')
         cell = f'{hex_color} {triple} {name}'
+        if source := color_source(name):
+            cell = f'<a href="{source}"> {cell} </a>'
 
         bg = not self.background and _background(color)
         style = _add_bg(f'color: {hex_color};', bg)
