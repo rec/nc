@@ -7,6 +7,7 @@ import nc
 SWATCH_PATH = Path(__file__).parents[1] / 'docs' / 'swatches'
 SWATCH_PATH.mkdir(exist_ok=True, parents=True)
 MAIN_SWATCH = SWATCH_PATH / 'index.md'
+ENABLE_LINKS = True
 
 """
 sorted by:
@@ -66,11 +67,12 @@ class Swatch:
         triple = f'({color.r:3},{color.g:3},{color.b:3})'
         triple = triple.replace(' ', '&nbsp;')
         cell = f'{hex_color} {triple} {name}'
-        if source := color_source(name):
-            cell = f'<a href="{source}"> {cell} </a>'
-
         bg = not self.background and _background(color)
         style = _add_bg(f'color: {hex_color};', bg)
+        if source := ENABLE_LINKS and color_source(name):
+            sstyle = f'{style}text-decoration: underline;'
+            cell = f'<a href="{source}" style="{sstyle}"> {cell} </a>'
+
         return f'    <td style="{style}"> {cell} </td>'
 
 
