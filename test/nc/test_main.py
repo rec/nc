@@ -22,7 +22,7 @@ class TestMain(TestCase):
 
     def test_all_unique(self):
         _, results = self._run('all')
-        assert len(results) == 1248
+        assert len(results) == 1245
         assert len(results) == len(set(results))
 
     def test_dupes_in_all(self):

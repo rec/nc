@@ -7,6 +7,6 @@ class ModuleTest(unittest.TestCase):
         assert nc('red') == nc.red
         assert nc['REd'] == nc.red
         assert 'Taupe' in nc
-        assert len(nc) == 1248
+        assert len(nc) == 1245
 
         assert str(nc[0]) == 'Absolute zero'

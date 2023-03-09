@@ -63,6 +63,7 @@ class Swatch:
         return f'  <tr>\n{cells}\n  </tr>'
 
     def cell(self, name, color):
+        assert ']' not in name, name
         hex_color = f'#{color.rgb:06x}'
         triple = f'({color.r:3},{color.g:3},{color.b:3})'
         triple = triple.replace(' ', '&nbsp;')

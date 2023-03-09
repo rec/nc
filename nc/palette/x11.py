@@ -49,7 +49,7 @@ COLORS = {
     'Floral White': 0xFFFAF0,
     'Forest Green': 0x228B22,
     'Fuchsia': 0xFF00FF,
-    'Gainsboro]]*': 0xDCDCDC,
+    'Gainsboro': 0xDCDCDC,
     'Ghost White': 0xF8F8FF,
     'Gold': 0xFFD700,
     'Goldenrod': 0xDAA520,

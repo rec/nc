@@ -49,6 +49,7 @@ def wikitext(url):
     if not url.endswith(EDIT_STRING):
         url += EDIT_STRING
     text = requests.get(url).text
+    print(url)
     soup = bs4.BeautifulSoup(text, features='html.parser')
     return soup.find(id='wpTextbox1').text
 
