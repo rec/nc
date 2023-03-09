@@ -78,9 +78,6 @@ _DEFAULT_PALETTES = 'wikipedia', 'x11', 'juce'
 
 
 class NC:
-    """NC is a collection of named colors that acts like both an array and
-    a dictionary, used to replace `sys.modules['nc']`.
-    """
     colors = _colors
     Colors = _colors.Colors
 
@@ -119,5 +116,6 @@ class NC:
 
 
 NamedColors = NC  # for backwards compatibility
+NC.__doc__ = __doc__
 sys.modules[__name__] = NC()
 _color.Color.COLORS = NC.COLORS
