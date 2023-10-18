@@ -27,6 +27,16 @@ requests = "^2.28.2"
 safer = "^4.5.0"
 lxml = "^4.9.2"
 
+
+[tool.coverage]
+[tool.coverage.run]
+branch = "True"
+source = "nc/"
+
+[tool.coverage.report]
+fail_under = "100"
+skip_covered = "True"
+exclude_lines = ["", "pragma: no cover", "if False:", "if __name__ == .__main__.:", "raise NotImplementedError"]
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
