@@ -10,6 +10,9 @@ description = "🎨 Named colors in Python 🎨"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/rec/nc"
+homepage = "https://github.com/rec/nc"
+documentation = "https://rec.github.io/nc"
 
 [tool.poetry.dependencies]
 python = "^3.8"
