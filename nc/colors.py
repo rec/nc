@@ -1,13 +1,13 @@
-from . color import Color
+from . import color
 from functools import cached_property
-from typing import Iterator, Optional, Tuple, Union
 import importlib
 import re
 import string
+import typing as t
 
 _ALLOWED = set(string.ascii_letters + string.digits)
 
-ColorKey = Union[int, slice, str, Color, Tuple[int, int, int]]
+ColorKey = t.Union[int, slice, str, color.Color, t.Tuple[int, int, int]]
 
 
 class Colors:
@@ -15,19 +15,17 @@ class Colors:
     and a namespace.
 
     `Colors` is indexed by a type `ColorKey`, which may be an
-    `int`, `slice`, `str`, `Color`, or`Tuple[int, int, int]]`.
+    `int`, `slice`, `str`, `Color`, or`t.Tuple[int, int, int]]`.
     """
 
-    def __init__(self, *palettes, canonicalize_gray='gray', default='black'):
-        from . import color
-
+    def __init__(self, *palettes, canonicalize_gray='gray', default='black') -> None:
         class Color(color.Color):
             COLORS = self
 
         self.__dict__['Color'] = Color
         self._canonicalize_gray = canonicalize_gray
-        self._name_to_rgb = {}
-        self._rgb_to_name = {}
+        self._name_to_rgb: t.Dict[str, color.Color] = {}
+        self._rgb_to_name: t.Dict[color.Color, str] = {}
         self._palettes = [self._add_palette(s) for s in palettes]
 
         self._canonical_to_rgb = {
@@ -35,26 +33,26 @@ class Colors:
         }
         self._default = self.get(str(default)) or next(iter(self._rgb_to_name))
 
-    def get(self, key: ColorKey, default: Optional[Color] = None):
+    def get(self, key: ColorKey, default: t.Optional[color.Color] = None):
         """Return the value for `key` if it exists, else `default`."""
         try:
             return self[key]
         except KeyError:
             return default
 
-    def items(self) -> Iterator[Tuple[str, Color]]:
+    def items(self) -> t.Iterator[t.Tuple[str, color.Color]]:
         """Return an iterator of name, Color pairs. Some colors might repeat"""
         return self._colors.items()
 
-    def values(self) -> Iterator[Color]:
+    def values(self) -> t.Iterator[color.Color]:
         """Return an iterator of Colors. Some colors might repeat"""
         return self._colors.values()
 
-    def keys(self) -> Iterator[str]:
+    def keys(self) -> t.Iterator[str]:
         """Return an iterator of strings, unique color names"""
         return self._colors.keys()
 
-    def closest(self, color: Color) -> Color:
+    def closest(self, color: color.Color) -> color.Color:
         """
         Return the closest named color to `color`.  This can be quite slow,
         particularly if there are many colors.
@@ -68,7 +66,7 @@ class Colors:
     def __call__(self, *args, **kwds):
         return self.Color(*args, **kwds)
 
-    def __getitem__(self, name: ColorKey) -> Color:
+    def __getitem__(self, name: ColorKey) -> color.Color:
         """Try to convert string item into a color"""
         if isinstance(name, (int, slice)):
             return self._color_list[name]
@@ -90,7 +88,7 @@ class Colors:
         """Return true if this ColorKey appears in the table canonically"""
         return self._canonical_name(x) in self._canonical_to_rgb
 
-    def __getattr__(self, name: str) -> Color:
+    def __getattr__(self, name: str) -> color.Color:
         if name.startswith('_'):
             return super().__getattribute__(name)
         try:
@@ -106,7 +104,7 @@ class Colors:
     def __len__(self) -> int:
         return len(self._color_list)
 
-    def __iter__(self) -> Iterator[Color]:
+    def __iter__(self) -> t.Iterator[color.Color]:
         return iter(self._color_list)
 
     def __eq__(self, x) -> bool:
@@ -115,19 +113,19 @@ class Colors:
     def __ne__(self, x) -> bool:
         return not (self == x)
 
-    def __add__(self, x):
+    def __add__(self, x) -> 'Colors':
         cg, d = self._canonicalize_gray, self._default
         c = x if isinstance(x, __class__) else __class__(x)
         palettes = self._palettes + c._palettes
         return __class__(*palettes, canonicalize_gray=cg, default=d)
 
-    def __radd__(self, x):
+    def __radd__(self, x) -> 'Colors':
         other = __class__(
             x, canonicalize_gray=self._canonicalize_gray, default=self._default
         )
         return other + self
 
-    def _add_palette(self, palette):
+    def _add_palette(self, palette) -> None:
         if isinstance(palette, str):
             if '.' not in palette:
                 palette = '.' + palette
@@ -169,14 +167,14 @@ class Colors:
         self._rgb_to_name.update((k, best_name(v)) for k, v in names.items())
         return palette
 
-    def _canonical_name(self, name):
+    def _canonical_name(self, name) -> str:
         name = name.lower()
         if self._canonicalize_gray:
             name = name.replace('grey', 'gray')
         return ''.join(i for i in name if i in _ALLOWED)
 
     @cached_property
-    def _colors(self):
+    def _colors(self) -> t.Dict[str, Color]:
         return {k: self.Color(*v) for k, v in self._name_to_rgb.items()}
 
     @cached_property

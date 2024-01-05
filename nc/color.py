@@ -4,22 +4,30 @@ import collections
 import colorsys
 import math
 import numbers
+import typing as t
 
-try:
-    from typing import Self
-except ImportError:
-    from typing import Any as Self
+from typing_extensions import Protocol
 
 
-COLOR_TUPLE = collections.namedtuple('Color', 'r g b')
+class Colors(Protocol):
+    _default: str
+    _rgb_to_name: t.Dict['Color', str]
+
+    def closest(self, color: 'Color') -> 'Color':
+        pass
+
+    def __getitem__(self, k: str) -> 'Color':
+        pass
 
 
-class Color(COLOR_TUPLE):
+
+class Color(collections.namedtuple('Color', 'r g b')):
     """A single Color, represented as a named triple of integers in the range
     [0, 256).
     """
 
-    COLORS = None
+    COLORS: t.ClassVar[Colors]
+
     GAMMA = 2.5
 
     def __new__(cls, *args):
@@ -36,7 +44,7 @@ class Color(COLOR_TUPLE):
             return "Color('%s')" % name
         return 'Color' + name
 
-    def closest(self) -> Self:
+    def closest(self) -> 'Color':
         """
         Return the closest named color to `self`.  This is quite slow,
         particularly in large schemes.
@@ -63,30 +71,30 @@ class Color(COLOR_TUPLE):
         return (sum(c ** self.GAMMA for c in self) / 3) ** (1 / self.GAMMA)
 
     @cached_property
-    def hsl(self) -> Tuple[int, int, int]:
-        return colorsys.rgb_to_hsl(*self._to())
+    def hls(self) -> t.Tuple[float, float, float]:
+        return colorsys.rgb_to_hls(*self._to())
 
     @cached_property
-    def hsv(self) -> Tuple[int, int, int]:
+    def hsv(self) -> t.Tuple[float, float, float]:
         return colorsys.rgb_to_hsv(*self._to())
 
     @cached_property
-    def yiq(self) -> Tuple[int, int, int]:
+    def yiq(self) -> t.Tuple[float, float, float]:
         return colorsys.rgb_to_yiq(*self._to())
 
     @classmethod
-    def from_hsl(cls, h, s, l) -> Self:  # noqa E741
-        return cls._from(colorsys.hsl_to_rgb(h, s, l))
+    def from_hls(cls, h, s, l) -> 'Color':  # noqa E741
+        return cls._from(colorsys.hls_to_rgb(h, s, l))
 
     @classmethod
-    def from_hsv(cls, h, s, v) -> Self:
+    def from_hsv(cls, h, s, v) -> 'Color':
         return cls._from(colorsys.hsv_to_rgb(h, s, v))
 
     @classmethod
-    def from_yiq(cls, y, i, q) -> Self:
+    def from_yiq(cls, y, i, q) -> 'Color':
         return cls._from(colorsys.yiq_to_rgb(y, i, q))
 
-    def _to(self):
+    def _to(self) -> t.Iterator[float]:
         return (i / 255 for i in self)
 
     @classmethod
