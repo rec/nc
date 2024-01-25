@@ -34,6 +34,9 @@ source = ["nc/"]
 fail_under = 100
 skip_covered = true
 exclude_lines = ["pragma: no cover", "if False:", "if __name__ == .__main__.:", "raise NotImplementedError"]
+
+[tool.mypy]
+strict = true
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
