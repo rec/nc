@@ -1,13 +1,13 @@
 from nc.palette import juce, wikipedia, x11
-from . wikipedia import wikitext, SOURCES, WIKI_URL
+from .wikipedia import wikitext, SOURCES, WIKI_URL
 
-X11 = 'https://en.wikipedia.org/wiki/X11_color_names#Color_name_chart'
+X11 = "https://en.wikipedia.org/wiki/X11_color_names#Color_name_chart"
 JUCE = (
-    'https://github.com/juce-framework/JUCE/blob/master/'
-    'modules/juce_graphics/colour/juce_Colours.cpp'
+    "https://github.com/juce-framework/JUCE/blob/master/"
+    "modules/juce_graphics/colour/juce_Colours.cpp"
 )
 
-WIKIS = SOURCES['wikipedia'][1:]
+WIKIS = SOURCES["wikipedia"][1:]
 
 
 X_COLORS = {i.lower() for i in x11.COLORS}
@@ -19,7 +19,7 @@ _PAGES = [None, None, None]
 
 def color_source(name):
     name = name.lower()
-    ng = name.replace('gray', 'grey')
+    ng = name.replace("gray", "grey")
     if name in X_COLORS:
         return X_COLORS
     if ng in J_COLORS:
@@ -32,11 +32,11 @@ def color_source(name):
 
 def _wiki_url(name):
     ch = name[0].upper()
-    if 'A' <= ch <= 'F':
+    if "A" <= ch <= "F":
         w = 0
-    elif 'G' <= ch <= 'M':
+    elif "G" <= ch <= "M":
         w = 1
-    elif 'N' <= ch <= 'Z':
+    elif "N" <= ch <= "Z":
         w = 2
     else:
         assert False
@@ -51,17 +51,17 @@ def _wiki_source(i):
     d = {}
     for line in wikitext(WIKIS[i]).splitlines():
         old_l = line
-        while line and not line.startswith('name='):
-            _, _, line = line.partition('|')
+        while line and not line.startswith("name="):
+            _, _, line = line.partition("|")
         if not line:
             continue
-        name, _, rest = line.partition('=')
-        if name != 'name' or not rest.startswith('[['):
+        name, _, rest = line.partition("=")
+        if name != "name" or not rest.startswith("[["):
             continue
-        rest, _, _ = rest[2:].partition(']]')
+        rest, _, _ = rest[2:].partition("]]")
         if not rest:
             continue
-        url, _, name = rest.partition('|')
+        url, _, name = rest.partition("|")
         name = (name or url).lower()
         d[name] = WIKI_URL + url
 

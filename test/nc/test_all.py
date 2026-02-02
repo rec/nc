@@ -2,4 +2,4 @@ import impall
 
 
 class ImpAllTest(impall.ImpAllTest):
-    WARNINGS_ACTION = 'error'
+    WARNINGS_ACTION = "error"

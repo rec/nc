@@ -3,7 +3,7 @@ import contextlib
 import functools
 import subprocess
 
-TERMINAL_ENVIRONMENT_VAR = '_NC_TERMINAL_COLOR_COUNT'
+TERMINAL_ENVIRONMENT_VAR = "_NC_TERMINAL_COLOR_COUNT"
 SIZES = 256, 16, 8
 
 
@@ -13,7 +13,7 @@ def context(fg=None, bg=None, print=print, count=None):
 
 @functools.lru_cache()
 def color_count():
-    cmd = 'tput', 'colors'
+    cmd = "tput", "colors"
     try:
         count = int(subprocess.check_output(cmd, stderr=subprocess.STDOUT))
     except subprocess.CalledProcessError:  # pragma: no cover
@@ -26,12 +26,12 @@ class _Context:
     def __init__(self, count=None):
         count = color_count() if count is None else count
         if count:
-            self.colors = Colors('terminal%s' % count)
+            self.colors = Colors("terminal%s" % count)
             palette = self.colors._palettes[0]
-            codes = palette['CODES']
+            codes = palette["CODES"]
             self.CODES = {self.colors[k]: v for k, v in codes.items()}
-            self.fg = palette['fg']
-            self.bg = palette['bg']
+            self.fg = palette["fg"]
+            self.bg = palette["bg"]
         else:
             self.colors = None
 
@@ -42,8 +42,8 @@ class _Context:
         return self.colors and len(self.colors) or 0
 
     def print_codes(self, *codes, print=print):
-        result = '\x1b[%sm' % ';'.join(str(c) for c in codes)
-        print(result, end='')
+        result = "\x1b[%sm" % ";".join(str(c) for c in codes)
+        print(result, end="")
 
     @contextlib.contextmanager
     def __call__(self, fg=None, bg=None, print=print):

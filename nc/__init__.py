@@ -74,7 +74,7 @@ from functools import cached_property
 from typing import Iterator
 import sys
 
-_DEFAULT_PALETTES = 'wikipedia', 'x11', 'juce'
+_DEFAULT_PALETTES = "wikipedia", "x11", "juce"
 
 
 class NC:

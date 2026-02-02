@@ -11,17 +11,16 @@ from typing_extensions import Protocol
 
 class Colors(Protocol):
     _default: str
-    _rgb_to_name: t.Dict['Color', str]
+    _rgb_to_name: t.Dict["Color", str]
 
-    def closest(self, color: 'Color') -> 'Color':
+    def closest(self, color: "Color") -> "Color":
         pass
 
-    def __getitem__(self, k: str) -> 'Color':
+    def __getitem__(self, k: str) -> "Color":
         pass
 
 
-
-class Color(collections.namedtuple('Color', 'r g b')):
+class Color(collections.namedtuple("Color", "r g b")):
     """A single Color, represented as a named triple of integers in the range
     [0, 256).
     """
@@ -34,17 +33,15 @@ class Color(collections.namedtuple('Color', 'r g b')):
         return super().__new__(cls, *_make(cls, args))
 
     def __str__(self):
-        return self.COLORS._rgb_to_name.get(self) or '({}, {}, {})'.format(
-            *self
-        )
+        return self.COLORS._rgb_to_name.get(self) or "({}, {}, {})".format(*self)
 
     def __repr__(self):
         name = str(self)
-        if not name.startswith('('):
+        if not name.startswith("("):
             return "Color('%s')" % name
-        return 'Color' + name
+        return "Color" + name
 
-    def closest(self) -> 'Color':
+    def closest(self) -> "Color":
         """
         Return the closest named color to `self`.  This is quite slow,
         particularly in large schemes.
@@ -68,7 +65,7 @@ class Color(collections.namedtuple('Color', 'r g b')):
     @cached_property
     def brightness(self) -> float:
         """gamma-weighted average of intensities"""
-        return (sum(c ** self.GAMMA for c in self) / 3) ** (1 / self.GAMMA)
+        return (sum(c**self.GAMMA for c in self) / 3) ** (1 / self.GAMMA)
 
     @cached_property
     def hls(self) -> t.Tuple[float, float, float]:
@@ -83,15 +80,15 @@ class Color(collections.namedtuple('Color', 'r g b')):
         return colorsys.rgb_to_yiq(*self._to())
 
     @classmethod
-    def from_hls(cls, h, s, l) -> 'Color':  # noqa E741
+    def from_hls(cls, h, s, l) -> "Color":  # noqa E741
         return cls._from(colorsys.hls_to_rgb(h, s, l))
 
     @classmethod
-    def from_hsv(cls, h, s, v) -> 'Color':
+    def from_hsv(cls, h, s, v) -> "Color":
         return cls._from(colorsys.hsv_to_rgb(h, s, v))
 
     @classmethod
-    def from_yiq(cls, y, i, q) -> 'Color':
+    def from_yiq(cls, y, i, q) -> "Color":
         return cls._from(colorsys.yiq_to_rgb(y, i, q))
 
     def _to(self) -> t.Iterator[float]:
@@ -120,15 +117,15 @@ def _make(cls, args):
     except KeyError:
         pass
 
-    if ',' not in a:
+    if "," not in a:
         return _int_to_tuple(_string_to_int(a))
 
-    if a.startswith('(') and a.endswith(')'):
+    if a.startswith("(") and a.endswith(")"):
         a = a[1:-1]
-    if a.startswith('[') and a.endswith(']'):
+    if a.startswith("[") and a.endswith("]"):
         a = a[1:-1]
 
-    return tuple(_string_to_int(i) for i in a.split(','))
+    return tuple(_string_to_int(i) for i in a.split(","))
 
 
 def _int_to_tuple(color):
@@ -140,12 +137,12 @@ def _int_to_tuple(color):
 def _string_to_int(s):
     s = s.strip()
 
-    for prefix in '0x', '#':
+    for prefix in "0x", "#":
         if s.startswith(prefix):
-            p = s[len(prefix) :].lstrip('0')
-            return int(p or '0', 16)
+            p = s[len(prefix) :].lstrip("0")
+            return int(p or "0", 16)
 
     return int(s)
 
 
-_COLOR_ERROR = 'Colors must have three components: r, g, b'
+_COLOR_ERROR = "Colors must have three components: r, g, b"

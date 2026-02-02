@@ -1,12 +1,12 @@
 from nc import Colors
 import unittest
 
-HTML = Colors('html')
-TERMINAL_8 = Colors('terminal8')
-TERMINAL_16 = Colors('terminal16')
-TERMINAL_256 = Colors('terminal256')
-WIKIPEDIA = Colors('wikipedia')
-X11 = Colors('x11')
+HTML = Colors("html")
+TERMINAL_8 = Colors("terminal8")
+TERMINAL_16 = Colors("terminal16")
+TERMINAL_256 = Colors("terminal256")
+WIKIPEDIA = Colors("wikipedia")
+X11 = Colors("x11")
 
 
 class PaletteTest(unittest.TestCase):

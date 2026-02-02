@@ -18,11 +18,11 @@ class Colors:
     `int`, `slice`, `str`, `Color`, or`t.Tuple[int, int, int]]`.
     """
 
-    def __init__(self, *palettes, canonicalize_gray='gray', default='black') -> None:
+    def __init__(self, *palettes, canonicalize_gray="gray", default="black") -> None:
         class Color(color.Color):
             COLORS = self
 
-        self.__dict__['Color'] = Color
+        self.__dict__["Color"] = Color
         self._canonicalize_gray = canonicalize_gray
         self._name_to_rgb: t.Dict[str, color.Color] = {}
         self._rgb_to_name: t.Dict[color.Color, str] = {}
@@ -89,7 +89,7 @@ class Colors:
         return self._canonical_name(x) in self._canonical_to_rgb
 
     def __getattr__(self, name: str) -> color.Color:
-        if name.startswith('_'):
+        if name.startswith("_"):
             return super().__getattribute__(name)
         try:
             return self[name]
@@ -97,7 +97,7 @@ class Colors:
             raise AttributeError(name)
 
     def __setattr__(self, name, value):
-        if name.startswith('_'):
+        if name.startswith("_"):
             return super().__setattr__(name, value)
         raise AttributeError(name)
 
@@ -113,13 +113,13 @@ class Colors:
     def __ne__(self, x) -> bool:
         return not (self == x)
 
-    def __add__(self, x) -> 'Colors':
+    def __add__(self, x) -> "Colors":
         cg, d = self._canonicalize_gray, self._default
         c = x if isinstance(x, __class__) else __class__(x)
         palettes = self._palettes + c._palettes
         return __class__(*palettes, canonicalize_gray=cg, default=d)
 
-    def __radd__(self, x) -> 'Colors':
+    def __radd__(self, x) -> "Colors":
         other = __class__(
             x, canonicalize_gray=self._canonicalize_gray, default=self._default
         )
@@ -127,27 +127,27 @@ class Colors:
 
     def _add_palette(self, palette) -> None:
         if isinstance(palette, str):
-            if '.' not in palette:
-                palette = '.' + palette
-            if palette.startswith('.'):
-                palette = 'nc.palette' + palette
+            if "." not in palette:
+                palette = "." + palette
+            if palette.startswith("."):
+                palette = "nc.palette" + palette
 
             palette = importlib.import_module(palette)
 
         if not isinstance(palette, dict):
             palette = palette.__dict__
 
-        if 'COLORS' in palette:
-            colors = palette['COLORS']
-            primary_names = palette.get('PRIMARY_NAMES', ())
+        if "COLORS" in palette:
+            colors = palette["COLORS"]
+            primary_names = palette.get("PRIMARY_NAMES", ())
 
         else:
             colors = palette
-            palette = {'COLORS': palette}
+            palette = {"COLORS": palette}
             primary_names = ()
 
         colors = {k: self.Color(v) for k, v in colors.items()}
-        if not palette.get('PRESERVE_CAPITALIZATION'):
+        if not palette.get("PRESERVE_CAPITALIZATION"):
             colors = {k.capitalize(): v for k, v in colors.items()}
 
         for sub, rep in self._replacements:
@@ -170,8 +170,8 @@ class Colors:
     def _canonical_name(self, name) -> str:
         name = name.lower()
         if self._canonicalize_gray:
-            name = name.replace('grey', 'gray')
-        return ''.join(i for i in name if i in _ALLOWED)
+            name = name.replace("grey", "gray")
+        return "".join(i for i in name if i in _ALLOWED)
 
     @cached_property
     def _colors(self) -> t.Dict[str, Color]:
@@ -186,13 +186,13 @@ class Colors:
         if not (gt := self._canonicalize_gray):
             return ()
 
-        gt = 'gray' if gt is True else gt.lower()
-        gf = 'grey' if gt == 'gray' else 'gray'
-        if gt not in ('gray', 'grey'):
-            raise ValueError('Don\'t understand canonicalize_gray=%s' % gt)
+        gt = "gray" if gt is True else gt.lower()
+        gf = "grey" if gt == "gray" else "gray"
+        if gt not in ("gray", "grey"):
+            raise ValueError("Don't understand canonicalize_gray=%s" % gt)
 
-        regular = re.compile(r'\b%s\b' % gf).sub, gt
-        upper = re.compile(r'\b%s\b' % gf.capitalize()).sub, gt.capitalize()
+        regular = re.compile(r"\b%s\b" % gf).sub, gt
+        upper = re.compile(r"\b%s\b" % gf.capitalize()).sub, gt.capitalize()
         return regular, upper
 
 

@@ -7,12 +7,12 @@ import io
 def print_mocker():
     results = []
 
-    with mock.patch('builtins.print') as mp:
+    with mock.patch("builtins.print") as mp:
         yield results
 
     sio = io.StringIO()
     for args, kwargs in mp.call_args_list:
-        kwargs.pop('file', None)
+        kwargs.pop("file", None)
         print(*args, **kwargs, file=sio)
 
     results[:] = sio.getvalue().splitlines()

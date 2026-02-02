@@ -4,7 +4,7 @@ import sys
 import time
 
 DEFAULT_COLUMNS = 64
-DEMO_CHAR = '•'
+DEMO_CHAR = "•"
 
 
 class Demo:
@@ -15,8 +15,8 @@ class Demo:
 
     def demo(self, is_long):
         if not self.context:
-            print('Your terminal does not seem to support colors')
-            print('Try `pync all` to see a list of colors')
+            print("Your terminal does not seem to support colors")
+            print("Try `pync all` to see a list of colors")
             return -1
 
         return self.long() if is_long else self.short()
@@ -25,7 +25,7 @@ class Demo:
         self._run(self._one_long, True)
 
     def short(self):
-        cmd = ['stty', 'size']
+        cmd = ["stty", "size"]
         try:
             out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL)
         except Exception:
@@ -42,12 +42,12 @@ class Demo:
 
     def _one_long(self, fg, bg):
         print()
-        print(fg, bg, sep=', ', end='')
+        print(fg, bg, sep=", ", end="")
         sleep_time = 0.01
         sleep_time and time.sleep(sleep_time)
 
     def _one_short(self, fg, bg):
-        print(DEMO_CHAR, end='')
+        print(DEMO_CHAR, end="")
         if (self.count + 1) % self.chars:
             sys.stdout.flush()
         else:
