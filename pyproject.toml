@@ -26,7 +26,6 @@ Documentation = "https://rec.github.io/nc"
 [dependency-groups]
 dev = [
     "coverage",
-    "mypy",
     "pytest",
     "ruff",
     "impall",
@@ -35,6 +34,8 @@ dev = [
     "requests",
     "safer",
     "lxml",
+    "pyupgrade>=3.21.2",
+    "ty>=0.0.14",
 ]
 
 [tool.uv]
