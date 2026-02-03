@@ -1,9 +1,10 @@
-from . import color
-from functools import cached_property
 import importlib
 import re
 import string
 import typing as t
+from functools import cached_property
+
+from . import color
 
 _ALLOWED = set(string.ascii_letters + string.digits)
 
@@ -94,7 +95,7 @@ class Colors:
         try:
             return self[name]
         except KeyError:
-            raise AttributeError(name)
+            raise AttributeError(name) from None
 
     def __setattr__(self, name, value):
         if name.startswith("_"):
@@ -174,7 +175,7 @@ class Colors:
         return "".join(i for i in name if i in _ALLOWED)
 
     @cached_property
-    def _colors(self) -> t.Dict[str, Color]:
+    def _colors(self) -> t.Dict[str, color.Color]:
         return {k: self.Color(*v) for k, v in self._name_to_rgb.items()}
 
     @cached_property

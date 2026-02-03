@@ -1,5 +1,6 @@
-import nc
 import unittest
+
+import nc
 
 
 class ModuleTest(unittest.TestCase):

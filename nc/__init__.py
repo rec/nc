@@ -68,11 +68,12 @@ color collection.
     #   (122, 110, 250) is closest to Slate blue 1 = 131 111 255
     #   (56, 218, 180) is closest to Turquoise = 64 224 208
 """
-from . import colors as _colors
-from . import color as _color
-from functools import cached_property
-from typing import Iterator
 import sys
+from functools import cached_property
+from collections.abc import Iterator
+
+from . import color as _color
+from . import colors as _colors
 
 _DEFAULT_PALETTES = "wikipedia", "x11", "juce"
 

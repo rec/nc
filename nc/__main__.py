@@ -1,9 +1,8 @@
-from nc import Color
-from nc import demo
-from nc import terminal
 import argparse
-import nc
 import sys
+
+import nc
+from nc import Color, demo, terminal
 
 DEFAULT_COMMAND = "all"
 
@@ -37,10 +36,10 @@ def main(sys_args, color_count=None):
     context = terminal.Context(color_count)
     first = True
     for name, color in colors:
-        assert type(name) is str
+        assert isinstance(name, str)
         assert "Color" in type(color).__name__, type(color).__name__
         background = nc.black if sum(color) >= 0x180 else nc.white
-        msg = "%s%s: %s" % ("" if first else "\n", name, tuple(color))
+        msg = "{}{}: {}".format("" if first else "\n", name, tuple(color))
         first = False
         if context:
             with context(color, background, print):

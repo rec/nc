@@ -1,7 +1,8 @@
-from . import terminal
 import subprocess
 import sys
 import time
+
+from . import terminal
 
 DEFAULT_COLUMNS = 64
 DEMO_CHAR = "•"

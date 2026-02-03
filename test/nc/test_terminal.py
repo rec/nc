@@ -1,7 +1,8 @@
-from nc import terminal
-from unittest import mock, TestCase
 import functools
+from unittest import TestCase, mock
+
 import nc
+from nc import terminal
 
 
 @mock.patch("time.sleep", return_value=None)

@@ -1,6 +1,8 @@
-from .print_mocker import print_mocker
+from unittest import TestCase, mock
+
 from nc import demo
-from unittest import mock, TestCase
+
+from .print_mocker import print_mocker
 
 
 @mock.patch("time.sleep", return_value=None)

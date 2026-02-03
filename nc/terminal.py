@@ -1,7 +1,8 @@
-from .colors import Colors
 import contextlib
 import functools
 import subprocess
+
+from .colors import Colors
 
 TERMINAL_ENVIRONMENT_VAR = "_NC_TERMINAL_COLOR_COUNT"
 SIZES = 256, 16, 8
@@ -11,7 +12,7 @@ def context(fg=None, bg=None, print=print, count=None):
     return Context(count)(fg, bg, print)
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def color_count():
     cmd = "tput", "colors"
     try:
@@ -65,4 +66,4 @@ class _Context:
             yield
 
 
-Context = functools.lru_cache()(_Context)
+Context = functools.lru_cache(_Context)

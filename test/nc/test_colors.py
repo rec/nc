@@ -1,8 +1,7 @@
-from nc import COLORS
-from nc import Color
-from nc import Colors
-from nc.palette import juce
 import unittest
+
+from nc import COLORS, Color, Colors
+from nc.palette import juce
 
 
 class ColorsTest(unittest.TestCase):

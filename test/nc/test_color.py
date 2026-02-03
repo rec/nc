@@ -1,6 +1,6 @@
-from nc import COLORS
-from nc import Color
 import unittest
+
+from nc import COLORS, Color
 
 
 class ColorTest(unittest.TestCase):

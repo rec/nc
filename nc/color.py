@@ -1,10 +1,9 @@
-from functools import cached_property
-from typing import Tuple
 import collections
 import colorsys
 import math
 import numbers
 import typing as t
+from functools import cached_property
 
 from typing_extensions import Protocol
 
@@ -50,7 +49,7 @@ class Color(collections.namedtuple("Color", "r g b")):
 
     def distance2(self, other) -> int:
         """Return the square of the distance between this and another color"""
-        d = (i - j for i, j in zip(self, other))
+        d = (i - j for i, j in zip(self, other, strict=False))
         return sum(i * i for i in d)
 
     def distance(self, other) -> float:

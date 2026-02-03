@@ -1,5 +1,6 @@
-from nc import Colors
 import unittest
+
+from nc import Colors
 
 HTML = Colors("html")
 TERMINAL_8 = Colors("terminal8")
