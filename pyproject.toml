@@ -1,6 +1,6 @@
 [project]
 name = "nc"
-version = "1.0.2"
+version = "1.1.0"
 description = "🎨 Named colors in Python 🎨"
 authors = [{ name = "Tom Ritchford", email = "tom@swirly.com" }]
 requires-python = ">=3.10"
