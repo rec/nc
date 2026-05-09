@@ -1,6 +1,6 @@
 [project]
 name = "nc"
-version = "1.1.0"
+version = "1.2.0"
 description = "🎨 Named colors in Python 🎨"
 authors = [{ name = "Tom Ritchford", email = "tom@swirly.com" }]
 requires-python = ">=3.10"
@@ -45,7 +45,7 @@ exclude_lines = ["pragma: no cover", "if False:", "if __name__ == .__main__.:", 
 
 [tool.poetry]
 name = "nc"
-version = "0.1.0"
+version = "1.2.0"
 description = "🎨 Named colors in Python 🎨"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 readme = "README.md"
